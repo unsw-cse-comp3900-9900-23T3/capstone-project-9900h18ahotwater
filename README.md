@@ -13,7 +13,6 @@ pass
 
 ## File Structure
 
-<p>
 project/  
 ├── data/  
 │   └── to be continued  
@@ -39,7 +38,6 @@ project/
 |   ├── z5412301.txt  
 |   └── z5390552.txt  
 └── to be continued...  
-</p>
 
 
 * work_diary: the folder for weekly diary
