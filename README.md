@@ -14,30 +14,30 @@ pass
 ## File Structure
 
 project/  
-├── data/  
-│   └── to be continued  
-├── docs/  
-│   └── history.md  
-├── src/  
-│   ├── frontend/  
-│   │   └── to be continued  
-│   ├── model/  
-│   │   └── to be continued  
-│   └── server/  
-│       └── to be continued  
-├── tests/  
-│   └── to be continued  
-├── .gitignore  
-├── README.md  
-├── requirements.txt  
-├── setup.py  
-|── work_diary/  
-|   ├── z5383693.txt  
-|   ├── z5193638.txt  
-|   ├── z5232340.txt  
-|   ├── z5412301.txt  
-|   └── z5390552.txt  
-└── to be continued...  
+&#8195;|- data/  
+&#8195;| &#8195; └ to be continued
+&#8195;|- docs/ 
+&#8195;| &#8195; └ to be continued
+&#8195;|- diary/
+&#8195;| &#8195; |- z5383693.txt
+&#8195;| &#8195; |- z5193638.txt
+&#8195;| &#8195; |- z5232340.txt
+&#8195;| &#8195; |- z5412301.txt
+&#8195;| &#8195;└ z5390552.txt
+&#8195;|- src/  
+&#8195;| &#8195; |- frontend/
+&#8195;| &#8195;└ to be continued
+&#8195;| &#8195; |- model/
+&#8195;| &#8195;└ to be continued
+&#8195;| &#8195;└ server/
+&#8195;| &#8195;└ to be continued
+&#8195;|- tests/
+&#8195;| &#8195; └ to be continued
+&#8195;|- README.md
+&#8195;|- requirements.txt
+&#8195;|- setup.py
+&#8194; └ to be continued...
+ 
 
 
 * work_diary: the folder for weekly diary
