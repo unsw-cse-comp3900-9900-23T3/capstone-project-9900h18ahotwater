@@ -15,28 +15,28 @@ pass
 
 project/  
 &#8195;|- data/  
-&#8195;| &#8195; └ to be continued
-&#8195;|- docs/ 
-&#8195;| &#8195; └ to be continued
-&#8195;|- diary/
-&#8195;| &#8195; |- z5383693.txt
-&#8195;| &#8195; |- z5193638.txt
-&#8195;| &#8195; |- z5232340.txt
-&#8195;| &#8195; |- z5412301.txt
-&#8195;| &#8195;└ z5390552.txt
+&#8195;| &#8195; └ to be continued  
+&#8195;|- docs/  
+&#8195;| &#8195; └ to be continued  
+&#8195;|- diary/  
+&#8195;| &#8195; |- z5383693.txt  
+&#8195;| &#8195; |- z5193638.txt  
+&#8195;| &#8195; |- z5232340.txt  
+&#8195;| &#8195; |- z5412301.txt  
+&#8195;| &#8195;└ z5390552.txt  
 &#8195;|- src/  
-&#8195;| &#8195; |- frontend/
-&#8195;| &#8195;└ to be continued
-&#8195;| &#8195; |- model/
-&#8195;| &#8195;└ to be continued
-&#8195;| &#8195;└ server/
-&#8195;| &#8195;└ to be continued
-&#8195;|- tests/
-&#8195;| &#8195; └ to be continued
-&#8195;|- README.md
-&#8195;|- requirements.txt
-&#8195;|- setup.py
-&#8194; └ to be continued...
+&#8195;| &#8195; |- frontend/  
+&#8195;| &#8195;└ to be continued  
+&#8195;| &#8195; |- model/  
+&#8195;| &#8195;└ to be continued  
+&#8195;| &#8195;└ server/  
+&#8195;| &#8195;└ to be continued  
+&#8195;|- tests/  
+&#8195;| &#8195; └ to be continued  
+&#8195;|- README.md  
+&#8195;|- requirements.txt  
+&#8195;|- setup.py  
+&#8194; └ to be continued...  
  
 
 
