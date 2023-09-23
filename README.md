@@ -13,31 +13,33 @@ pass
 
 ## File Structure
 
-project/ \n
-├── data/ \n
-│   └── to be continued \n
-├── docs/ \n
-│   └── history.md \n
-├── src/ \n
-│   ├── frontend/ \n
-│   │   └── to be continued \n
-│   ├── model/ \n
-│   │   └── to be continued \n
-│   └── server/ \n
-│       └── to be continued \n
-├── tests/ \n
-│   └── to be continued \n
-├── .gitignore \n
-├── README.md \n
-├── requirements.txt \n
-├── setup.py \n
-|── work_diary/ \n
-|   ├── z5383693.txt \n
-|   ├── z5193638.txt \n
-|   ├── z5232340.txt \n
-|   ├── z5412301.txt \n
-|   └── z5390552.txt \n
-└── to be continued... \n
+<p>
+project/  
+├── data/  
+│   └── to be continued  
+├── docs/  
+│   └── history.md  
+├── src/  
+│   ├── frontend/  
+│   │   └── to be continued  
+│   ├── model/  
+│   │   └── to be continued  
+│   └── server/  
+│       └── to be continued  
+├── tests/  
+│   └── to be continued  
+├── .gitignore  
+├── README.md  
+├── requirements.txt  
+├── setup.py  
+|── work_diary/  
+|   ├── z5383693.txt  
+|   ├── z5193638.txt  
+|   ├── z5232340.txt  
+|   ├── z5412301.txt  
+|   └── z5390552.txt  
+└── to be continued...  
+</p>
 
 
 * work_diary: the folder for weekly diary
