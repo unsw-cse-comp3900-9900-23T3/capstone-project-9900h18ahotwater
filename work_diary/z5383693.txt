@@ -6,3 +6,5 @@ We talked about the metrials we need to prepare for the project, such as flask, 
 
 
 Week 2
+
+This week I finished setting up github. Also learned basic knowledge related to the project. We met to discuss the technologies and frameworks used in the project, and had a rough grasp of the project.
