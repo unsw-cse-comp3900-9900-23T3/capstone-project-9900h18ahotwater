@@ -1,0 +1,8 @@
+Week 1
+
+group formed and named as Hotwater. We have choosed a Scrum master whose name is  Zhenghao Yu. 
+The project we'd like to work on the most is P6, followed by P7, and finally P15.
+We talked about the metrials we need to prepare for the project, such as flask, git operation, and so on.
+
+
+Week 2
