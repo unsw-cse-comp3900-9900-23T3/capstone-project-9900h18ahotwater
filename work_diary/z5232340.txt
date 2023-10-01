@@ -1,0 +1,16 @@
+week1
+
+Read the projects topic carefully, and decide on the project after consulting with the team.
+Team members introduce themselves, get to know each other's technology stacks.
+We discuss future directions for collaboration. Created the Jira site.
+
+week2
+
+The team discussed the features needed for the project and determined when and how to communicate with the client.
+Discussed and documented the direction and details to focus on when communicating with the client.
+Confirmed the division of responsibilities between team members.
+
+week3
+
+The background, value, and technology stack of the project were discussed around the proposal.
+Completed the background and project design. Initialization of the project proposal.
