@@ -48,6 +48,7 @@ project/
 ## Branches
 
 * main: the main branch for the project, nobody can push to this branch directly
+* master: the branch for solving conflicts. Before you push your code to main branch, you should merge your code to this branch first for solving the conflicts, and then merge this branch to main branch
 * diary: the branch for diary, used for weekly diary
 * feature-xxx: the branch for xxx feature, used for xxx feature (for example)
 * bugfix-xxx: the branch for xxx bugfix, used for xxx bugfix (for example)
