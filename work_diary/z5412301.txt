@@ -15,3 +15,5 @@ Many user stories were identified.
 Read a lot of project-related papers and discuss the novel functions of our project.
 The deep learning model framework to be used is discussed.
 Write a complete proposal.
+
+week 4
