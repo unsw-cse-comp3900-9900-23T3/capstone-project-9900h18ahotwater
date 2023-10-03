@@ -10,3 +10,11 @@ Week 2
 This week I finished setting up github. 
 Also learned basic knowledge related to the project. 
 We met to discuss the technologies and frameworks used in the project, and had a rough grasp of the project.
+
+Week 3
+
+This week we finished the proposal and submitted it.
+We also discussed the project in detail such as the model of whole project.
+As for the feature extraction part, I decided to use several models to extract the features of the image. such as, Vit, Resnet, swin transformer, RCNN, CNN and so on.
+As for the feature fusion part, I decided to use D-VSM or MLP to fuse the features extracted by different models.
+As for the classification part, I decided to use the MLP or D-VSM to classify the features.
