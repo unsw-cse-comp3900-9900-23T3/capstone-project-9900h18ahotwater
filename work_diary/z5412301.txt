@@ -1,0 +1,17 @@
+week 1
+The team has been formed and the group name has been decided.
+A scrum master is selected.
+The topic selection direction was discussed and the project description of all the related projects was read.
+After discussion with team members, we selected the project 6.
+Brainstorm the functions that need to be implemented.
+
+week 2
+The specific requirements of the project were discussed with the client.
+Discussions with team members roughly determined the technical route of the project.
+After discussion, a rough division of labor was made.
+
+week 3
+Many user stories were identified.
+Read a lot of project-related papers and discuss the novel functions of our project.
+The deep learning model framework to be used is discussed.
+Write a complete proposal.
