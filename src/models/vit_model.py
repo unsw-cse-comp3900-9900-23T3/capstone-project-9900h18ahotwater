@@ -231,10 +231,10 @@ class VisionTransformer(nn.Module):
         return x
 
 
+#need to freeze the parameters of the model and abandon the last classification layer of the pre-trained models
 
-
-
-def vit_base_patch16_224(pretrained=False, **kwargs):
+#this is not trained model, just for note the parameters
+def vit_base_patch16_224(pretrained=False):
     model = VisionTransformer(
         img_size=224, patch_size=16, embed_dim=768, depth=12, num_heads=12, out_dim=768)
     return model
