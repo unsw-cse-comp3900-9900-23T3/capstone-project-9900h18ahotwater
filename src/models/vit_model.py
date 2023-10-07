@@ -199,7 +199,7 @@ class VisionTransformer(nn.Module):
         self.pos_drop = nn.Dropout(p=drop_ratio)
 
         dpr = [x.item() for x in torch.linspace(0, drop_path_ratio, depth)]  # stochastic depth decay rule
-        self.blocks = nn.ModuleList(*[
+        self.blocks = nn.ModuleList([
             EncoderBlock(dim=embed_dim, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
                          drop_ratio=drop_ratio, attn_drop_ratio=attn_drop_ratio, drop_path_ratio=dpr[i],
                          norm_layer=norm_layer, act_layer=act_layer)
@@ -207,7 +207,7 @@ class VisionTransformer(nn.Module):
         self.norm = norm_layer(embed_dim)
 
         #mlp part
-        self.mlp = MLP(in_features=embed_dim, hidden_features=int(embed_dim * mlp_ratio), act_layer=act_layer , drop_ratio=drop_ratio)
+        self.mlp = MLP(in_features=embed_dim, hidden_features=int(embed_dim * mlp_ratio), out_features=out_dim, act_layer=act_layer , drop_ratio=drop_ratio)
         
 
         # init weight
