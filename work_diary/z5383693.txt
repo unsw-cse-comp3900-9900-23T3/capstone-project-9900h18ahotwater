@@ -18,3 +18,7 @@ We also discussed the project in detail such as the model of whole project.
 As for the feature extraction part, I decided to use several models to extract the features of the image. such as, Vit, Resnet, swin transformer, RCNN, CNN and so on.
 As for the feature fusion part, I decided to use D-VSM or MLP to fuse the features extracted by different models.
 As for the classification part, I decided to use the MLP or D-VSM to classify the features.
+
+week 4
+This week I rewiewed some papers, such as vit, transformer, bert and so on.
+I also finished constructing vit model, bert model, a model of fusion and classification model.
