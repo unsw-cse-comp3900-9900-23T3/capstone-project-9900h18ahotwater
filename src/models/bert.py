@@ -18,7 +18,7 @@ class Bert(BertPreTrainedModel):
                  mlp_drop=0.,
                  config = AutoConfig.from_pretrained('bert-base-uncased')):
         super(Bert, self).__init__(config)
-        self.bert = BertModel(config)
+        self.bert = BertModel(config, add_pooling_layer=True)
         self.num_features = self.embed_dim = config.hidden_size
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
         self.mlp = MLP(in_features=self.embed_dim, hidden_features=int(self.embed_dim * mlp_ratio), act_layer=nn.GELU , drop_ratio=mlp_drop, out_features=out_dim)
@@ -26,10 +26,18 @@ class Bert(BertPreTrainedModel):
         self.apply(_init_vit_weights)
 
     def forward(self,x):
-        # [batch_size, max_len, embed_dim]
-        x = self.bert(**x)
+        # [batch_size, 3, seq_len]
+        # 3 -> [input_ids, token_type_ids, attention_mask]
+        print(x.shape)
+        print("x:\n",x)
+        # [batch_size, 3, seq_len]
+        mapping = {'input_ids' : x[:,0,:], 'token_type_ids' : x[:,1,:], 'attention_mask' : x[:,2,:]}
+        print(mapping)
+        x = self.bert(**mapping)
+        print(x.shape)
         # [batch_size, embed_dim]
-        x = x[:,0,:]
+        #x = x.last_hidden_state[:, 0, :]
+        #print(x.shape)
         # [batch_size, out_dim]
         x = self.mlp(x)
         return x
