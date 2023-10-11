@@ -216,6 +216,7 @@ class VisionTransformer(nn.Module):
         self.apply(_init_vit_weights)
 
     def forward(self, x):
+        x = x.to(torch.float)
         # [B, C, H, W] -> [B, num_patches, embed_dim]
         x = self.patch_embed(x)   #[B, 196, 768] 14*14=196  768=3*16*16
         # [1, 1, 768] -> [B, 1, 768]

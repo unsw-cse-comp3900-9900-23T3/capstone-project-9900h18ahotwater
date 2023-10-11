@@ -28,17 +28,14 @@ class Bert(BertPreTrainedModel):
     def forward(self,x):
         # [batch_size, 3, seq_len]
         # 3 -> [input_ids, token_type_ids, attention_mask]
-        print(x.shape)
-        print("x:\n",x)
-        # [batch_size, 3, seq_len]
-        mapping = {'input_ids' : x[:,0,:], 'token_type_ids' : x[:,1,:], 'attention_mask' : x[:,2,:]}
-        print(mapping)
+        # print(x.shape)
+        # print("x:\n",x)
+        # # [batch_size, 3, seq_len]
+        mapping = {'input_ids' : x[0:,0,:], 'token_type_ids' : x[:,1,:], 'attention_mask' : x[:,2,:]}
+        # print(mapping)
         x = self.bert(**mapping)
-        print(x.shape)
-        # [batch_size, embed_dim]
-        #x = x.last_hidden_state[:, 0, :]
-        #print(x.shape)
         # [batch_size, out_dim]
+        x = x.last_hidden_state[:,0,:]
         x = self.mlp(x)
         return x
     

@@ -7,6 +7,7 @@ numpy>=1.22.2
 torch>=2.0.1
 transformers>=4.34.0
 pandas>=2.0.2
-torchsummary>=1.5.1
+torchinfo>=1.8.0
+tqdm>=4.65.0
 # torchvision
 

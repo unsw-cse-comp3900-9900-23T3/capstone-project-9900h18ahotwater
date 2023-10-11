@@ -4,7 +4,7 @@ from torch import nn
 import torch
 
 
-class SFSC(nn.modules):
+class SFSC(nn.Module):
     #simple fusion with simple classifier
     #input: 2 images and 1 sentence
     #
@@ -24,7 +24,7 @@ class SFSC(nn.modules):
         x1 = x[:,0,:,:,:]
         x2 = x[:,1,:,:,:]
         x3 = x[:,2,:,:,:]
-        x3 = x3[:,:,:,0]
+        x3 = x3[:,:,0]
         # x1 -> [b, 3, 224, 224]
         # x2 -> [b, 3, 224, 224]
         # x3 -> [b, 3, sentence_len]
@@ -57,7 +57,7 @@ class DFDC(nn.Module):
         self.sigmoid = nn.Sigmoid()
         self.relu = nn.ReLU()
 
-    def forward(self, x1, x2, x3):
+    def forward(self,x):
         #x -> [b,3,3,224,224] second 3 is for 3 views
         x1 = x[:,0,:,:,:]
         x2 = x[:,1,:,:,:]
