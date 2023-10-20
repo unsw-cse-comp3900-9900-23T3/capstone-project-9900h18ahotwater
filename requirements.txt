@@ -9,5 +9,6 @@ transformers>=4.34.0
 pandas>=2.0.2
 torchinfo>=1.8.0
 tqdm>=4.65.0
+tensorboard>=2.12.1
 # torchvision
 

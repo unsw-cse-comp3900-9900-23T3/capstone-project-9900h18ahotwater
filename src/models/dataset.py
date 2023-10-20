@@ -52,12 +52,14 @@ class MyDataSet(Dataset):
         return img1, img2, text, label
     
 
+tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased', cache_dir='./models')
+
 def collate_fn(batch):
     # print("collate_fn:\n")
     # print(np.array(batch).shape)
-    tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased', cache_dir='./models')
     images1,images2, text, labels = tuple(zip(*batch))
     labels = torch.as_tensor(labels)
+    labels = labels.to(torch.float)
     texts = tokenizer(
         text,
         padding="max_length", 

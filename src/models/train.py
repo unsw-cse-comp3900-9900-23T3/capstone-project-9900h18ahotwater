@@ -40,7 +40,7 @@ def main(args):
                                    transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])])}
     
     train_dataset = MyDataSet(train_path+"/train.csv",train_path+"/data/",range_label=args.range_label,transform=img_transform["train"])
-    val_dataset = MyDataSet(train_path+"/test.csv",train_path+"/data/",range_label=args.range_label,transform=img_transform["val"])
+    val_dataset = MyDataSet(train_path+"/val.csv",train_path+"/data/",range_label=args.range_label,transform=img_transform["val"])
 
     batch_size = args.batch_size
     nw = min([os.cpu_count(), batch_size if batch_size > 1 else 0, 8])  # number of workers
@@ -136,7 +136,7 @@ if __name__ == '__main__':
                         default="dataset1")
     #range of label from the least to the most+1, for example (1,20) means label from 1 to 19
     parser.add_argument('--range_label', type=tuple,default=(1,20),help='range of label')
-    parser.add_argument('--model_name', default='', help='create model name')
+    parser.add_argument('--model_name', default='model1', help='create model name')
 
     # path of pre-trained model，if not then make it to blank i.e. "",  default='./vit_base_patch16_224_in21k.pth'
     parser.add_argument('--weights', type=str, default='',
