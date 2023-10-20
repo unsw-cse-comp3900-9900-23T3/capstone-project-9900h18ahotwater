@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 import matplotlib.pyplot as plt
 
-def train_one_epoch(model, optimizer, data_loader, device, epoch):
+def train_one_epoch(model, optimizer, data_loader, device, epoch, threshold=0.5):
     model.train()
     loss_function = torch.nn.BCELoss()
     accu_loss = torch.zeros(1).to(device)  # 累计损失
@@ -26,8 +26,8 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch):
         # print(pred)
         # print(pred.shape)
         # print(y)
-        
-        accu_num += torch.eq(pred, y.to(device)).sum()
+        pred_class = torch.where(pred > threshold, torch.ones_like(pred), torch.zeros_like(pred))
+        accu_num += torch.eq(pred_class, y.to(device)).sum()
         loss = loss_function(pred, y.to(device))
         loss.backward()
         accu_loss += loss.detach()
@@ -47,7 +47,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch):
 
 
 @torch.no_grad()
-def evaluate(model, data_loader, device, epoch):
+def evaluate(model, data_loader, device, epoch, threshold=0.5):
     loss_function = torch.nn.BCELoss()
 
     model.eval()
@@ -62,7 +62,8 @@ def evaluate(model, data_loader, device, epoch):
         sample_num += x.shape[0]
 
         pred = model(x.to(device))
-        accu_num += torch.eq(pred, y.to(device)).sum()
+        pred_class = torch.where(pred > threshold, torch.ones_like(pred), torch.zeros_like(pred))
+        accu_num += torch.eq(pred_class, y.to(device)).sum()
 
         loss = loss_function(pred, y.to(device))
         accu_loss += loss
