@@ -116,6 +116,8 @@ def main(args):
             best_epoch = epoch
             #save model
 
+        if os.path.exists("./weights/{}".format(args.model_name)) is False:
+            os.makedirs("./weights/{}".format(args.model_name))
         torch.save(model.state_dict(), "./weights/{}/model-{}.pth".format(args.model_name,epoch))
 
     print("best acc: {}, best epoch: {}".format(best_acc, best_epoch))

@@ -6,6 +6,8 @@ import re
 import pandas as pd
 from io import StringIO
 import numpy as np
+import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
 class MyDataSet(Dataset):
@@ -28,8 +30,8 @@ class MyDataSet(Dataset):
         df = pd.read_csv(StringIO(''.join(lines)), escapechar="/")
         for id in range(len(df)):
             item = np.array(df["Labels"][id].split(" "), dtype=int)
-            vector = [i in item for i in range(self.range_label[0], self.range_label[1])]
-            df["Labels"][id] = np.array(vector, dtype=int)
+            vector = [int(i in item) for i in range(self.range_label[0], self.range_label[1])]
+            df["Labels"][id] = vector
         return df
     
 
@@ -47,7 +49,7 @@ class MyDataSet(Dataset):
             img1 = self.transform(img)
             img2 = self.transform(img)
         
-        text = self.dataset["Caption"][item]
+        text = self.dataset["Caption"][item].lower()
 
         return img1, img2, text, label
     
