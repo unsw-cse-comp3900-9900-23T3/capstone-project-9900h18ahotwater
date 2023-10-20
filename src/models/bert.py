@@ -16,7 +16,7 @@ class Bert(BertPreTrainedModel):
                  out_dim=768,
                  mlp_ratio=4.,
                  mlp_drop=0.,
-                 config = AutoConfig.from_pretrained('bert-base-uncased')):
+                 config = AutoConfig.from_pretrained('bert-base-uncased',cache_dir='./models')):
         super(Bert, self).__init__(config)
         self.bert = BertModel(config, add_pooling_layer=True)
         self.num_features = self.embed_dim = config.hidden_size
@@ -31,7 +31,7 @@ class Bert(BertPreTrainedModel):
         # print(x.shape)
         # print("x:\n",x)
         # # [batch_size, 3, seq_len]
-        mapping = {'input_ids' : x[0:,0,:], 'token_type_ids' : x[:,1,:], 'attention_mask' : x[:,2,:]}
+        mapping = {'input_ids' : x[0:,0,:].to(torch.int), 'token_type_ids' : x[:,1,:].to(torch.int), 'attention_mask' : x[:,2,:].to(torch.int)}
         # print(mapping)
         x = self.bert(**mapping)
         # [batch_size, out_dim]
