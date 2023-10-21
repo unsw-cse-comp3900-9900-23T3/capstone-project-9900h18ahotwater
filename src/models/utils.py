@@ -42,7 +42,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, threshold=0.5)
         loss.backward()
         accu_loss += loss.detach()
 
-        data_loader.desc = "[train epoch {}] loss: {:.3f}, acc: {:.3f}".format(epoch,
+        data_loader.desc = "[train epoch {}] loss: {:.3f}, precision: {:.3f}, recall: {:.3f}, f1: {:.3f}".format(epoch,
                                                                                accu_loss.item() / (step + 1),
                                                                                precision.item(),
                                                                                recall.item(),
@@ -91,7 +91,7 @@ def evaluate(model, data_loader, device, epoch, threshold=0.5):
         loss = loss_function(pred, y.to(device))
         accu_loss += loss
 
-        data_loader.desc = "[valid epoch {}] loss: {:.3f}, acc: {:.3f}".format(epoch,
+        data_loader.desc = "[valid epoch {}] loss: {:.3f}, precision: {:.3f}, recall: {:.3f}, f1: {:.3f}".format(epoch,
                                                                                accu_loss.item() / (step + 1),
                                                                                precision.item(),
                                                                                recall.item(),

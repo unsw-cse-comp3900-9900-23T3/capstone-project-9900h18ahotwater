@@ -25,6 +25,9 @@ def main(args):
 
     if os.path.exists("./weights") is False:
         os.makedirs("./weights")
+    
+    if os.path.exists("./weights/{}".format(args.model_name)) is False:
+            os.makedirs("./weights/{}".format(args.model_name))
 
     tb_writer = SummaryWriter()
     train_path = "./dataset/" + args.data_path
@@ -85,12 +88,12 @@ def main(args):
     lf = lambda x: ((1 + math.cos(x * math.pi / args.epochs)) / 2) * (1 - args.lrf) + args.lrf  # cosine
     scheduler = lr_scheduler.LambdaLR(optimizer, lr_lambda=lf)
 
-    best_acc = 0.0
+    best_f1 = 0.0
     best_epoch = 0
 
     for epoch in range(args.epochs):
         # train
-        train_loss, train_acc = train_one_epoch(model=model,
+        train_loss, train_precision, train_recall, train_f1 = train_one_epoch(model=model,
                                                 optimizer=optimizer,
                                                 data_loader=train_loader,
                                                 device=device,
@@ -99,29 +102,44 @@ def main(args):
         scheduler.step()
 
         # validate
-        val_loss, val_acc = evaluate(model=model,
+        val_loss, val_precision, val_recall, val_f1 = evaluate(model=model,
                                      data_loader=val_loader,
                                      device=device,
                                      epoch=epoch)
 
         tags = ["train_loss", "train_acc", "val_loss", "val_acc", "learning_rate"]
         tb_writer.add_scalar(tags[0], train_loss, epoch)
-        tb_writer.add_scalar(tags[1], train_acc, epoch)
-        tb_writer.add_scalar(tags[2], val_loss, epoch)
-        tb_writer.add_scalar(tags[3], val_acc, epoch)
-        tb_writer.add_scalar(tags[4], optimizer.param_groups[0]["lr"], epoch)
+        tb_writer.add_scalar(tags[1], train_precision, epoch)
+        tb_writer.add_scalar(tags[2], train_recall, epoch)
+        tb_writer.add_scalar(tags[3], train_f1, epoch)
+        tb_writer.add_scalar(tags[4], val_loss, epoch)
+        tb_writer.add_scalar(tags[5], val_precision, epoch)
+        tb_writer.add_scalar(tags[6], val_recall, epoch)
+        tb_writer.add_scalar(tags[7], optimizer.param_groups[0]["lr"], epoch)
         
-        if val_acc > best_acc:
-            best_acc = val_acc
+        if val_f1 > best_f1:
+            best_f1 = val_f1
             best_epoch = epoch
             #save model
 
-        if os.path.exists("./weights/{}".format(args.model_name)) is False:
-            os.makedirs("./weights/{}".format(args.model_name))
         torch.save(model.state_dict(), "./weights/{}/model-{}.pth".format(args.model_name,epoch))
 
-    print("best acc: {}, best epoch: {}".format(best_acc, best_epoch))
-    os.system("cp ./weights/{}/model-{}.pth ./weights/{}/model-best.pth".format(args.model_name,best_epoch,args.model_name))
+        #every 10 epoch save best model and delete from epoch-20 to epoch-10 models
+        if epoch%10 == 0 and epoch != 0:
+            if best_epoch>=epoch-20:
+                try:
+                    os.system("cp -f ./weights/{}/model-{}.pth ./weights/{}/model-best.pth".format(args.model_name,best_epoch,args.model_name))
+                except:
+                    pass
+            if epoch > 10:
+                for i in range(epoch-20,epoch-9):
+                    try:
+                        os.system("rm ./weights/{}/model-{}.pth".format(args.model_name,i))
+                    except:
+                        pass
+
+
+    print("best f1: {}, best epoch: {}".format(best_f1, best_epoch))
     tb_writer.close()
 
 
