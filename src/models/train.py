@@ -107,7 +107,7 @@ def main(args):
                                      device=device,
                                      epoch=epoch)
 
-        tags = ["train_loss", "train_acc", "val_loss", "val_acc", "learning_rate"]
+        tags = ["train_loss", "train_precision", "train_recall", "train_f1", "val_loss", "val_precision", "val_recall", "learning_rate"]
         tb_writer.add_scalar(tags[0], train_loss, epoch)
         tb_writer.add_scalar(tags[1], train_precision, epoch)
         tb_writer.add_scalar(tags[2], train_recall, epoch)
