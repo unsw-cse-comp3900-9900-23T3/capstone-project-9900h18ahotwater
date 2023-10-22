@@ -62,8 +62,13 @@ def main(args):
                                              pin_memory=True,
                                              num_workers=nw,
                                              collate_fn=collate_fn)
-
-    model = SFSC(num_classes=args.num_classes).to(device)
+    
+    if args.model == "SFSC":
+        model = SFSC(num_classes=args.num_classes).to(device)
+    elif args.model == "DFDC":
+        model = DFDC(num_classes=args.num_classes).to(device)
+    else:
+        raise ValueError("model name not found, you can choose SFSC or DFDC")
     # model = DFDC(num_classes=args.num_classes).to(device)
 
     if args.weights != "":
@@ -154,6 +159,8 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=8)
     parser.add_argument('--lr', type=float, default=0.001)
     parser.add_argument('--lrf', type=float, default=0.01)
+    # model type: SFSC or DFDC
+    parser.add_argument('--model', type=str, default="SFSC")
 
     # path of dataset,it should be under the path of the dataset, i.e. rather FILE than /dataset/FILES
     parser.add_argument('--data_path', type=str,
