@@ -11,6 +11,7 @@ from torchvision import transforms
 from model import SFSC, DFDC
 from dataset import MyDataSet, collate_fn
 from utils import train_one_epoch, evaluate
+import pandas as pd
 
 
 
@@ -90,7 +91,8 @@ def main(args):
 
     best_f1 = 0.0
     best_epoch = 0
-
+    tags = ["epoch","train_loss", "train_precision", "train_recall", "train_f1", "val_loss", "val_precision", "val_recall", "learning_rate"]
+    pd.DataFrame(columns=tags).to_csv("./weights/{}/log.csv".format(args.model_name), index=False)
     for epoch in range(args.epochs):
         # train
         train_loss, train_precision, train_recall, train_f1 = train_one_epoch(model=model,
@@ -107,15 +109,15 @@ def main(args):
                                      device=device,
                                      epoch=epoch)
 
-        tags = ["train_loss", "train_precision", "train_recall", "train_f1", "val_loss", "val_precision", "val_recall", "learning_rate"]
-        tb_writer.add_scalar(tags[0], train_loss, epoch)
-        tb_writer.add_scalar(tags[1], train_precision, epoch)
-        tb_writer.add_scalar(tags[2], train_recall, epoch)
-        tb_writer.add_scalar(tags[3], train_f1, epoch)
-        tb_writer.add_scalar(tags[4], val_loss, epoch)
-        tb_writer.add_scalar(tags[5], val_precision, epoch)
-        tb_writer.add_scalar(tags[6], val_recall, epoch)
-        tb_writer.add_scalar(tags[7], optimizer.param_groups[0]["lr"], epoch)
+        
+        tb_writer.add_scalar(tags[1], train_loss, epoch)
+        tb_writer.add_scalar(tags[2], train_precision, epoch)
+        tb_writer.add_scalar(tags[3], train_recall, epoch)
+        tb_writer.add_scalar(tags[4], train_f1, epoch)
+        tb_writer.add_scalar(tags[5], val_loss, epoch)
+        tb_writer.add_scalar(tags[6], val_precision, epoch)
+        tb_writer.add_scalar(tags[7], val_recall, epoch)
+        tb_writer.add_scalar(tags[8], optimizer.param_groups[0]["lr"], epoch)
         
         if val_f1 > best_f1:
             best_f1 = val_f1
@@ -123,16 +125,17 @@ def main(args):
             #save model
 
         torch.save(model.state_dict(), "./weights/{}/model-{}.pth".format(args.model_name,epoch))
+        pd.DataFrame([epoch,train_loss, train_precision, train_recall, train_f1, val_loss, val_precision, val_recall, optimizer.param_groups[0]["lr"]], columns=tags).to_csv("./weights/{}/log.csv".format(args.model_name), mode='a', header=False, index=False)
 
         #every 10 epoch save best model and delete from epoch-20 to epoch-10 models
-        if epoch%10 == 0 and epoch != 0:
-            if best_epoch>=epoch-20:
+        if epoch%10 == 9:
+            if best_epoch>=epoch-19:
                 try:
                     os.system("cp -f ./weights/{}/model-{}.pth ./weights/{}/model-best.pth".format(args.model_name,best_epoch,args.model_name))
                 except:
                     pass
             if epoch > 10:
-                for i in range(epoch-20,epoch-9):
+                for i in range(epoch-19,epoch-9):
                     try:
                         os.system("rm ./weights/{}/model-{}.pth".format(args.model_name,i))
                     except:
@@ -140,6 +143,7 @@ def main(args):
 
 
     print("best f1: {}, best epoch: {}".format(best_f1, best_epoch))
+    pd.DataFrame([best_f1, best_epoch], columns=["best_f1", "best_epoch"]).to_csv("./weights/{}/best.csv".format(args.model_name), index=False)
     tb_writer.close()
 
 
