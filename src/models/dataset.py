@@ -104,7 +104,7 @@ class COCODataSet(Dataset):
         anno_path = f'{self.data_path}/annotations'
         self.img_path = f'{self.data_path}/train2017' if train else f'{self.data_path}/val2017'
         # load json file， caption annotations
-        self.caption_path = f'{anno_path}/captions_tain2017.json' if train else f'{anno_path}/captions_val2017.json'
+        self.caption_path = f'{anno_path}/captions_train2017.json' if train else f'{anno_path}/captions_val2017.json'
         self.label_path = f'{anno_path}/instances_trian2017.json' if train else f'{anno_path}/instances_val2017.json'
 
         self.range_label = range_label
