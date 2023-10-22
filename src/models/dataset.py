@@ -7,6 +7,7 @@ import pandas as pd
 from io import StringIO
 import numpy as np
 import os
+import json
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
@@ -83,3 +84,72 @@ def collate_fn(batch):
     x = torch.stack((images1,images2,texts),dim=1)
 
     return x, labels
+
+
+
+
+class COCODataSet(Dataset):
+    def __init__(self, 
+                 path, 
+                 range_label = (1,90), 
+                 train=True,
+                 transform=None):
+        # e.g. img_path = "./dataset/coco/train2017/"
+        # labels are from 1 to 19, range_label = (1,20)
+        # train = True means train dataset, train = False means val dataset
+
+
+        self.data_path = path
+        anno_path = f'{self.data_path}/annotations'
+        self.img_path = f'{self.data_path}/train2017' if train else f'{self.data_path}/val2017'
+        # load json file， caption annotations
+        self.caption_path = f'{anno_path}/captions_tain2017.json' if train else f'{anno_path}/captions_val2017.json'
+        self.label_path = f'{anno_path}/instances_trian2017.json' if train else f'{anno_path}/instances_val2017.json'
+
+        self.range_label = range_label
+        self.dataset = self.get_data()
+        self.transform = transform
+
+    def get_data(self):
+        with open(self.caption_path, 'r') as f:
+            caption_data = json.load(f)
+        with open(self.label_path, 'r') as f:
+            label_data = json.load(f)
+        images = caption_data['images']
+        captions = caption_data['annotations']
+        labels = label_data['annotations']
+        df = pd.DataFrame(columns=['ImageID', 'ImagePath', 'Labels', 'Caption'])
+        df["ImageID"] = [image['id'] for image in images]
+        df["ImagePath"] = [f'{self.img_path}/{image["file_name"]}' for image in images]
+        for id in range(len(df)):
+            cap = [caption['caption'] for caption in captions if caption['image_id'] == df["ImageID"][id]]
+            cap_vector = " ".join(cap)
+            df["Caption"][id] = cap_vector
+            lab = [label['category_id'] for label in labels if label['image_id'] == df["ImageID"][id]]
+            lab_vector = set(lab)
+            df["Labels"][id] = lab_vector
+        
+        return df
+    
+
+    def __len__(self):
+        return len(self.dataset)
+
+    def __getitem__(self, item):
+        img = Image.open(self.dataset["ImagePath"][item])
+        # RGB is colorful img，L is gray img
+        if img.mode != 'RGB':
+            raise ValueError("image: {} isn't RGB mode.".format(self.images_path[item]))
+        label = self.dataset["Labels"][item]
+        label = [int(i in label) for i in range(self.range_label[0], self.range_label[1])]
+
+        if self.transform is not None:
+            img1 = self.transform(img)
+            img2 = self.transform(img)
+        
+        text = self.dataset["Caption"][item].lower()
+
+        return img1, img2, text, label
+    
+
+    
