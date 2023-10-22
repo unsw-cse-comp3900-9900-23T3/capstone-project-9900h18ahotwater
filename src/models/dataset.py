@@ -142,7 +142,8 @@ class COCODataSet(Dataset):
         img = Image.open(self.dataset["ImagePath"][item])
         # RGB is colorful img，L is gray img
         if img.mode != 'RGB':
-            raise ValueError("image: {} isn't RGB mode.".format(self.images_path[item]))
+            # raise ValueError("image: {} isn't RGB mode.".format(self.dataset["ImagePath"][item]))
+            img = img.convert('RGB')
         label = set(self.dataset["Labels"][item])
         label = [int(i in label) for i in range(self.range_label[0], self.range_label[1])]
 
