@@ -133,7 +133,7 @@ def main(args):
             #save model
 
         torch.save(model.state_dict(), "./weights/{}/model-{}.pth".format(args.model_name,epoch))
-        pd.DataFrame([epoch,train_loss, train_precision, train_recall, train_f1, val_loss, val_precision, val_recall, optimizer.param_groups[0]["lr"]], columns=tags).to_csv("./weights/{}/log.csv".format(args.model_name), mode='a', header=False, index=False)
+        pd.DataFrame([[epoch,train_loss, train_precision, train_recall, train_f1, val_loss, val_precision, val_recall, optimizer.param_groups[0]["lr"]]], columns=tags).to_csv("./weights/{}/log.csv".format(args.model_name), mode='a', header=False, index=False)
 
         #every 10 epoch save best model and delete from epoch-20 to epoch-10 models
         if epoch%10 == 9:
@@ -156,6 +156,7 @@ def main(args):
 
 
 if __name__ == '__main__':
+    #python train.py --data_path coco --epochs 100 --model_name coco1 --batch_size 16
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_classes', type=int, default=90)
     parser.add_argument('--epochs', type=int, default=10)
