@@ -9,7 +9,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torchvision import transforms
 
 from model import SFSC, DFDC
-from dataset import MyDataSet, collate_fn
+from dataset import COCODataSet, collate_fn
 from utils import train_one_epoch, evaluate
 import pandas as pd
 
@@ -43,8 +43,11 @@ def main(args):
                                    transforms.ToTensor(),
                                    transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])])}
     
-    train_dataset = MyDataSet(train_path+"/train.csv",train_path+"/data/",range_label=args.range_label,transform=img_transform["train"])
-    val_dataset = MyDataSet(train_path+"/val.csv",train_path+"/data/",range_label=args.range_label,transform=img_transform["val"])
+    # train_dataset = MyDataSet(train_path+"/train.csv",train_path+"/data/",range_label=args.range_label,transform=img_transform["train"])
+    # val_dataset = MyDataSet(train_path+"/val.csv",train_path+"/data/",range_label=args.range_label,transform=img_transform["val"])
+
+    train_dataset = COCODataSet(path=train_path, range_label=args.range_label, train=True, transform=img_transform["train"])
+    val_dataset = COCODataSet(path=train_path, range_label=args.range_label, train=False, transform=img_transform["val"])
 
     batch_size = args.batch_size
     nw = min([os.cpu_count(), batch_size if batch_size > 1 else 0, 8])  # number of workers
@@ -154,7 +157,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--num_classes', type=int, default=19)
+    parser.add_argument('--num_classes', type=int, default=90)
     parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--batch_size', type=int, default=8)
     parser.add_argument('--lr', type=float, default=0.001)
@@ -164,9 +167,9 @@ if __name__ == '__main__':
 
     # path of dataset,it should be under the path of the dataset, i.e. rather FILE than /dataset/FILES
     parser.add_argument('--data_path', type=str,
-                        default="dataset1")
-    #range of label from the least to the most+1, for example (1,20) means label from 1 to 19
-    parser.add_argument('--range_label', type=tuple,default=(1,20),help='range of label')
+                        default="coco")
+    #range of label from the least to the most+1, for example (1,91) means label from 1 to 90
+    parser.add_argument('--range_label', type=tuple,default=(1,91),help='range of label')
     parser.add_argument('--model_name', default='model1', help='create model name')
 
     # path of pre-trained model，if not then make it to blank i.e. "",  default='./vit_base_patch16_224_in21k.pth'

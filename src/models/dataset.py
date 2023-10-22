@@ -8,6 +8,7 @@ from io import StringIO
 import numpy as np
 import os
 import json
+import tqdm
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
@@ -94,7 +95,7 @@ class COCODataSet(Dataset):
                  range_label = (1,90), 
                  train=True,
                  transform=None):
-        # e.g. img_path = "./dataset/coco/train2017/"
+        # e.g. img_path = "./dataset/coco"
         # labels are from 1 to 19, range_label = (1,20)
         # train = True means train dataset, train = False means val dataset
 
@@ -111,6 +112,7 @@ class COCODataSet(Dataset):
         self.transform = transform
 
     def get_data(self):
+        print("loading data...")
         with open(self.caption_path, 'r') as f:
             caption_data = json.load(f)
         with open(self.label_path, 'r') as f:
@@ -118,16 +120,17 @@ class COCODataSet(Dataset):
         images = caption_data['images']
         captions = caption_data['annotations']
         labels = label_data['annotations']
-        df = pd.DataFrame(columns=['ImageID', 'ImagePath', 'Labels', 'Caption'])
-        df["ImageID"] = [image['id'] for image in images]
-        df["ImagePath"] = [f'{self.img_path}/{image["file_name"]}' for image in images]
-        for id in range(len(df)):
-            cap = [caption['caption'] for caption in captions if caption['image_id'] == df["ImageID"][id]]
-            cap_vector = " ".join(cap)
-            df["Caption"][id] = cap_vector
-            lab = [label['category_id'] for label in labels if label['image_id'] == df["ImageID"][id]]
-            lab_vector = set(lab)
-            df["Labels"][id] = lab_vector
+        img_id = [image['id'] for image in images]
+        df = pd.DataFrame(index=img_id,columns=['ImagePath', 'Labels', 'Caption'])
+        df["Labels"] = [[] for i in range(len(df))]
+        df["Caption"] = ["" for i in range(len(df))]
+        for item in tqdm.tqdm(images):
+            df.loc[item['id'], 'ImagePath'] = self.img_path + '/' + item['file_name']
+        for item in tqdm.tqdm(labels):
+            df.loc[item['image_id'], 'Labels'].append(item['category_id'])
+        for item in tqdm.tqdm(captions):
+            df.loc[item['image_id'], 'Caption'] += item['caption'] + " "
+        df.index = range(len(df))
         
         return df
     
@@ -140,7 +143,7 @@ class COCODataSet(Dataset):
         # RGB is colorful img，L is gray img
         if img.mode != 'RGB':
             raise ValueError("image: {} isn't RGB mode.".format(self.images_path[item]))
-        label = self.dataset["Labels"][item]
+        label = set(self.dataset["Labels"][item])
         label = [int(i in label) for i in range(self.range_label[0], self.range_label[1])]
 
         if self.transform is not None:
