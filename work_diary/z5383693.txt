@@ -1,18 +1,15 @@
 Week 1
-
 group formed and named as Hotwater. We have choosed a Scrum master whose name is  Zhenghao Yu. 
 The project we'd like to work on the most is P6, followed by P7, and finally P15.
 We talked about the metrials we need to prepare for the project, such as flask, git operation, and so on.
 
 
 Week 2
-
 This week I finished setting up github. 
 Also learned basic knowledge related to the project. 
 We met to discuss the technologies and frameworks used in the project, and had a rough grasp of the project.
 
 Week 3
-
 This week we finished the proposal and submitted it.
 We also discussed the project in detail such as the model of whole project.
 As for the feature extraction part, I decided to use several models to extract the features of the image. such as, Vit, Resnet, swin transformer, RCNN, CNN and so on.
@@ -22,3 +19,16 @@ As for the classification part, I decided to use the MLP or D-VSM to classify th
 week 4
 This week I rewiewed some papers, such as vit, transformer, bert and so on.
 I also finished constructing vit model, bert model, a model of fusion and classification model.
+
+week 5
+This week I finished the training code of the models.
+I finished dataset class and preprocessing for the images.
+I also finished the code of detection part.
+
+week 6
+This week I started to train the model SFSC.
+I also funtuned the model, and evaluated the model.
+
+week 7
+This week I started to train of the model DFDC.
+I also funtuned the model, and evaluated the model.
