@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #212529;
+            display: block;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header {
+            padding-right: 40px;
+            padding-left: 40px;
+        }
+        .header_default {
+            min-height: 96px;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+            font-family: Arial, sans-serif;
+        }
+        .header-left {
+            order: 0;
+            align-self: auto;
+            align-items: center;
+            display: flex;
+
+        }
+        .header-right {
+            text-align: center;
+            align-self: center;
+            align-items: center;
+            display: flex;
+
+        }
+        .header-right a {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration:none;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #4D049A;
+        }
+        .header-log {
+            color: #111827;
+            font: 16px Inter sans-serif;
+            background: #FFFFFF;
+            padding: 13px 20px;
+        }
+        .fa_icon {
+            font-family: Font Awesome Regular, sans-serif;
+        }
+        .fa_icon.button-pad-l {
+            padding-left: 6px;
+            padding-right: 4px;
+        }
+        .left_item{
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration:none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #FFFFFF;
+        }
+        .nav-link {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration:none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #FFFFFF;
+         }
+        .dropdown-item {
+            display: inline-block;
+            text-decoration:none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #FFFFFF;
+         }
+        .dropdown-menu {
+            background: #212529;
+        }
+        .header-left a:hover {
+            border-bottom: 2px solid deepskyblue;
+        }
+        .header-right a {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration:none;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #4D049A;
+        }
+        .header-log {
+            color: #111827;
+            font: 16px Inter sans-serif;
+            background: #FFFFFF;
+            padding: 13px 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        nav li {
+            margin-right: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .carousel img {
+            width: 100%;
+            display: inline-block;
+        }
+        .box {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            margin: 50px auto;
+            padding-top: 30px;
+            background-image: url('./images/drag_file.png'); /* 你要设置的背景图片 */
+            background-size: cover;
+            background-position: center;
+            background-color: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .btn {
+            width: 200px;
+            height: 30px;
+            line-height: 30px;
+            margin: 280px auto;
+            text-align: center;
+            color: #5098F8;
+            border-radius: 4px;
+            border: 1px dashed #5098F8;
+            cursor: pointer;
+        }
+        .container1 {
+            background: #212529;
+            color: #6B7280;
+            text-align: center;
+        }
+        .container1 h3 {
+            color: #dee2e6;
+        }
+        label[for="upload-input"] {
+            display: block;
+            background-color: #5098F8;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .nav-link:focus, .nav-link:hover {
+            color: #FFFFFF;
+        }
+        #file-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+</style>
+</head>
+
+
+<body>
+
+<div class="header">
+    <div class="header_default">
+        <a href="/"><img src="./images/logo1.png" loading="lazy" width="200" height="74" alt="logo"></a>
+        <div class="header-left">
+            <a class="left_item" href="./home.html">Home</a>
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    Introduction
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./universe.html">Universe</a></li>
+                    <li><a class="dropdown-item" href="./annotate.html">Annotate</a></li>
+                    <li><a class="dropdown-item" href="./train.html">Train</a></li>
+                </ul>
+            </div>
+            <a class="left_item" href="./performance.html">Performance</a>
+            <a class="left_item" href="./upload.html">Upload</a>
+        </div>
+        <div class="header-right">
+            <a class="header-log" href="./login.html">Login<span class="fa_icon button-pad-l">→</span></a>
+
+        </div>
+    </div>
+</div>
+<div class="box" id="drop">
+
+
+    <input type="file" id="file-btn" onchange="selectFile(event)" accept=".jpeg,.png,.gif,.mp4,.quicktime">
+</div>
+<footer class="pt-3 mt-4 text-body-secondary border-top container1 py-5">
+    <div class="row">
+
+        <div class="col-12 col-md">
+            <img src="./images/logo1.png" alt="Company Logo">
+            <br>
+            <br>
+            <small class="d-block mb-3" style="text-align:center">© 2023 Hotwater, Inc.</small>
+            <small class="d-block mb-3" style="text-align:center">All rights reserved.</small>
+        </div>
+        <div class="col-12 col-md">
+            <h3>Links</h3>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary text-decoration-none" href="./home.html">Home</a></li>
+                <li><a class="link-secondary text-decoration-none" href="./performance.html">Performance</a></li>
+                <li><a class="link-secondary text-decoration-none" href="./upload.html">Upload</a></li>
+                <li><a class="link-secondary text-decoration-none" href="./login.html">Login</a></li>
+            </ul>
+        </div>
+        <div class="col-12 col-md">
+            <h3>Introduction</h3>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary text-decoration-none" href="./universe.html">Universe</a></li>
+                <li><a class="link-secondary text-decoration-none" href="./annotate.html">Annotate</a></li>
+                <li><a class="link-secondary text-decoration-none" href="./train.html">Train</a></li>
+
+            </ul>
+        </div>
+        <div class="col-12 col-md">
+            <h3>About</h3>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary text-decoration-none" href="#">Team</a></li>
+                <li><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
+                <li><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
+                <li><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let file = null;
+
+    document.querySelector('#btn').onclick = function () {
+        document.querySelector('#file-btn').click();
+    };
+
+    document.querySelector('#file-btn').addEventListener('change', selectFile);
+
+    function selectFile(e) {
+        if (e.target.files.length > 0) {
+            const selectedFile = e.target.files[0];
+            if (isValidFileType(selectedFile)) {
+                file = selectedFile;
+                alert('Success!');
+            } else {
+                alert('Please select the correct file type (Image document or Video document)');
+            }
+        }
+    }
+
+    function isValidFileType(file) {
+        const acceptedTypes = [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'video/mp4',
+            'video/quicktime',
+        ];
+
+        return acceptedTypes.includes(file.type);
+    }
+
+
+    let dropBox = document.querySelector('#drop');
+
+    dropBox.addEventListener('dragover', function (e) {
+        e.preventDefault();
+    });
+
+    dropBox.addEventListener('drop', function (e) {
+        e.preventDefault();
+        const droppedFile = e.dataTransfer.files[0];
+        if (isValidFileType(droppedFile)) {
+            file = droppedFile;
+            alert('Success!');
+        } else {
+            alert('Please select the correct file type (Image document or Video document)');
+        }
+    });
+</script>
+</body>
+
+</html>
