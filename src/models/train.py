@@ -99,8 +99,9 @@ def main(args):
 
     best_f1 = 0.0
     best_epoch = 0
-    tags = ["epoch","train_loss", "train_precision", "train_recall", "train_f1", "val_loss", "val_precision", "val_recall", "learning_rate"]
-    pd.DataFrame(columns=tags).to_csv("./weights/{}/log.csv".format(args.model_name), index=False)
+    tags = ["epoch","train_loss", "train_precision", "train_recall", "train_f1", "val_loss", "val_precision", "val_recall",'val_f1' , "learning_rate"]
+    if os.path.exists("./weights/{}/log.csv".format(args.model_name)) is False:
+        pd.DataFrame(columns=tags).to_csv("./weights/{}/log.csv".format(args.model_name), index=False)
     for epoch in range(args.epochs):
         # train
         train_loss, train_precision, train_recall, train_f1 = train_one_epoch(model=model,
@@ -125,6 +126,7 @@ def main(args):
         tb_writer.add_scalar(tags[5], val_loss, epoch)
         tb_writer.add_scalar(tags[6], val_precision, epoch)
         tb_writer.add_scalar(tags[7], val_recall, epoch)
+        tb_writer.add_scalar(tags[8], val_f1, epoch)
         tb_writer.add_scalar(tags[8], optimizer.param_groups[0]["lr"], epoch)
         
         if val_f1 > best_f1:
@@ -133,7 +135,7 @@ def main(args):
             #save model
 
         torch.save(model.state_dict(), "./weights/{}/model-{}.pth".format(args.model_name,epoch))
-        pd.DataFrame([[epoch,train_loss, train_precision, train_recall, train_f1, val_loss, val_precision, val_recall, optimizer.param_groups[0]["lr"]]], columns=tags).to_csv("./weights/{}/log.csv".format(args.model_name), mode='a', header=False, index=False)
+        pd.DataFrame([[epoch,train_loss, train_precision, train_recall, train_f1, val_loss, val_precision, val_recall, val_f1, optimizer.param_groups[0]["lr"]]], columns=tags).to_csv("./weights/{}/log.csv".format(args.model_name), mode='a', header=False, index=False)
 
         #every 10 epoch save best model and delete from epoch-20 to epoch-10 models
         if epoch%10 == 9:
@@ -151,7 +153,7 @@ def main(args):
 
 
     print("best f1: {}, best epoch: {}".format(best_f1, best_epoch))
-    pd.DataFrame([best_f1, best_epoch], columns=["best_f1", "best_epoch"]).to_csv("./weights/{}/best.csv".format(args.model_name), index=False)
+    pd.DataFrame([[best_f1, best_epoch]], columns=["best_f1", "best_epoch"]).to_csv("./weights/{}/best.csv".format(args.model_name), index=False)
     tb_writer.close()
 
 
