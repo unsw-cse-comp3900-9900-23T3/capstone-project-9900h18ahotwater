@@ -18,3 +18,11 @@ This week, I read the task requirements of the proposal and collaborated with my
 Week4
 
 This week, I am planning and dividing the frontend pages. And it has simply implemented the log in and sign up functions, as well as the file upload function.
+
+Week5
+
+This week, I started designing and implementing the code for the header and footer, and then implemented them for each page first.
+
+Week6
+
+I have unified the color style of each page, improved the style, and discussed functional improvements with my team members.
