@@ -17,3 +17,14 @@ The deep learning model framework to be used is discussed.
 Write a complete proposal.
 
 week 4
+Meeting with the client to understand the specific functions to be implemented.
+Read papers and write a literature review at the request of the client.
+
+week 5
+Meeting with the tutor for demo A.
+Discussing what went well and what did not go so well.
+Summarizes the tasks to try in the next sprint and complete the retrospective report A.
+
+week 6
+Solved the problem of the data set and started to use it for training the backend model.
+Configuring the environment and using the GPU on online server to train the model.
