@@ -20,6 +20,7 @@
             padding-right: 40px;
             padding-left: 40px;
         }
+
         .header_default {
             min-height: 96px;
             flex-wrap: nowrap;
@@ -28,6 +29,7 @@
             display: flex;
             font-family: Arial, sans-serif;
         }
+
         .header-left {
             order: 0;
             align-self: auto;
@@ -35,6 +37,7 @@
             display: flex;
 
         }
+
         .header-right {
             text-align: center;
             align-self: center;
@@ -42,80 +45,91 @@
             display: flex;
 
         }
+
         .header-right a {
             margin-left: 12px;
             margin-right: 12px;
             padding: 12px;
             display: inline-block;
-            text-decoration:none;
+            text-decoration: none;
             font-weight: 700;
             font-family: 'Inter', sans-serif;
             font-size: 16px;
             color: #4D049A;
         }
+
         .header-log {
             color: #111827;
             font: 16px Inter sans-serif;
             background: #FFFFFF;
             padding: 13px 20px;
         }
+
         .fa_icon {
             font-family: Font Awesome Regular, sans-serif;
         }
+
         .fa_icon.button-pad-l {
             padding-left: 6px;
             padding-right: 4px;
         }
-        .left_item{
+
+        .left_item {
             margin-left: 12px;
             margin-right: 12px;
             padding: 12px;
             display: inline-block;
-            text-decoration:none;
+            text-decoration: none;
             border-bottom: 1px solid transparent;
             font-weight: 700;
             font-family: 'Inter', sans-serif;
             font-size: 16px;
             color: #FFFFFF;
         }
+
         .nav-link {
             margin-left: 12px;
             margin-right: 12px;
             padding: 12px;
             display: inline-block;
-            text-decoration:none;
+            text-decoration: none;
             border-bottom: 1px solid transparent;
             font-weight: 700;
             font-family: 'Inter', sans-serif;
             font-size: 16px;
             color: #FFFFFF;
-         }
+        }
+
         .dropdown-item {
             display: inline-block;
-            text-decoration:none;
+            text-decoration: none;
             border-bottom: 1px solid transparent;
             font-weight: 700;
             font-family: 'Inter', sans-serif;
             font-size: 16px;
             color: #FFFFFF;
-         }
+        }
+
         .dropdown-menu {
             background: #212529;
         }
+
         .header-left a:hover {
             border-bottom: 2px solid deepskyblue;
         }
+
         .header-right a {
             margin-left: 12px;
             margin-right: 12px;
             padding: 12px;
             display: inline-block;
-            text-decoration:none;
+            text-decoration: none;
             font-weight: 700;
             font-family: 'Inter', sans-serif;
             font-size: 16px;
             color: #4D049A;
         }
+
         .header-log {
             color: #111827;
             font: 16px Inter sans-serif;
@@ -147,6 +161,7 @@
             width: 100%;
             display: inline-block;
         }
+
         .box {
             position: relative;
             width: 600px;
@@ -156,7 +171,7 @@
             background-image: url('./images/drag_file.png'); /* 你要设置的背景图片 */
             background-size: cover;
             background-position: center;
-            background-color: #f5f5f5;
+            background-color: #f5f5f5 !important;
             border-radius: 10px;
         }
 
@@ -171,14 +186,17 @@
             border: 1px dashed #5098F8;
             cursor: pointer;
         }
+
         .container1 {
             background: #212529;
             color: #6B7280;
             text-align: center;
         }
+
         .container1 h3 {
             color: #dee2e6;
         }
+
         label[for="upload-input"] {
             display: block;
             background-color: #5098F8;
@@ -188,9 +206,11 @@
             text-align: center;
             cursor: pointer;
         }
+
         .nav-link:focus, .nav-link:hover {
             color: #FFFFFF;
         }
+
         #file-btn {
             position: absolute;
             top: 0;
@@ -202,7 +222,57 @@
             height: 100%;
             cursor: pointer;
         }
-</style>
+
+        .image-wrapper img {
+            width: 200px;
+            height: 150px;
+        }
+
+        /* 增加描述框的大小 */
+        .description-input {
+            height: 200px;
+            width: 400px;
+            padding: 10px;
+            display: block;
+        }
+
+        /* 控制描述框容器的样式 */
+        .description-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .show {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        #image-submit {
+            display: block;
+            width: 150px; /* 设置按钮的宽度 */
+            height: 50px; /* 设置按钮的高度 */
+            margin: 0 auto; /* 居中按钮 */
+            background-color: #4D049A; /* 设置背景颜色 */
+            color: #fff; /* 设置文本颜色 */
+            font-size: 18px; /* 设置字体大小 */
+            border: none; /* 移除按钮边框 */
+            cursor: pointer;
+            border-radius: 10px; /* 圆角按钮 */
+        }
+
+        .space {
+            height: 20px;
+        }
+
+        .show_space {
+            height: 20px;
+        }
+    </style>
 </head>
 
 
@@ -234,9 +304,17 @@
     </div>
 </div>
 <div class="box" id="drop">
-
-
-    <input type="file" id="file-btn" onchange="selectFile(event)" accept=".jpeg,.png,.gif,.mp4,.quicktime">
+    <input type="file" id="file-btn" onchange="selectFile(event)" accept=".jpeg,.png,.gif,.mp4,.quicktime" multiple>
+</div>
+<div class="show">
+    <div id="image-container">
+        <!-- 这里将显示上传的图片 -->
+    </div>
+    //
+    <div class="show_space"></div>
+    <div id="description-container">
+        <!-- 这是描述信息容器 -->
+    </div>
 </div>
 <footer class="pt-3 mt-4 text-body-secondary border-top container1 py-5">
     <div class="row">
@@ -279,7 +357,7 @@
 </footer>
 <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    let file = null;
+    let selectedImages = [];
 
     document.querySelector('#btn').onclick = function () {
         document.querySelector('#file-btn').click();
@@ -289,28 +367,120 @@
 
     function selectFile(e) {
         if (e.target.files.length > 0) {
-            const selectedFile = e.target.files[0];
-            if (isValidFileType(selectedFile)) {
-                file = selectedFile;
-                alert('Success!');
+            const selectedFiles = e.target.files;
+            const validFiles = [];
+            const displayedImagesCount = document.querySelectorAll('.image-wrapper').length;
+
+            for (let i = 0; i < selectedFiles.length; i++) {
+                if (isValidFileType(selectedFiles[i])) {
+                    validFiles.push(selectedFiles[i]);
+                }
+            }
+            if (validFiles.length > 0) {
+                const remainingSlots = 2 - displayedImagesCount;
+                if (validFiles.length <= remainingSlots) {
+
+                    for (let i = 0; i < validFiles.length; i++) {
+                        displayImage(validFiles[i]);
+                    }
+                    alert('Success! ' + validFiles.length + ' files selected.');
+                } else {
+                    alert('You can only upload a maximum of two files. You have ' + displayedImagesCount + ' images already.');
+                    e.target.value = '';
+                }
             } else {
-                alert('Please select the correct file type (Image document or Video document)');
+                alert('Please select the correct file types (Image documents or Video documents)');
+                e.target.value = '';
             }
         }
     }
+
+
+    function displayImage(file) {
+        if (file.type.startsWith("image/")) {
+            const imageContainer = document.querySelector('#image-container');
+            const descriptionContainer = document.querySelector('#description-container');
+
+            const imageWrapper = document.createElement("div");
+            imageWrapper.classList.add("image-wrapper");
+            imageWrapper.style.display = "inline-block";
+
+            const image = document.createElement("img");
+            image.classList.add("dragged-image");
+            image.src = URL.createObjectURL(file);
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener('click', function () {
+                imageContainer.removeChild(imageWrapper);
+
+
+                if (imageContainer.querySelectorAll(".image-wrapper").length === 0) {
+
+                    const descriptionInput = document.querySelector('.description-input');
+                    const submitButton = document.querySelector('#image-submit');
+                    if (descriptionInput) {
+                        descriptionInput.remove();
+                    }
+                    if (submitButton) {
+                        submitButton.remove();
+                    }
+                    const space = document.createElement("div");
+                    space.classList.add("space");
+                    descriptionContainer.appendChild(space);
+                }
+            });
+
+            imageWrapper.appendChild(image);
+            imageWrapper.appendChild(deleteButton);
+
+            imageContainer.appendChild(imageWrapper);
+
+
+            let descriptionInput = document.querySelector('.description-input');
+            if (!descriptionInput) {
+                descriptionInput = document.createElement("textarea");
+                descriptionInput.id = "image-description";
+                descriptionInput.type = "text";
+                descriptionInput.placeholder = "Image description";
+                descriptionInput.classList.add("description-input");
+                descriptionContainer.appendChild(descriptionInput);
+            }
+            // Add a blank div for spacing
+            const space = document.createElement("div");
+            space.classList.add("space");
+            descriptionContainer.appendChild(space);
+            let submitButton = document.querySelector('#image-submit');
+            if (!submitButton) {
+                submitButton = document.createElement("button");
+                submitButton.id = "image-submit";
+                submitButton.textContent = "Submit";
+                submitButton.addEventListener('click', function () {
+
+                    const description = descriptionInput.value;
+                    if (description.trim() === "") {
+                        alert("Description cannot be empty.");
+                        return;
+                    }
+                    // Here you can add your backend request logic.
+
+
+                    descriptionInput.value = "";
+                });
+                descriptionContainer.appendChild(submitButton);
+            }
+        }
+    }
+
 
     function isValidFileType(file) {
         const acceptedTypes = [
             'image/jpeg',
             'image/png',
-            'image/gif',
-            'video/mp4',
-            'video/quicktime',
         ];
 
         return acceptedTypes.includes(file.type);
     }
-
 
     let dropBox = document.querySelector('#drop');
 
@@ -320,14 +490,25 @@
 
     dropBox.addEventListener('drop', function (e) {
         e.preventDefault();
-        const droppedFile = e.dataTransfer.files[0];
-        if (isValidFileType(droppedFile)) {
-            file = droppedFile;
-            alert('Success!');
-        } else {
-            alert('Please select the correct file type (Image document or Video document)');
+        const droppedFiles = e.dataTransfer.files[0];
+        const displayedImagesCount = document.querySelectorAll('.image-wrapper').length;
+        let remainingSlots = 2 - displayedImagesCount;
+        for (let i = 0; i < droppedFiles.length; i++) {
+            if (isValidFileType(droppedFiles[i]) && remainingSlots > 0) {
+
+                displayImage(droppedFiles[i]);
+                alert('Success!');
+                remainingSlots--;
+            } else if (remainingSlots <= 0) {
+                alert('You can only upload a maximum of two files. You have ' + displayedImagesCount + ' images already.');
+                break;
+            } else {
+                alert('Please select the correct file type (Image document or Video document)');
+            }
         }
     });
+
+
 </script>
 </body>
 
