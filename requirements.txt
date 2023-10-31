@@ -10,5 +10,9 @@ pandas>=2.0.2
 torchinfo>=1.8.0
 tqdm>=4.65.0
 tensorboard>=2.12.1
-# torchvision
-
+torchvision>=0.15.2
+flask>=2.2.2
+flask-cors>=3.0.10
+requests>=2.31.0
+pymysql>=1.0.2
+sqlalchemy>=2.0.21
