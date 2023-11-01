@@ -63,7 +63,7 @@ class Predict:
         texts = texts.reshape(1,3,224,224)
         if self.num_img == 1:
             # load image
-            img_path = self.img_path
+            img_path = self.img_path[0]
             assert os.path.exists(img_path), "file: '{}' dose not exist.".format(img_path)
             img = Image.open(img_path)
             if img.mode != 'RGB':
