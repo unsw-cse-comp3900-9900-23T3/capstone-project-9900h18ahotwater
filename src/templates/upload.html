@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload</title>
-    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -168,7 +168,7 @@
             height: 600px;
             margin: 50px auto;
             padding-top: 30px;
-            background-image: url('./images/drag_file.png'); /* 你要设置的背景图片 */
+            background-image: url('images/drag_file.png'); /* 你要设置的背景图片 */
             background-size: cover;
             background-position: center;
             background-color: #f5f5f5 !important;
@@ -228,7 +228,7 @@
             height: 150px;
         }
 
-        /* 增加描述框的大小 */
+
         .description-input {
             height: 200px;
             width: 400px;
@@ -236,7 +236,7 @@
             display: block;
         }
 
-        /* 控制描述框容器的样式 */
+
         .description-container {
             display: flex;
             flex-direction: column;
@@ -254,15 +254,15 @@
 
         #image-submit {
             display: block;
-            width: 150px; /* 设置按钮的宽度 */
-            height: 50px; /* 设置按钮的高度 */
-            margin: 0 auto; /* 居中按钮 */
-            background-color: #4D049A; /* 设置背景颜色 */
-            color: #fff; /* 设置文本颜色 */
-            font-size: 18px; /* 设置字体大小 */
-            border: none; /* 移除按钮边框 */
+            width: 150px;
+            height: 50px;
+            margin: 0 auto;
+            background-color: #4D049A;
+            color: #fff;
+            font-size: 18px;
+            border: none;
             cursor: pointer;
-            border-radius: 10px; /* 圆角按钮 */
+            border-radius: 10px;
         }
 
         .space {
@@ -272,6 +272,39 @@
         .show_space {
             height: 20px;
         }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+
+        #loading-spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
     </style>
 </head>
 
@@ -280,47 +313,64 @@
 
 <div class="header">
     <div class="header_default">
-        <a href="/"><img src="./images/logo1.png" loading="lazy" width="200" height="74" alt="logo"></a>
+        <a href="/"><img src="images/logo1.png" loading="lazy" width="200" height="74" alt="logo"></a>
         <div class="header-left">
-            <a class="left_item" href="./home.html">Home</a>
+            <a class="left_item" href="/">Home</a>
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                    aria-expanded="false">
                     Introduction
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="./universe.html">Universe</a></li>
-                    <li><a class="dropdown-item" href="./annotate.html">Annotate</a></li>
-                    <li><a class="dropdown-item" href="./train.html">Train</a></li>
+                    <li><a class="dropdown-item" href="/universe">Universe</a></li>
+                    <li><a class="dropdown-item" href="/annotate">Annotate</a></li>
+                    <li><a class="dropdown-item" href="/train">Train</a></li>
                 </ul>
             </div>
-            <a class="left_item" href="./performance.html">Performance</a>
-            <a class="left_item" href="./upload.html">Upload</a>
+            <a class="left_item" href="/performance">Performance</a>
+            <a class="left_item" href="/upload">Upload</a>
         </div>
         <div class="header-right">
-            <a class="header-log" href="./login.html">Login<span class="fa_icon button-pad-l">→</span></a>
+            <a class="header-log" href="/login">Login<span class="fa_icon button-pad-l">→</span></a>
 
         </div>
     </div>
 </div>
 <div class="box" id="drop">
-    <input type="file" id="file-btn" onchange="selectFile(event)" accept=".jpeg,.png,.gif,.mp4,.quicktime" multiple>
+    <input type="file" id="file-btn" onchange="selectFile(event)" accept=".jpeg,.png,.jpg" multiple>
 </div>
 <div class="show">
     <div id="image-container">
-        <!-- 这里将显示上传的图片 -->
+
     </div>
-    //
+
     <div class="show_space"></div>
     <div id="description-container">
-        <!-- 这是描述信息容器 -->
+
     </div>
 </div>
+<div id="loading-overlay">
+    <div id="loading-spinner"></div>
+    <p>Loading...</p>
+</div>
+<!-- 模态对话框 -->
+<div id="myModal" class="modal">
+    <div id="result-container">
+        <span class="close" id="modal-close">&times;</span>
+        <div id="modal-image-container">
+            <!-- 这里显示上传的图片 -->
+        </div>
+        <div id="modal-data-container">
+            <!-- 这里显示返回的数据 -->
+        </div>
+    </div>
+</div>
+
 <footer class="pt-3 mt-4 text-body-secondary border-top container1 py-5">
     <div class="row">
 
         <div class="col-12 col-md">
-            <img src="./images/logo1.png" alt="Company Logo">
+            <img src="images/logo1.png" alt="Company Logo">
             <br>
             <br>
             <small class="d-block mb-3" style="text-align:center">© 2023 Hotwater, Inc.</small>
@@ -329,18 +379,18 @@
         <div class="col-12 col-md">
             <h3>Links</h3>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary text-decoration-none" href="./home.html">Home</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./performance.html">Performance</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./upload.html">Upload</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./login.html">Login</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/">Home</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/introduction">Introduction</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/performance">Performance</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/login">Login</a></li>
             </ul>
         </div>
         <div class="col-12 col-md">
             <h3>Introduction</h3>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary text-decoration-none" href="./universe.html">Universe</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./annotate.html">Annotate</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./train.html">Train</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/data-preprocessing">Data pre-processing</a>
+                </li>
+                <li><a class="link-secondary text-decoration-none" href="/model_1">Model - Ⅰ</a></li>
 
             </ul>
         </div>
@@ -355,17 +405,12 @@
         </div>
     </div>
 </footer>
-<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     let selectedImages = [];
 
-    document.querySelector('#btn').onclick = function () {
-        document.querySelector('#file-btn').click();
-    };
-
-    document.querySelector('#file-btn').addEventListener('change', selectFile);
-
     function selectFile(e) {
+
         if (e.target.files.length > 0) {
             const selectedFiles = e.target.files;
             const validFiles = [];
@@ -374,6 +419,7 @@
             for (let i = 0; i < selectedFiles.length; i++) {
                 if (isValidFileType(selectedFiles[i])) {
                     validFiles.push(selectedFiles[i]);
+                    selectedImages.push(selectedFiles[i].name);
                 }
             }
             if (validFiles.length > 0) {
@@ -384,19 +430,23 @@
                         displayImage(validFiles[i]);
                     }
                     alert('Success! ' + validFiles.length + ' files selected.');
+
                 } else {
                     alert('You can only upload a maximum of two files. You have ' + displayedImagesCount + ' images already.');
                     e.target.value = '';
+
                 }
+
             } else {
                 alert('Please select the correct file types (Image documents or Video documents)');
                 e.target.value = '';
             }
+
         }
     }
 
-
     function displayImage(file) {
+
         if (file.type.startsWith("image/")) {
             const imageContainer = document.querySelector('#image-container');
             const descriptionContainer = document.querySelector('#description-container');
@@ -414,7 +464,6 @@
             deleteButton.addEventListener('click', function () {
                 imageContainer.removeChild(imageWrapper);
 
-
                 if (imageContainer.querySelectorAll(".image-wrapper").length === 0) {
 
                     const descriptionInput = document.querySelector('.description-input');
@@ -428,6 +477,7 @@
                     const space = document.createElement("div");
                     space.classList.add("space");
                     descriptionContainer.appendChild(space);
+                    selectedImages = [];
                 }
             });
 
@@ -446,7 +496,7 @@
                 descriptionInput.classList.add("description-input");
                 descriptionContainer.appendChild(descriptionInput);
             }
-            // Add a blank div for spacing
+
             const space = document.createElement("div");
             space.classList.add("space");
             descriptionContainer.appendChild(space);
@@ -455,26 +505,102 @@
                 submitButton = document.createElement("button");
                 submitButton.id = "image-submit";
                 submitButton.textContent = "Submit";
-                submitButton.addEventListener('click', function () {
+                descriptionContainer.appendChild(submitButton);
+                submitButton.addEventListener('click', function (e) {
+                    e.preventDefault()
 
                     const description = descriptionInput.value;
+                    const files = selectedImages;
+                    const data = {
+                        num_of_img: files.length,
+                        img_path: files,
+                        text: description
+                    }
+                    console.log(data)
                     if (description.trim() === "") {
                         alert("Description cannot be empty.");
                         return;
                     }
-                    // Here you can add your backend request logic.
+                    document.querySelector('#loading-overlay').style.display = 'flex';
+                    // 使用 fetch 发起异步请求
+                    fetch('/detect', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.text();
+                            } else {
+                                throw new Error('Network response was not ok');
+                            }
+                        })
+                        .then(data => {
+                            // 显示上传的图片
+                            const res = JSON.parse(data)
+                            const classes = res.classes
+                            const probs = res.prob
+                            const modalImageContainer = document.getElementById('modal-image-container');
 
+                            modalImageContainer.innerHTML = '';  // 清空内容
+                            selectedImages.forEach(imageName => {
+                                const img = document.createElement('img');
+                                img.src = 'images/' + imageName;  // 设置图片路径
+                                modalImageContainer.appendChild(img);
+                            });
+                            const resultContainer = document.getElementById('result-container');
+                            resultContainer.style.position = 'fixed';
+                            resultContainer.style.zIndex = '999';
+                            resultContainer.style.alignItems = 'center';
+                            resultContainer.style.justifyContent = 'center';
+                            resultContainer.style.textAlign = 'center'
+                            resultContainer.style.top = '10%';
+                            resultContainer.style.left = '10%';
+                            resultContainer.style.width = '80%';
+                            resultContainer.style.height = '80%';
+                            resultContainer.style.background = 'white';
+                            // resultContainer.style.transform = 'translate(-50%, -50%)'
+                            // 显示返回的数据
+                            const modalDataContainer = document.getElementById('modal-data-container');
+                            modalDataContainer.textContent = `Classes: ${classes.join(', ')},Probs: ${probs.join(', ')}`;
 
-                    descriptionInput.value = "";
+                            // 显示模态对话框
+                            const modal = document.getElementById('myModal');
+                            modal.style.display = 'block';
+
+                            document.querySelector('#loading-overlay').style.display = 'none';
+                            selectedImages = []
+                            // 获取关闭按钮的元素
+                            const closeButton = document.getElementById('modal-close');
+
+                            closeButton.addEventListener('click', function () {
+                                // 关闭模态对话框
+                                modal.style.display = 'none';
+                                location.reload();
+                            });
+
+                        })
+                        .catch(error => {
+
+                            console.error('Error:', error);
+                            selectedImages = []
+                            document.querySelector('#loading-overlay').style.display = 'none';
+                        });
+
                 });
-                descriptionContainer.appendChild(submitButton);
+
             }
+
+
         }
     }
 
 
     function isValidFileType(file) {
         const acceptedTypes = [
+            'image/jpg',
             'image/jpeg',
             'image/png',
         ];
@@ -489,8 +615,15 @@
     });
 
     dropBox.addEventListener('drop', function (e) {
+
         e.preventDefault();
-        const droppedFiles = e.dataTransfer.files[0];
+        const droppedFiles = e.dataTransfer.files;
+        for (let i = 0; i < droppedFiles.length; i++) {
+            if (isValidFileType(droppedFiles[i])) {
+                selectedImages.push(droppedFiles[i].name);
+            }
+        }
+
         const displayedImagesCount = document.querySelectorAll('.image-wrapper').length;
         let remainingSlots = 2 - displayedImagesCount;
         for (let i = 0; i < droppedFiles.length; i++) {
@@ -506,6 +639,7 @@
                 alert('Please select the correct file type (Image document or Video document)');
             }
         }
+
     });
 
 

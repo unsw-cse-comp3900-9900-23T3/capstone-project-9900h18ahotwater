@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -100,7 +100,6 @@
         }
 
 
-
         ul {
             list-style: none;
             padding: 0;
@@ -120,12 +119,12 @@
         }
 
     </style>
-<link href="./css/product.css" rel="stylesheet">
+    <link href="css/product.css" rel="stylesheet">
 </head>
 <body>
 <div class="loginBox">
     <h2>Login</h2>
-    <form action="#" method="post">
+    <form id="login-form" action="/login" method="post">
         <div class="item">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
@@ -136,7 +135,7 @@
             <input type="password" id="pwd" name="pwd" required>
         </div>
 
-        <button class="btn">Sign in
+        <button class="btn" type="submit">Sign in
             <span></span>
             <span></span>
             <span></span>
@@ -144,7 +143,7 @@
         </button>
         <br/><br/>
         <div class="reg">
-            <p>Don't have an account? <a href="registration.html" style="color: #2F81F7">Sign up</a></p>
+            <p>Don't have an account? <a href="/registration" style="color: #2F81F7">Sign up</a></p>
         </div>
     </form>
 
@@ -155,7 +154,7 @@
     <div class="row">
 
         <div class="col-12 col-md">
-            <img src="./images/logo1.png" alt="Company Logo">
+            <img src="images/logo1.png" alt="Company Logo">
             <br>
             <br>
             <small class="d-block mb-3" style="text-align:center">© 2023 Hotwater, Inc.</small>
@@ -164,18 +163,17 @@
         <div class="col-12 col-md">
             <h3>Links</h3>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary text-decoration-none" href="./home.html">Home</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./performance.html">Performance</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./upload.html">Upload</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./login.html">Login</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/">Home</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/introduction">Introduction</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/performance">Performance</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/login">Login</a></li>
             </ul>
         </div>
         <div class="col-12 col-md">
             <h3>Product</h3>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary text-decoration-none" href="./universe.html">Universe</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./annotate.html">Annotate</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./train.html">Train</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/data-preprocessing">Data pre-processing</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/model_1">Model - Ⅰ</a></li>
 
             </ul>
         </div>
@@ -190,6 +188,34 @@
         </div>
     </div>
 </footer>
-<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script>
+    document.getElementById("login-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("pwd").value;
+
+        const userData = {
+            email: email,
+            password: password
+        };
+
+        $.ajax({
+            url: "/login",
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(userData),
+            success: function (data) {
+                console.log(data.message);
+            },
+            error: function () {
+                alert("login failed");
+            }
+        });
+    });
+
+</script>
 </body>
 </html>

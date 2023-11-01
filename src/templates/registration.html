@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign up</title>
-    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="./js/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="./js/registration.js"></script>
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -125,7 +123,7 @@
 <body>
 <div class="regBox">
     <h2>Sign up</h2>
-    <!-- <form action="/reg" method="post"> -->
+    <form id="registration-form" action="/reg" method="post">
         <div class="item">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
@@ -136,13 +134,13 @@
         </div>
         <div class="item">
             <label for="pwd">Password:</label>
-            <input type="password" id="pwd" name="pwd" required>
+            <input type="password" id="pwd" name="password" required>
         </div>
         <div class="item">
-            <label for="confirm_pwd">Confirm password: </label>
-            <input type="password" id="confirm_pwd" name="confirm_pwd" required>
+            <label for="confirm_pwd">Confirm password：</label>
+            <input type="password" id="confirm_pwd" name="confirm_password" required>
         </div>
-        <button class="btn" onclick="doSendEmail()" >submit
+        <button class="btn" type="submit">submit
             <span></span>
             <span></span>
             <span></span>
@@ -150,15 +148,15 @@
         </button>
         <br/><br/>
         <div class="log">
-            <p>Already have an account? <a href="login.html" style="color: #2F81F7">Log in</a></p>
+            <p>Already have an account? <a href="/login" style="color: #2F81F7">Log in</a></p>
         </div>
-    <!-- </form> -->
+    </form>
 </div>
 <footer class="container1 py-5">
     <div class="row">
 
         <div class="col-12 col-md">
-            <img src="./images/logo1.png" alt="Company Logo">
+            <img src="images/logo1.png" alt="Company Logo">
             <br>
             <br>
             <small class="d-block mb-3" style="text-align:center">© 2023 Hotwater, Inc.</small>
@@ -167,18 +165,17 @@
         <div class="col-12 col-md">
             <h3>Links</h3>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary text-decoration-none" href="./home.html">Home</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./performance.html">Performance</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./upload.html">Upload</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./login.html">Login</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/">Home</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/introduction">Introduction</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/performance">Performance</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/login">Login</a></li>
             </ul>
         </div>
         <div class="col-12 col-md">
             <h3>Product</h3>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary text-decoration-none" href="./universe.html">Universe</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./annotate.html">Annotate</a></li>
-                <li><a class="link-secondary text-decoration-none" href="./train.html">Train</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/data-preprocessing">Data pre-processing</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/model_1">Model - Ⅰ</a></li>
 
 
             </ul>
@@ -194,7 +191,8 @@
         </div>
     </div>
 </footer>
-<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
 <script>
     document.getElementById("pwd").addEventListener("input", function () {
         const password = document.getElementById("pwd").value;
@@ -206,6 +204,34 @@
             confirm_password.setCustomValidity('passwords do not match');
         }
     });
+    document.getElementById("registration-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const password = document.getElementById("pwd").value;
+
+
+        const userData = {
+            email: email,
+            phone: phone,
+            password: password
+        };
+
+        $.ajax({
+            url: "/reg",
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(userData),
+            success: function (data) {
+                console.log(data.message);
+            },
+            error: function () {
+                alert("register failed");
+            }
+        });
+    });
+
 </script>
 </body>
 </html>
