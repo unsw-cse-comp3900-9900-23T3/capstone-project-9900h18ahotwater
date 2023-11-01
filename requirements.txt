@@ -15,4 +15,4 @@ flask>=2.2.2
 flask-cors>=3.0.10
 requests>=2.31.0
 pymysql>=1.0.2
-sqlalchemy>=2.0.21
+sqlalchemy==1.4.23
