@@ -16,14 +16,24 @@ md = MetaData(bind=engine)
 class User(Base):
     __table__ = Table('user', md, autoload=True)
 
+    def find_by_email(self, email):
+        return dbsession.query(User).filter(User.email == email).first()
+
+    def find_by_phone(self, phone):
+        return dbsession.query(User).filter(User.phone == phone).first()
+
+
 class History(Base):
     __table__ = Table('history', md, autoload=True)
 
 class Data(Base):
     __table__ = Table('data', md, autoload=True)
 
-if __name__ == "__main__":
-    res = dbsession.query(User).all()
-    for i in res:
-        print(i.user_id, i.nickname, i.username, i.password, i.email, i.phone)
+# if __name__ == "__main__":
+#     res = dbsession.query(User).all()
+#     for i in res:
+#         print(i.user_id, i.nickname, i.username, i.password, i.email, i.phone)
+#     user = User(nickname="123@a.com", email="123@a.com", phone="12345", password="asdfqw")
+#     dbsession.add(user)
+#     dbsession.commit()
 

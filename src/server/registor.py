@@ -24,7 +24,7 @@ def regist():
     else:
         # phone or email not exist
         try:
-            user = User(nickname= email,email=email, phone=phone, password=password)
+            user = User(nickname= email,email=email, phone=phone, password=password, username=email)
             dbsession.add(user)
             dbsession.commit()
             return jsonify({'status': 'success'})

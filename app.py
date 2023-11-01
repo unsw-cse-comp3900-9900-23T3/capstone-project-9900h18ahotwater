@@ -46,5 +46,8 @@ if __name__ == '__main__':
     from src.server.detect import detect
     app.register_blueprint(detect)
 
+    from src.server.login import login
+    app.register_blueprint(login)
+
     app.run(debug=True)
     # app.run(debut=False, host='', port=80)
