@@ -1,5 +1,7 @@
 from flask import Blueprint, request, session
 from flask import jsonify
+from src.server.sql import dbsession, User
+from sqlalchemy import or_
 
 registor = Blueprint('registor', __name__)
 
@@ -14,9 +16,21 @@ def regist():
     session['email'] = email
     session['phone'] = phone
     session["isLogin"] = True
-    #write to database
-    #to do
-    return jsonify({'status': 'success'})
+
+    res = dbsession.query(User).filter(or_(User.email == email, User.phone==phone)).first()
+    if res:
+        # phone or email exist
+        return jsonify({'status': 'exist'})
+    else:
+        # phone or email not exist
+        try:
+            user = User(nickname= email,email=email, phone=phone, password=password, username=email)
+            dbsession.add(user)
+            dbsession.commit()
+            return jsonify({'status': 'success'})
+        except:
+            return jsonify({'status': 'fail'})
+
 
 @registor.route('/code', methods=['POST'])
 def ecode():
