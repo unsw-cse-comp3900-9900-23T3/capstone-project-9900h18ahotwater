@@ -56,7 +56,7 @@ class MyDataSet(Dataset):
         return img1, img2, text, label
     
 
-tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased', cache_dir='./models')
+tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased',cache_dir='src/models/models')
 
 def collate_fn(batch):
     # print("collate_fn:\n")

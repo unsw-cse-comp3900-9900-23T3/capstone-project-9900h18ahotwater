@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from transformers import BertModel, BertTokenizer, BertPreTrainedModel, AutoConfig
-from vit_model import MLP
+from src.models.vit_model import MLP
 
 
 def _init_vit_weights(m):
@@ -16,7 +16,7 @@ class Bert(BertPreTrainedModel):
                  out_dim=768,
                  mlp_ratio=4.,
                  mlp_drop=0.,
-                 config = AutoConfig.from_pretrained('bert-base-uncased',cache_dir='./models')):
+                 config = AutoConfig.from_pretrained('bert-base-uncased',cache_dir='src/models/models')):
         super(Bert, self).__init__(config)
         self.bert = BertModel(config, add_pooling_layer=True)
         self.num_features = self.embed_dim = config.hidden_size

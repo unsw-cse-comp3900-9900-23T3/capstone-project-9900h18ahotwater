@@ -8,9 +8,9 @@ import torch.optim.lr_scheduler as lr_scheduler
 from torch.utils.tensorboard import SummaryWriter
 from torchvision import transforms
 
-from model import SFSC, DFDC
-from dataset import COCODataSet, collate_fn
-from utils import train_one_epoch, evaluate
+from src.models.model import SFSC, DFDC
+from src.models.dataset import COCODataSet, collate_fn
+from src.models.utils import train_one_epoch, evaluate
 import pandas as pd
 
 
@@ -18,20 +18,20 @@ import pandas as pd
 def main(args):
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
 
-    if os.path.exists("./dataset") is False:
-        os.makedirs("./dataset")
+    if os.path.exists("src/models/dataset") is False:
+        os.makedirs("src/models/dataset")
 
-    if os.path.exists("./models") is False:
-        os.makedirs("./models")
+    if os.path.exists("src/models/models") is False:
+        os.makedirs("src/models/models")
 
-    if os.path.exists("./weights") is False:
-        os.makedirs("./weights")
+    if os.path.exists("src/models/weights") is False:
+        os.makedirs("src/models/weights")
     
-    if os.path.exists("./weights/{}".format(args.model_name)) is False:
-            os.makedirs("./weights/{}".format(args.model_name))
+    if os.path.exists("src/models/weights/{}".format(args.model_name)) is False:
+            os.makedirs("src/models/weights/{}".format(args.model_name))
 
     tb_writer = SummaryWriter()
-    train_path = "./dataset/" + args.data_path
+    train_path = "src/models/dataset/" + args.data_path
 
     img_transform = {
         "train": transforms.Compose([transforms.RandomResizedCrop(224),
@@ -100,8 +100,8 @@ def main(args):
     best_f1 = 0.0
     best_epoch = 0
     tags = ["epoch","train_loss", "train_precision", "train_recall", "train_f1", "val_loss", "val_precision", "val_recall",'val_f1' , "learning_rate"]
-    if os.path.exists("./weights/{}/log.csv".format(args.model_name)) is False:
-        pd.DataFrame(columns=tags).to_csv("./weights/{}/log.csv".format(args.model_name), index=False)
+    if os.path.exists("src/models/weights/{}/log.csv".format(args.model_name)) is False:
+        pd.DataFrame(columns=tags).to_csv("src/models/weights/{}/log.csv".format(args.model_name), index=False)
     for epoch in range(args.epochs):
         # train
         train_loss, train_precision, train_recall, train_f1 = train_one_epoch(model=model,
@@ -134,26 +134,26 @@ def main(args):
             best_epoch = epoch
             #save model
 
-        torch.save(model.state_dict(), "./weights/{}/model-{}.pth".format(args.model_name,epoch))
+        torch.save(model.state_dict(), "src/models/weights/{}/model-{}.pth".format(args.model_name,epoch))
         pd.DataFrame([[epoch,train_loss, train_precision, train_recall, train_f1, val_loss, val_precision, val_recall, val_f1, optimizer.param_groups[0]["lr"]]], columns=tags).to_csv("./weights/{}/log.csv".format(args.model_name), mode='a', header=False, index=False)
 
         #every 10 epoch save best model and delete from epoch-20 to epoch-10 models
         if epoch%10 == 9:
             if best_epoch>=epoch-19:
                 try:
-                    os.system("cp -f ./weights/{}/model-{}.pth ./weights/{}/model-best.pth".format(args.model_name,best_epoch,args.model_name))
+                    os.system("cp -f src/models/weights/{}/model-{}.pth src/models/weights/{}/model-best.pth".format(args.model_name,best_epoch,args.model_name))
                 except:
                     pass
             if epoch > 10:
                 for i in range(epoch-19,epoch-9):
                     try:
-                        os.system("rm ./weights/{}/model-{}.pth".format(args.model_name,i))
+                        os.system("rm src/models/weights/{}/model-{}.pth".format(args.model_name,i))
                     except:
                         pass
 
 
     print("best f1: {}, best epoch: {}".format(best_f1, best_epoch))
-    pd.DataFrame([[best_f1, best_epoch]], columns=["best_f1", "best_epoch"]).to_csv("./weights/{}/best.csv".format(args.model_name), index=False)
+    pd.DataFrame([[best_f1, best_epoch]], columns=["best_f1", "best_epoch"]).to_csv("src/models/weights/{}/best.csv".format(args.model_name), index=False)
     tb_writer.close()
 
 

@@ -1,5 +1,5 @@
-from vit_model import VisionTransformer
-from bert import Bert
+from src.models.vit_model import VisionTransformer
+from src.models.bert import Bert
 from torch import nn
 import torch
 

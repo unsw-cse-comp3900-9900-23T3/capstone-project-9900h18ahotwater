@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
+import os
 
 app = Flask(__name__, template_folder='./src/templates', static_folder='./src/resources', static_url_path='')
-
+app.config['SECRET_KEY'] = os.urandom(24)
 
 @app.route('/')
 def index():
@@ -35,22 +36,15 @@ def upload():
 def universe():
     return render_template('universe.html')
 
-@app.route('/test', methods=['GET', 'POST'])
-def test():
-    if request.method == 'GET':
-        print("get")
-        return render_template('test.html')
-    else:
-        json = request.json
-        print('recv:', json)
-        
-        return json
 
 
 if __name__ == '__main__':
 
-    from src.server.registor import bp
-    app.register_blueprint(bp)
+    from src.server.registor import registor
+    app.register_blueprint(registor)
+
+    from src.server.detect import detect
+    app.register_blueprint(detect)
 
     app.run(debug=True)
     # app.run(debut=False, host='', port=80)

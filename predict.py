@@ -7,7 +7,7 @@ from torchvision import transforms
 from transformers import AutoTokenizer
 import matplotlib.pyplot as plt
 
-from model import SFSC, DFDC
+from src.models.model import SFSC, DFDC
 
 
 def main():
@@ -26,7 +26,7 @@ def main():
     82: 'refrigerator', 84: 'book', 85: 'clock', 86: 'vase', 87: 'scissors', 88: 'teddy bear', 89: 'hair drier',
     90: 'toothbrush'}
 
-    tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased', cache_dir='./models')
+    tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased', cache_dir='src/models/models')
     # text = "There is a person in the picture. She is a woman."
     # text = "there are some people in the picture. they all have some cups in their hands."
     # text = "There are some motrocycles in the picture. bikes are also in the picture."
@@ -53,7 +53,7 @@ def main():
          transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])])
 
     # load image
-    img_path = "test/3.jpg"
+    img_path = "src/models/test/3.jpg"
     assert os.path.exists(img_path), "file: '{}' dose not exist.".format(img_path)
     img = Image.open(img_path)
     if img.mode != 'RGB':
@@ -89,7 +89,7 @@ def main():
     # create model
     model = SFSC(num_classes=90).to(device)
     # load model weights
-    model_weight_path = "./weights/SFSC/model-best.pth"
+    model_weight_path = "src/models/weights/SFSC/model-best.pth"
     model.load_state_dict(torch.load(model_weight_path, map_location=device))
     model.eval()
     with torch.no_grad():
