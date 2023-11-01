@@ -124,7 +124,7 @@
 <body>
 <div class="loginBox">
     <h2>Login</h2>
-    <form id="login-form" action="/login" method="post">
+    <form id="login-form" action="#" method="post">
         <div class="item">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
@@ -198,17 +198,18 @@
         const password = document.getElementById("pwd").value;
 
         const userData = {
-            email: email,
-            password: password
+            "email": email,
+            "password": password
         };
 
         $.ajax({
-            url: "/login",
+            url: "/dologin",
             type: "POST",
             contentType: 'application/json',
             data: JSON.stringify(userData),
             success: function (data) {
-                console.log(data.message);
+                console.log(data);
+                alert(data['status'])
             },
             error: function () {
                 alert("login failed");

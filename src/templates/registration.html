@@ -123,7 +123,7 @@
 <body>
 <div class="regBox">
     <h2>Sign up</h2>
-    <form id="registration-form" action="/reg" method="post">
+    <form id="registration-form" action="#" method="post">
         <div class="item">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
@@ -194,7 +194,7 @@
 <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/jquery-3.7.1.min.js"></script>
 <script>
-    document.getElementById("pwd").addEventListener("input", function () {
+    /*document.getElementById("pwd").addEventListener("input", function () {
         const password = document.getElementById("pwd").value;
         const confirm_password = document.getElementById("confirm_pwd");
 
@@ -203,7 +203,7 @@
         } else {
             confirm_password.setCustomValidity('passwords do not match');
         }
-    });
+    });*/
     document.getElementById("registration-form").addEventListener("submit", function (event) {
         event.preventDefault();
 
@@ -213,9 +213,9 @@
 
 
         const userData = {
-            email: email,
-            phone: phone,
-            password: password
+            "email": email,
+            "phone": phone,
+            "password": password
         };
 
         $.ajax({
@@ -224,7 +224,8 @@
             contentType: 'application/json',
             data: JSON.stringify(userData),
             success: function (data) {
-                console.log(data.message);
+                console.log(data["status"]);
+                alert(data["status"]);
             },
             error: function () {
                 alert("register failed");
