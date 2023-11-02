@@ -25,4 +25,12 @@ This week, I started designing and implementing the code for the header and foot
 
 Week6
 
-I have unified the color style of each page, improved the style, and discussed functional improvements with my team members.
+This week, I have unified the color style of each page, improved the style, and discussed functional improvements with my team members.
+
+Week7
+
+This week, I fused the code with another front-end teammate, and then discussed with the back-end teammate how to formulate the returned and received values.
+
+Week8
+
+This week, I successfully interacted with the backend and implemented dynamic web pages.
