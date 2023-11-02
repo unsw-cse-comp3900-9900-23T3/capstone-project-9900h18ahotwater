@@ -4,6 +4,7 @@ from src.server.sql import dbsession, User
 
 login = Blueprint('login', __name__)
 
+
 @login.route('/dologin', methods=['POST'])
 def dologin():
     data = request.get_json()
@@ -19,3 +20,10 @@ def dologin():
             return jsonify({'status': 'fail'})
     else:
         return jsonify({'status': 'fail'})
+
+
+@login.route('/dologout', methods=['GET'])
+def dologout():
+    session.pop('email', None)
+    session.pop('isLogin', None)
+    return jsonify({'status': 'success'})
