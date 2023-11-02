@@ -26,3 +26,9 @@ prepare for the demo A
 week6：
 
 coding alternative models and algos
+
+
+week7:
+
+implemented 2 models
+
