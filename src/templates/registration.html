@@ -226,6 +226,7 @@
             success: function (data) {
                 console.log(data["status"]);
                 alert(data["status"]);
+                window.location.href = '/login';
             },
             error: function () {
                 alert("register failed");
