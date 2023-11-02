@@ -14,3 +14,28 @@ week3
 
 The background, value, and technology stack of the project were discussed around the proposal.
 Completed the background and project design. Initialization of the project proposal.
+
+week4
+
+Learn about the design of similar websites, and start designing the front-end pages of the website. 
+Search the database for the back-end model. Design the introduction page.
+
+week5
+
+Completed the design of the introduction page, and synchronized the design style of the page. 
+Synchronize the navigation bar and footer with my teammates' design. 
+Find existing web design elements for reference.
+
+week6
+
+Completion of the introduction page. 
+Design of the model introduction web page and preparation of the documentation required for the web page. 
+
+week7
+
+Write a page for displaying the model results, optimizing the previously designed page.
+
+week8
+
+All web interfaces are completed, synchronized with teammates for web styling, and configured with a complete front-end and back-end environment. 
+Running all the preliminary project code on the computer for this week's demo.
