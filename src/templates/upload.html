@@ -313,25 +313,27 @@
 
 <div class="header">
     <div class="header_default">
-        <a href="/"><img src="images/logo1.png" loading="lazy" width="200" height="74" alt="logo"></a>
+        <a href="/"
+        ><img
+                src="images/logo1.png"
+                loading="lazy"
+                width="200"
+                height="74"
+                alt="logo"
+        /></a>
         <div class="header-left">
             <a class="left_item" href="/">Home</a>
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false">
-                    Introduction
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/universe">Universe</a></li>
-                    <li><a class="dropdown-item" href="/annotate">Annotate</a></li>
-                    <li><a class="dropdown-item" href="/train">Train</a></li>
-                </ul>
-            </div>
+            <a class="left_item" href="/introduction">Introduction</a>
             <a class="left_item" href="/performance">Performance</a>
             <a class="left_item" href="/upload">Upload</a>
         </div>
         <div class="header-right">
-            <a class="header-log" href="/login">Login<span class="fa_icon button-pad-l">→</span></a>
+            {% if session.email %}
+                <span style="color: #FFFFFF">Welcome, {{ session.email }}</span>
+                <a class="header-log" href="#" id="logout-link">Logout<span class="fa_icon button-pad-l">→</span></a>
+            {% else %}
+                <a class="header-log" href="/login">Login<span class="fa_icon button-pad-l">→</span></a>
+            {% endif %}
 
         </div>
     </div>
@@ -643,6 +645,30 @@
     });
 
 
+</script>
+<script>
+    // JavaScript代码用于处理注销操作
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('logout-link').addEventListener('click', function () {
+            // 发送注销请求到后端（可以使用Ajax或直接跳转到注销路由）
+            // 这里示例使用Ajax
+            fetch('/dologout', {
+                method: 'GET'
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        // 如果后端返回了重定向操作，刷新页面以跳转到登录页面
+                        window.location.reload();
+                    } else {
+                        // 否则，可能显示注销成功消息
+                        alert('Logout successful');
+                    }
+                })
+                .catch(error => {
+                    alert('Logout failed');
+                });
+        });
+    });
 </script>
 </body>
 
