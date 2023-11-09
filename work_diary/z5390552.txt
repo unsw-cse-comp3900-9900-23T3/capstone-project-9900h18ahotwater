@@ -34,3 +34,7 @@ This week, I fused the code with another front-end teammate, and then discussed 
 Week8
 
 This week, I successfully interacted with the backend and implemented dynamic web pages.
+
+Week9
+
+This week, after experiencing the pre of the second demo, according to the suggestions of the tutor, work with the team members to modify the logic of some pages, and then continue to improve the front-end and back-end interaction functions.
