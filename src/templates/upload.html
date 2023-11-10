@@ -339,7 +339,7 @@
     </div>
 </div>
 <div class="box" id="drop">
-    <input type="file" id="file-btn" onchange="selectFile(event)" accept=".jpeg,.png,.jpg" multiple>
+    <input type="file" id="file-btn" name="photo" onchange="selectFile(event)" accept=".jpeg,.png,.jpg" multiple>
 </div>
 <div class="show">
     <div id="image-container">
@@ -408,6 +408,7 @@
     </div>
 </footer>
 <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
 <script>
     let selectedImages = [];
 
@@ -431,7 +432,25 @@
                     for (let i = 0; i < validFiles.length; i++) {
                         displayImage(validFiles[i]);
                     }
-                    alert('Success! ' + validFiles.length + ' files selected.');
+                    {#alert('Success! ' + validFiles.length + ' files selected.');#}
+                    var fileObj = document.getElementById("file-btn").files[0]; // js 获取文件对象
+                    var formFile = new FormData();
+                    formFile.append("action", "UploadImage");
+                    formFile.append("file", fileObj); //加入文件对象
+                    var form_data = formFile;
+                    $.ajax({
+                        url: "/uploadphoto",
+                        data: form_data,
+                        type: "post",
+                        dataType: "json",
+                        cache: false,//上传文件无需缓存
+                        processData: false,//用于对data参数进行序列化处理 这里必须false
+                        contentType: false, //必须
+                        success: function (result) {
+                            alert('Success! ' + validFiles.length + ' files selected.');
+                        },
+                    })
+
 
                 } else {
                     alert('You can only upload a maximum of two files. You have ' + displayedImagesCount + ' images already.');

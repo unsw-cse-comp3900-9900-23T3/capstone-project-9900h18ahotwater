@@ -1,8 +1,18 @@
 from flask import Blueprint, request, session
-from flask import jsonify
+from flask import jsonify, make_response
 from src.server.sql import dbsession, User
+from src.server.imagecode import ImageCode
 
 login = Blueprint('login', __name__)
+
+
+@login.route('/getcode', methods=['GET'])
+def getcode():
+    code,bstring = ImageCode().get_code()
+    response = make_response(bstring)
+    response.headers['Content-Type'] = 'image/jpeg'
+    session['code'] = code.lower()
+    return response
 
 
 @login.route('/dologin', methods=['POST'])

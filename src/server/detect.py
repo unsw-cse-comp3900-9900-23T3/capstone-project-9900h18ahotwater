@@ -5,6 +5,7 @@ import torch
 from PIL import Image
 from torchvision import transforms
 from transformers import AutoTokenizer
+from flask import jsonify
 
 from src.models.model import SFSC
 
@@ -134,6 +135,17 @@ def getDetect():
     predict = Predict(num_of_img, img_path, text)
     res = predict.predict()
     return res
+
+@detect.route('/uploadphoto', methods=['POST'])
+def uploadphoto():
+    data = request.files['file']
+    files = os.listdir('data/')
+    exist = [int(i.split(".")[0]) for i in files]
+    if len(exist) == 0:
+        data.save('data/1.'+data.filename.split(".")[-1])
+    else:
+        data.save('data/'+str(max(exist)+1)+'.'+data.filename.split(".")[-1])
+    return jsonify({'status': 'success', 'path': 'data/'+str(max(exist)+1)+'.'+data.filename.split(".")[-1]})
     
 
 
