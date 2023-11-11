@@ -155,9 +155,10 @@ def getDetect():
         else:
             img1 = img_path[0]
             img2 = img_path[1]
-        data = Data(num_img=num_of_img, img1=img1, img2=img2, text=text)
-        dbsession.add(data)
-        dbsession.commit()
+        if Data().find_data(img1,img2,text) is None:
+            data = Data(num_img=num_of_img, img1=img1, img2=img2, text=text)
+            dbsession.add(data)
+            dbsession.commit()
         data_id = Data().find_data(img1,img2,text).data_id
         history = History(user_id=user_id, data_id=data_id, history_model=model, history_time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) , classes=",".join(res['classes']), probability=",".join([str(i) for i in res['prob']]))
         dbsession.add(history)
