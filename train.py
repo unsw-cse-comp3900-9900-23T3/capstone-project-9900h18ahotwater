@@ -135,7 +135,7 @@ def main(args):
             #save model
 
         torch.save(model.state_dict(), "src/models/weights/{}/model-{}.pth".format(args.model_name,epoch))
-        pd.DataFrame([[epoch,train_loss, train_precision, train_recall, train_f1, val_loss, val_precision, val_recall, val_f1, optimizer.param_groups[0]["lr"]]], columns=tags).to_csv("./weights/{}/log.csv".format(args.model_name), mode='a', header=False, index=False)
+        pd.DataFrame([[epoch,train_loss, train_precision, train_recall, train_f1, val_loss, val_precision, val_recall, val_f1, optimizer.param_groups[0]["lr"]]], columns=tags).to_csv("src/models/weights/{}/log.csv".format(args.model_name), mode='a', header=False, index=False)
 
         #every 10 epoch save best model and delete from epoch-20 to epoch-10 models
         if epoch%10 == 9:
