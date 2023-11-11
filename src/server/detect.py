@@ -1,6 +1,6 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, session
 import os
-
+import time
 import torch
 from PIL import Image
 from torchvision import transforms
@@ -8,6 +8,7 @@ from transformers import AutoTokenizer
 from flask import jsonify
 
 from src.models.model import SFSC
+from src.server.sql import dbsession, Data, History, User
 
 detect = Blueprint('detect', __name__)
 
@@ -143,6 +144,26 @@ def getDetect():
         weight_path = "src/models/weights/model4/model-best.pth"
     predict = Predict(num_of_img, img_path, text, weight_path=weight_path)
     res = predict.predict()
+
+    # save to database
+    if session.get('isLogin'):
+        user_eamil = session.get('email')
+        user_id = User().find_by_email(user_eamil).user_id
+        if num_of_img == 1:
+            img1 = img_path[0]
+            img2 = img_path[0]
+        else:
+            img1 = img_path[0]
+            img2 = img_path[1]
+        data = Data(num_img=num_of_img, img1=img1, img2=img2, text=text)
+        dbsession.add(data)
+        dbsession.commit()
+        data_id = Data().find_data(img1,img2,text).data_id
+        history = History(user_id=user_id, data_id=data_id, history_model=model, history_time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) , classes=",".join(res['classes']), probability=",".join([str(i) for i in res['prob']]))
+        dbsession.add(history)
+        dbsession.commit()
+
+
     return res
 
 @detect.route('/uploadphoto', methods=['POST'])

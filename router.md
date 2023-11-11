@@ -4,3 +4,5 @@
 /uploadphoto   | post
 /getcode       | get
 /dologout      | get
+/status        | get
+/gethistory    | get

@@ -39,6 +39,14 @@ def registration():
 def upload():
     return render_template('upload.html')
 
+@app.route('/status', methods=['GET'])
+def status():
+    response = {}
+    response['isLogin'] = session.get('isLogin')
+    response['email'] = session.get('email')
+    response['code'] = session.get('code')
+    return response
+
 
 if __name__ == '__main__':
     from src.server.registor import registor
@@ -52,6 +60,10 @@ if __name__ == '__main__':
     from src.server.login import login
 
     app.register_blueprint(login)
+
+    from src.server.history import history
+
+    app.register_blueprint(history)
 
     app.run(debug=True)
     # app.run(debut=False, host='', port=80)

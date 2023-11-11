@@ -26,9 +26,21 @@ class User(Base):
 class History(Base):
     __table__ = Table('history', md, autoload=True)
 
+    def find_by_user_id(self, user_id):
+        return dbsession.query(History).filter(History.user_id == user_id).all()
+
+    def find_by_user_id_and_data_id(self, user_id, data_id):
+        return dbsession.query(History).filter(and_(History.user_id == user_id, History.data_id == data_id)).first()
+
+
 class Data(Base):
     __table__ = Table('data', md, autoload=True)
 
+    def find_by_data_id(self, data_id):
+        return dbsession.query(Data).filter(Data.data_id == data_id).first()
+
+    def find_data(self,img1, img2, text):
+        return dbsession.query(Data).filter(and_(Data.img1 == img1, Data.img2 == img2, Data.text == text)).first()
 # if __name__ == "__main__":
 #     res = dbsession.query(User).all()
 #     for i in res:
