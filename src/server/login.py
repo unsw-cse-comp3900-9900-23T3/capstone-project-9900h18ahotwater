@@ -14,6 +14,12 @@ def getcode():
     session['code'] = code.lower()
     return response
 
+@login.route('/dologout', methods=['get'])
+def dologout():
+    session.pop('email', None)
+    session.pop('isLogin', None)
+    return jsonify({'status': 'success'})
+
 
 @login.route('/dologin', methods=['POST'])
 def dologin():

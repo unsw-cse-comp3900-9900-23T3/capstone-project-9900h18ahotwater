@@ -132,7 +132,16 @@ def getDetect():
     num_of_img = data['num_of_img']
     img_path = data['img_path']
     text = data['text']
-    predict = Predict(num_of_img, img_path, text)
+    model = data['model']
+    if model == 'model1':
+        weight_path = "src/models/weights/SFSC/model-best.pth"
+    elif model == 'model2':
+        weight_path = "src/models/weights/DFDC/model-best.pth"
+    elif model == 'model3':
+        weight_path = "src/models/weights/resnet/model-best.pth"
+    else:
+        weight_path = "src/models/weights/model4/model-best.pth"
+    predict = Predict(num_of_img, img_path, text, weight_path=weight_path)
     res = predict.predict()
     return res
 
