@@ -265,14 +265,6 @@
             border-radius: 10px;
         }
 
-        .space {
-            height: 20px;
-        }
-
-        .show_space {
-            height: 20px;
-        }
-
         #loading-overlay {
             position: fixed;
             top: 0;
@@ -303,6 +295,80 @@
             100% {
                 transform: rotate(360deg);
             }
+        }
+
+        /* 弹窗背景 */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 10%;
+            top: 10%;
+            width: 80%; /* Full width */
+            height: 80%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+            flex-direction: column;
+        }
+
+        .modal-imgs {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+        }
+
+        .modal-imgs img {
+            width: 400px; /* 设置图片的宽度为200px（或者你想要的具体尺寸） */
+            height: 300px; /* 设置图片的高度为150px（或者你想要的具体尺寸） */
+        }
+
+        #caption {
+            flex-direction: column; /* 垂直排列子元素 */
+            justify-content: center;
+            margin: auto;
+            display: flex;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+            white-space: pre-line;
+            font-size: 25px;
+        }
+
+        /* 关闭按钮 */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .model_option {
+            display: none;
+        }
+
+        .model_option label {
+            color: #FFFFFF;
+        }
+
+        .option_space {
+            margin-right: 10px; /* 调整空格大小，根据需要进行修改 */
         }
 
     </style>
@@ -339,17 +405,31 @@
     </div>
 </div>
 <div class="box" id="drop">
-    <input type="file" id="file-btn" name="photo" onchange="selectFile(event)" accept=".jpeg,.png,.jpg" multiple>
+    <input type="file" id="file-btn" name="photo" onchange="selectFile(event)" accept=".jpeg,.png,.jpg">
 </div>
 <div class="show">
     <div id="image-container">
 
     </div>
-
-    <div class="show_space"></div>
+    <br>
+    <div id="model_option" class="model_option">
+        <input type="radio" id="model1" name="option" value="model1" checked>
+        <label for="model1">model1</label>
+        <span class="option_space"></span>
+        <input type="radio" id="model2" name="option" value="model2">
+        <label for="model2">model2</label>
+        <span class="option_space"></span>
+        <input type="radio" id="model3" name="option" value="model3">
+        <label for="model3">model3</label>
+        <span class="option_space"></span>
+        <input type="radio" id="model4" name="option" value="model4">
+        <label for="model4">model4</label>
+    </div>
+    <br>
     <div id="description-container">
 
     </div>
+
 </div>
 <div id="loading-overlay">
     <div id="loading-spinner"></div>
@@ -357,15 +437,15 @@
 </div>
 <!-- 模态对话框 -->
 <div id="myModal" class="modal">
-    <div id="result-container">
-        <span class="close" id="modal-close">&times;</span>
-        <div id="modal-image-container">
-            <!-- 这里显示上传的图片 -->
-        </div>
-        <div id="modal-data-container">
-            <!-- 这里显示返回的数据 -->
-        </div>
+
+    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+    <div id="modal-image-container" class="modal-imgs">
+        <!-- 这里显示上传的图片 -->
     </div>
+    <div class="modal-body" id="caption">
+        <!-- 这里显示返回的数据 -->
+    </div>
+    <!--</div>-->
 </div>
 
 <footer class="pt-3 mt-4 text-body-secondary border-top container1 py-5">
@@ -411,6 +491,7 @@
 <script src="js/jquery-3.7.1.min.js"></script>
 <script>
     let selectedImages = [];
+    let uploadedImages = [];
 
     function selectFile(e) {
 
@@ -437,10 +518,9 @@
                     var formFile = new FormData();
                     formFile.append("action", "UploadImage");
                     formFile.append("file", fileObj); //加入文件对象
-                    var form_data = formFile;
                     $.ajax({
                         url: "/uploadphoto",
-                        data: form_data,
+                        data: formFile,
                         type: "post",
                         dataType: "json",
                         cache: false,//上传文件无需缓存
@@ -448,6 +528,11 @@
                         contentType: false, //必须
                         success: function (result) {
                             alert('Success! ' + validFiles.length + ' files selected.');
+
+                            if (result.status === "success") {
+                                uploadedImages.push(result.path);
+                            }
+
                         },
                     })
 
@@ -489,16 +574,18 @@
 
                     const descriptionInput = document.querySelector('.description-input');
                     const submitButton = document.querySelector('#image-submit');
+                    const modelOption = document.querySelector('.model_option');
                     if (descriptionInput) {
                         descriptionInput.remove();
                     }
                     if (submitButton) {
                         submitButton.remove();
                     }
-                    const space = document.createElement("div");
-                    space.classList.add("space");
-                    descriptionContainer.appendChild(space);
+                    if (modelOption) {
+                        modelOption.style.display = 'none';
+                    }
                     selectedImages = [];
+                    uploadedImages = [];
                 }
             });
 
@@ -518,26 +605,39 @@
                 descriptionContainer.appendChild(descriptionInput);
             }
 
-            const space = document.createElement("div");
-            space.classList.add("space");
-            descriptionContainer.appendChild(space);
             let submitButton = document.querySelector('#image-submit');
+            let modelOption = document.getElementById('model_option');
             if (!submitButton) {
+                modelOption.style.display = "flex";
                 submitButton = document.createElement("button");
                 submitButton.id = "image-submit";
                 submitButton.textContent = "Submit";
                 descriptionContainer.appendChild(submitButton);
                 submitButton.addEventListener('click', function (e) {
                     e.preventDefault()
+                    // 获取 model_option 元素
+                    const modelOption = document.getElementById("model_option");
+
+                    // 获取所有单选框元素
+                    const radioButtons = modelOption.querySelectorAll('input[type="radio"]');
+
+                    // 遍历所有单选框，找到被选中的那个
+                    let selectedModel;
+                    radioButtons.forEach(radioButton => {
+                        if (radioButton.checked) {
+                            selectedModel = radioButton.value;
+                        }
+                    });
 
                     const description = descriptionInput.value;
-                    const files = selectedImages;
+                    const files = uploadedImages;
                     const data = {
                         num_of_img: files.length,
                         img_path: files,
-                        text: description
-                    }
-                    console.log(data)
+                        text: description,
+                        model: selectedModel
+                    };
+
                     if (description.trim() === "") {
                         alert("Description cannot be empty.");
                         return;
@@ -560,47 +660,50 @@
                         })
                         .then(data => {
                             // 显示上传的图片
-                            const res = JSON.parse(data)
-                            const classes = res.classes
-                            const probs = res.prob
+                            const res = JSON.parse(data);
+                            const classes = res.classes;
+                            const probs = res.prob;
                             const modalImageContainer = document.getElementById('modal-image-container');
 
-                            modalImageContainer.innerHTML = '';  // 清空内容
+                            modalImageContainer.innerHTML = '';
                             selectedImages.forEach(imageName => {
                                 const img = document.createElement('img');
-                                img.src = 'images/' + imageName;  // 设置图片路径
+                                img.src = 'images/' + imageName;
+                                img.style.marginRight = '10px';
                                 modalImageContainer.appendChild(img);
+
                             });
-                            const resultContainer = document.getElementById('result-container');
-                            resultContainer.style.position = 'fixed';
-                            resultContainer.style.zIndex = '999';
-                            resultContainer.style.alignItems = 'center';
-                            resultContainer.style.justifyContent = 'center';
-                            resultContainer.style.textAlign = 'center'
-                            resultContainer.style.top = '10%';
-                            resultContainer.style.left = '10%';
-                            resultContainer.style.width = '80%';
-                            resultContainer.style.height = '80%';
-                            resultContainer.style.background = 'white';
-                            // resultContainer.style.transform = 'translate(-50%, -50%)'
+
                             // 显示返回的数据
-                            const modalDataContainer = document.getElementById('modal-data-container');
-                            modalDataContainer.textContent = `Classes: ${classes.join(', ')},Probs: ${probs.join(', ')}`;
+                            const modalDataContainer = document.getElementById('caption');
+                            const combinedStrings = [];
+                            for (let i = 0; i < classes.length; i++) {
+                                const cls = classes[i];
+                                const prob = probs[i];
+                                const combined = `${cls}: ${prob}\n`;
+
+                                combinedStrings.push(combined);
+                            }
+                            modalDataContainer.textContent = combinedStrings.join('');
 
                             // 显示模态对话框
                             const modal = document.getElementById('myModal');
-                            modal.style.display = 'block';
+                            modal.style.display = 'flex';
 
                             document.querySelector('#loading-overlay').style.display = 'none';
                             selectedImages = []
-                            // 获取关闭按钮的元素
-                            const closeButton = document.getElementById('modal-close');
 
-                            closeButton.addEventListener('click', function () {
-                                // 关闭模态对话框
-                                modal.style.display = 'none';
+                            modal.appendChild(modalImageContainer);
+                            modal.appendChild(modalDataContainer);
+
+                            // 获取 <span> 元素，设置关闭按钮
+                            const span = document.getElementsByClassName("close")[0];
+
+                            // 当点击 (x), 关闭弹窗
+                            span.onclick = function () {
+                                modal.style.display = "none";
                                 location.reload();
-                            });
+                            }
 
                         })
                         .catch(error => {
@@ -651,7 +754,26 @@
             if (isValidFileType(droppedFiles[i]) && remainingSlots > 0) {
 
                 displayImage(droppedFiles[i]);
-                alert('Success!');
+                var formFile = new FormData();
+                formFile.append("action", "UploadImage");
+                formFile.append("file", droppedFiles[i]); //加入文件对象
+                $.ajax({
+                    url: "/uploadphoto",
+                    data: formFile,
+                    type: "post",
+                    dataType: "json",
+                    cache: false,//上传文件无需缓存
+                    processData: false,//用于对data参数进行序列化处理 这里必须false
+                    contentType: false, //必须
+                    success: function (result) {
+                        alert('Success! ' + droppedFiles.length + ' files selected.');
+
+                        if (result.status === "success") {
+                            uploadedImages.push(result.path);
+                        }
+
+                    },
+                })
                 remainingSlots--;
             } else if (remainingSlots <= 0) {
                 alert('You can only upload a maximum of two files. You have ' + displayedImagesCount + ' images already.');
