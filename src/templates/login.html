@@ -53,7 +53,7 @@
         }
 
         .item {
-            height: 65px;
+            height: 32px;
             border-bottom: 1px solid black;
             margin-bottom: 40px;
             position: relative;
@@ -63,8 +63,16 @@
             width: 100%;
             height: 100%;
             color: #fff;
-            padding-top: 40px;
+            {#padding-top: 40px;#}
             box-sizing: border-box;
+        }
+        .item img {
+            position: absolute;
+            right: 0;
+            top: -20px;
+            cursor: pointer;
+            height: 50px;
+            width: 120px;
         }
 
         .item input:focus + label,
@@ -125,19 +133,22 @@
 <div class="loginBox">
     <h2>Login</h2>
     <form id="login-form" action="#" method="post">
+        <label for="email">Email:</label>
         <div class="item">
-            <label for="email">Email:</label>
+
             <input type="email" id="email" name="email" required>
         </div>
 
+        <label for="pwd">Password:</label>
         <div class="item">
-            <label for="pwd">Password:</label>
+
             <input type="password" id="pwd" name="pwd" required>
         </div>
+        <label for="captcha">Captcha:</label>
         <div class="item">
-            <label for="captcha">Captcha:</label>
+
             <input type="text" id="captcha" name="captcha" required>
-            <br><br>
+{#            <br><br>#}
             <img id="captchaImage" src="" alt="Captcha Image" onclick="refreshCaptcha()">
         </div>
         <br>
