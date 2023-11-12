@@ -1,5 +1,5 @@
 from flask import Blueprint, request, session
-from flask import jsonify
+from flask import jsonify, redirect, url_for
 from src.server.sql import dbsession, User
 from sqlalchemy import or_
 
@@ -27,7 +27,8 @@ def regist():
             user = User(nickname= email,email=email, phone=phone, password=password, username=email)
             dbsession.add(user)
             dbsession.commit()
-            return jsonify({'status': 'success'})
+            # return jsonify({'status': 'success'})
+            return redirect(url_for('index'))
         except:
             return jsonify({'status': 'fail'})
 
