@@ -18,13 +18,13 @@ def getcode():
 @login.route('/dologin', methods=['POST'])
 def dologin():
     data = request.get_json()
-    email = data['email']
     password = data['password']
-    session['email'] = email
-    session["isLogin"] = True
+    email = data['email']
     res = dbsession.query(User).filter(User.email == email).first()
     if res:
         if res.password == password:
+            session['email'] = email
+            session["isLogin"] = True
             return jsonify({'status': 'success'})
         else:
             return jsonify({'status': 'fail'})
