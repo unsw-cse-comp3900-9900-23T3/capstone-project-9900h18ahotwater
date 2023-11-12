@@ -129,12 +129,18 @@
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
         </div>
-        <br>
+
         <div class="item">
             <label for="pwd">Password:</label>
             <input type="password" id="pwd" name="pwd" required>
         </div>
-
+        <div class="item">
+            <label for="captcha">Captcha:</label>
+            <input type="text" id="captcha" name="captcha" required>
+            <br><br>
+            <img id="captchaImage" src="" alt="Captcha Image" onclick="refreshCaptcha()">
+        </div>
+        <br>
         <button class="btn" type="submit">Sign in
             <span></span>
             <span></span>
@@ -172,7 +178,8 @@
         <div class="col-12 col-md">
             <h3>Product</h3>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary text-decoration-none" href="/data-preprocessing">Data pre-processing</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/data-preprocessing">Data pre-processing</a>
+                </li>
                 <li><a class="link-secondary text-decoration-none" href="/model_1">Model - Ⅰ</a></li>
 
             </ul>
@@ -208,15 +215,64 @@
             contentType: 'application/json',
             data: JSON.stringify(userData),
             success: function (data) {
-                console.log(data);
-                alert(data['status'])
-                window.location.href = '/';
+
+                if (data['status'] === "fail") {
+                    alert('Login failed. Please check your email or password and try again.');
+                    window.location.reload();
+                }
+                if (data['status'] === "success") {
+                    window.location.href = '/';
+                }
             },
             error: function () {
                 alert("login failed");
             }
         });
     });
+    let code;
+
+    function refreshCaptcha() {
+        const captchaImage = document.getElementById('captchaImage');
+
+        const newImage = new Image();
+
+        newImage.onload = function () {
+
+            captchaImage.src = newImage.src;
+
+            getCode();
+        };
+
+        newImage.src = '/getcode?' + new Date().getTime();
+    }
+
+    function getCode() {
+        $.ajax({
+            url: "/status?" + new Date().getTime(),
+            type: "GET",
+            contentType: 'application/json',
+            success: function (data) {
+
+                code = data["code"];
+            },
+            error: function () {
+                alert("get captcha failed");
+            }
+        });
+    }
+
+    window.onload = refreshCaptcha;
+    document.getElementById("captcha").addEventListener("input", function () {
+        const captcha_input = document.getElementById("captcha").value.toLowerCase();
+        const captcha = document.getElementById("captcha");
+        if (captcha_input === code) {
+            captcha.setCustomValidity('');
+        } else {
+            captcha.setCustomValidity('Incorrect captcha. Please try again.');
+            // refreshCaptcha();
+        }
+    });
+
 
 </script>
 </body>

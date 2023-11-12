@@ -140,6 +140,13 @@
             <label for="confirm_pwd">Confirm password：</label>
             <input type="password" id="confirm_pwd" name="confirm_password" required>
         </div>
+        <div class="item">
+            <label for="captcha">Captcha:</label>
+            <input type="text" id="captcha" name="captcha" required>
+            <br><br>
+            <img id="captchaImage" src="" alt="Captcha Image" onclick="refreshCaptcha()">
+        </div>
+        <br>
         <button class="btn" type="submit">submit
             <span></span>
             <span></span>
@@ -174,7 +181,8 @@
         <div class="col-12 col-md">
             <h3>Product</h3>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary text-decoration-none" href="/data-preprocessing">Data pre-processing</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/data-preprocessing">Data pre-processing</a>
+                </li>
                 <li><a class="link-secondary text-decoration-none" href="/model_1">Model - Ⅰ</a></li>
 
 
@@ -194,16 +202,28 @@
 <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/jquery-3.7.1.min.js"></script>
 <script>
-    /*document.getElementById("pwd").addEventListener("input", function () {
+    document.getElementById("pwd").addEventListener("input", function () {
         const password = document.getElementById("pwd").value;
         const confirm_password = document.getElementById("confirm_pwd");
 
         if (password === confirm_password.value) {
             confirm_password.setCustomValidity('');
         } else {
-            confirm_password.setCustomValidity('passwords do not match');
+            confirm_password.setCustomValidity('Passwords do not match');
         }
-    });*/
+    });
+
+    document.getElementById("confirm_pwd").addEventListener("input", function () {
+        const password = document.getElementById("pwd").value;
+        const confirm_password = document.getElementById("confirm_pwd");
+
+        if (password === confirm_password.value) {
+            confirm_password.setCustomValidity('');
+        } else {
+            confirm_password.setCustomValidity('Passwords do not match');
+        }
+    });
+
     document.getElementById("registration-form").addEventListener("submit", function (event) {
         event.preventDefault();
 
@@ -224,7 +244,7 @@
             contentType: 'application/json',
             data: JSON.stringify(userData),
             success: function (data) {
-                console.log(data["status"]);
+
                 alert(data["status"]);
                 window.location.href = '/login';
             },
@@ -233,7 +253,48 @@
             }
         });
     });
+    function refreshCaptcha() {
+        const captchaImage = document.getElementById('captchaImage');
 
+        const newImage = new Image();
+
+        newImage.onload = function () {
+
+            captchaImage.src = newImage.src;
+
+            getCode();
+        };
+
+        newImage.src = '/getcode?' + new Date().getTime();
+    }
+
+    function getCode() {
+        $.ajax({
+            url: "/status?" + new Date().getTime(),
+            type: "GET",
+            contentType: 'application/json',
+            success: function (data) {
+
+                code = data["code"];
+            },
+            error: function () {
+                alert("get captcha failed");
+            }
+        });
+    }
+
+    window.onload = refreshCaptcha;
+
+        document.getElementById("captcha").addEventListener("input", function () {
+        const captcha_input = document.getElementById("captcha").value.toLowerCase();
+        const captcha = document.getElementById("captcha");
+        if (captcha_input === code) {
+            captcha.setCustomValidity('');
+        } else {
+            captcha.setCustomValidity('Incorrect captcha. Please try again.');
+            // refreshCaptcha();
+        }
+    });
 </script>
 </body>
 </html>
