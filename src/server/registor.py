@@ -27,8 +27,8 @@ def regist():
             user = User(nickname= email,email=email, phone=phone, password=password, username=email)
             dbsession.add(user)
             dbsession.commit()
-            # return jsonify({'status': 'success'})
-            return redirect(url_for('index'))
+            return jsonify({'status': 'success'})
+            # return redirect(url_for('index'))
         except:
             return jsonify({'status': 'fail'})
 
