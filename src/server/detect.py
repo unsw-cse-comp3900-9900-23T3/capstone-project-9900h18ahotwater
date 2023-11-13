@@ -164,8 +164,6 @@ def getDetect():
         history = History(user_id=user_id, data_id=data_id, history_model=model, history_time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) , classes=",".join(res['classes']), probability=",".join([str(i) for i in res['prob']]))
         dbsession.add(history)
         dbsession.commit()
-
-
     return res
 
 @detect.route('/uploadphoto', methods=['POST'])
