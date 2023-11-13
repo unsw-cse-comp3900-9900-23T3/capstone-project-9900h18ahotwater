@@ -119,7 +119,8 @@ class Predict:
         prob = []
         for i in range(len(pred_class)):
             classes.append(self.label_map[pred_class[i].item()+1])
-            prob.append(pred[0][pred_class[i]].item())
+            prob.append(round(pred[0][pred_class[i]].item(), 4))
+
         
         res_json['classes'] = classes
         res_json['prob'] = prob

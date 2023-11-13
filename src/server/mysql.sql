@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS `history`(
     `data_id` INT UNSIGNED NOT NULL,
     `history_time` DATETIME NOT NULL,
     `history_model` VARCHAR(40) NOT NULL,
-    `classes` VARCHAR(40) NOT NULL,
-    `probability` VARCHAR(40) NOT NULL,
+    `classes` VARCHAR(256) NOT NULL,
+    `probability` VARCHAR(256) NOT NULL,
     PRIMARY KEY ( `history_id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
