@@ -132,7 +132,7 @@ class Predict:
 def getDetect():
     data = request.get_json()
     num_of_img = data['num_of_img']
-    img_path = data['img_path']
+    img_path = ["./src/resources/"+i for i in data['img_path']]
     text = data['text']
     model = data['model']
     if model == 'model1':
@@ -169,12 +169,12 @@ def getDetect():
 @detect.route('/uploadphoto', methods=['POST'])
 def uploadphoto():
     data = request.files['file']
-    files = os.listdir('data/')
+    files = os.listdir('./src/resources/data/')
     exist = [int(i.split(".")[0]) for i in files]
     if len(exist) == 0:
-        data.save('data/1.'+data.filename.split(".")[-1])
+        data.save('./src/resources/data/1.'+data.filename.split(".")[-1])
     else:
-        data.save('data/'+str(max(exist)+1)+'.'+data.filename.split(".")[-1])
+        data.save('./src/resources/data/'+str(max(exist)+1)+'.'+data.filename.split(".")[-1])
     return jsonify({'status': 'success', 'path': 'data/'+str(max(exist)+1)+'.'+data.filename.split(".")[-1]})
     
 
