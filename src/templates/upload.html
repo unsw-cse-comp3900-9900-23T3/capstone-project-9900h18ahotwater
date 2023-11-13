@@ -666,9 +666,9 @@
                             const modalImageContainer = document.getElementById('modal-image-container');
 
                             modalImageContainer.innerHTML = '';
-                            selectedImages.forEach(imageName => {
+                            uploadedImages.forEach(imageName => {
                                 const img = document.createElement('img');
-                                img.src = 'images/' + imageName;
+                                img.src = imageName;
                                 img.style.marginRight = '10px';
                                 modalImageContainer.appendChild(img);
 
@@ -692,7 +692,7 @@
 
                             document.querySelector('#loading-overlay').style.display = 'none';
                             selectedImages = []
-
+                            uploadedImages = [];
                             modal.appendChild(modalImageContainer);
                             modal.appendChild(modalDataContainer);
 
@@ -709,7 +709,8 @@
                         .catch(error => {
 
                             console.error('Error:', error);
-                            selectedImages = []
+                            selectedImages = [];
+                            uploadedImages = [];
                             document.querySelector('#loading-overlay').style.display = 'none';
                         });
 
