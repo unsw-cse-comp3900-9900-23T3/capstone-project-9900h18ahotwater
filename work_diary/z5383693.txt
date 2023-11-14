@@ -32,3 +32,15 @@ I also funtuned the model, and evaluated the model.
 week 7
 This week I started to train of the model DFDC.
 I also funtuned the model, and evaluated the model.
+
+Week 8
+This week I started to write the backend of the project.
+including the database, the interface of the routes, and so on.
+
+week 9
+This week I finished the backend of the project and Front-end and back-end interaction.
+Finishing the main function of the project, such as uploading the image, detecting the image, and so on.
+
+week 10
+Fixing the bugs of the project.
+writing the report of the project.
