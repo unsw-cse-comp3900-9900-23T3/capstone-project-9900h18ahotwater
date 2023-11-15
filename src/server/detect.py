@@ -31,13 +31,13 @@ class Predict:
             self.model = SFSC(num_classes=90).to(device)
             weight_path = "src/models/weights/SFSC/model-best.pth"
         elif model == 'model2':
-            self.model = DFDC(num_classes=2).to(device)
+            self.model = DFDC(num_classes=90).to(device)
             weight_path = "src/models/weights/DFDC/model-best.pth"
         elif model == 'model3':
-            self.model = new_design1(num_classes=2).to(device)
+            self.model = new_design1(num_classes=90).to(device)
             weight_path = "src/models/weights/new_design1/model-best.pth"
         else:
-            self.model = new_design2(num_classes=2).to(device)
+            self.model = new_design2(num_classes=90).to(device)
             weight_path = "src/models/weights/new_design2/model-best.pth"
         # self.model = SFSC(num_classes=90).to(device)
         # load model weights
@@ -139,7 +139,6 @@ class Predict:
         res_json['prob'] = prob
         return res_json
 
-###TODO: save img to local
 
 @detect.route('/detect', methods=['POST'])
 def getDetect():
