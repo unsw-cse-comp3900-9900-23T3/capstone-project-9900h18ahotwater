@@ -30,6 +30,26 @@ def model_1():
     return render_template('model_1.html')
 
 
+@app.route('/model_2')
+def model_2():
+    return render_template('model_2.html')
+
+
+@app.route('/model_3')
+def model_3():
+    return render_template('model_3.html')
+
+
+@app.route('/model_4')
+def model_4():
+    return render_template('model_4.html')
+
+
+@app.route('/data-preprocessing')
+def pre_process():
+    return render_template('pre-process.html')
+
+
 @app.route('/registration')
 def registration():
     return render_template('registration.html')
@@ -38,6 +58,7 @@ def registration():
 @app.route('/upload')
 def upload():
     return render_template('upload.html')
+
 
 @app.route('/status', methods=['GET'])
 def status():
