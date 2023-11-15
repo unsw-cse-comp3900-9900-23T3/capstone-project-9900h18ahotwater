@@ -7,7 +7,7 @@ from torchvision import transforms
 from transformers import AutoTokenizer
 from flask import jsonify
 
-from src.models.model import SFSC
+from src.models.model import SFSC, DFDC, new_design1, new_design2
 from src.server.sql import dbsession, Data, History, User
 
 detect = Blueprint('detect', __name__)
@@ -18,7 +18,8 @@ class Predict:
                  img_path, 
                  text, 
                  threshold=0.5, 
-                 weight_path="src/models/weights/SFSC/model-best.pth",
+                #  weight_path="src/models/weights/SFSC/model-best.pth",
+                 model="model1"
                 #  model,
                  ):
         self.num_img = num_img
@@ -26,7 +27,19 @@ class Predict:
         self.text = text
         self.threshold = threshold
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        self.model = SFSC(num_classes=90).to(device)
+        if model == 'model1':
+            self.model = SFSC(num_classes=90).to(device)
+            weight_path = "src/models/weights/SFSC/model-best.pth"
+        elif model == 'model2':
+            self.model = DFDC(num_classes=2).to(device)
+            weight_path = "src/models/weights/DFDC/model-best.pth"
+        elif model == 'model3':
+            self.model = new_design1(num_classes=2).to(device)
+            weight_path = "src/models/weights/new_design1/model-best.pth"
+        else:
+            self.model = new_design2(num_classes=2).to(device)
+            weight_path = "src/models/weights/new_design2/model-best.pth"
+        # self.model = SFSC(num_classes=90).to(device)
         # load model weights
         self.model_weight_path = weight_path
         self.transform = transforms.Compose(
@@ -135,15 +148,7 @@ def getDetect():
     img_path = ["./src/resources/"+i for i in data['img_path']]
     text = data['text']
     model = data['model']
-    if model == 'model1':
-        weight_path = "src/models/weights/SFSC/model-best.pth"
-    elif model == 'model2':
-        weight_path = "src/models/weights/DFDC/model-best.pth"
-    elif model == 'model3':
-        weight_path = "src/models/weights/resnet/model-best.pth"
-    else:
-        weight_path = "src/models/weights/model4/model-best.pth"
-    predict = Predict(num_of_img, img_path, text, weight_path=weight_path)
+    predict = Predict(num_of_img, img_path, text, model=model)
     res = predict.predict()
 
     # save to database

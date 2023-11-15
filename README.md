@@ -11,39 +11,34 @@ Group members:
 
 pass
 
-## File Structure
+## How to install
 
-project/  
-&#8195;|- data/  
-&#8195;| &#8195; └ to be continued  
-&#8195;|- docs/  
-&#8195;| &#8195; └ to be continued  
-&#8195;|- diary/  
-&#8195;| &#8195; |- z5383693.txt  
-&#8195;| &#8195; |- z5193638.txt  
-&#8195;| &#8195; |- z5232340.txt  
-&#8195;| &#8195; |- z5412301.txt  
-&#8195;| &#8195;└ z5390552.txt  
-&#8195;|- src/  
-&#8195;| &#8195; |- frontend/  
-&#8195;| &#8195;└ to be continued  
-&#8195;| &#8195; |- model/  
-&#8195;| &#8195;└ to be continued  
-&#8195;| &#8195;└ server/  
-&#8195;| &#8195;└ to be continued  
-&#8195;|- tests/  
-&#8195;| &#8195; └ to be continued  
-&#8195;|- README.md  
-&#8195;|- requirements.txt  
-&#8195;|- setup.py  
-&#8194; └ to be continued...  
- 
+1. Clone the project to your local machine
+2. Install python3.11.3
+3. pip install -r requirements.txt
+4. install mysql
+5. use mysql to import the database file in the project (mysql.sql), you can use the following command:
+    ```shell
+    #login mysql
+    mysql -u root -p 
+    #import database
+    source /path_to/mysql.sql
+    ```
+6. download weights to src/models/weights, you can find the download link in the readme.md file in the folder
+7. (optional) download the dataset to src/models/dataset, you can find the download link in the readme.md file in the folder
+
+## How to run
+1. to run the server, you can use the following command:
+    ```shell
+    python3 app.py
+    ```
+
+2. to run the train script, you can use the following command:
+    ```shell
+    python3 train.py --data_path coco --epochs 100 --model_name coco1 --batch_size 16
+    ```
 
 
-* work_diary: the folder for weekly diary
-* src: the folder for source code
-* doc: the folder for document
-* to be continued....
 
 ## Branches
 

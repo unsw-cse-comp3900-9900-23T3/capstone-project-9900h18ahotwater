@@ -7,7 +7,7 @@ from torchvision import transforms
 from transformers import AutoTokenizer
 import matplotlib.pyplot as plt
 
-from src.models.model import SFSC, DFDC
+from src.models.model import SFSC, DFDC, new_design1, new_design2
 
 
 def main():

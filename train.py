@@ -8,7 +8,7 @@ import torch.optim.lr_scheduler as lr_scheduler
 from torch.utils.tensorboard import SummaryWriter
 from torchvision import transforms
 
-from src.models.model import SFSC, DFDC
+from src.models.model import SFSC, DFDC, new_design1, new_design2
 from src.models.dataset import COCODataSet, collate_fn
 from src.models.utils import train_one_epoch, evaluate
 import pandas as pd
@@ -70,6 +70,10 @@ def main(args):
         model = SFSC(num_classes=args.num_classes).to(device)
     elif args.model == "DFDC":
         model = DFDC(num_classes=args.num_classes).to(device)
+    elif args.model == "new_design1":
+        model = new_design1(num_classes=args.num_classes).to(device)
+    elif args.model == "new_design2":
+        model = new_design2(num_classes=args.num_classes).to(device)
     else:
         raise ValueError("model name not found, you can choose SFSC or DFDC")
     # model = DFDC(num_classes=args.num_classes).to(device)
