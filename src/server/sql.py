@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, session, scoped_session
 
 # connect to mysql
-password = 'Ren894493655' #need to change
+password = '' #need to change
 engine = create_engine('mysql+pymysql://root:'+password+'@localhost:3306/Comp9900', echo=False, pool_size=1000)
 
 #create session
