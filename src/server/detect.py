@@ -115,7 +115,7 @@ class Predict:
         x = self.generateX()
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         model = self.model
-        model.load_state_dict(torch.load(self.model_weight_path, map_location=device))
+        model.load_state_dict(torch.load(self.model_weight_path, map_location=device), strict=False)
         model.eval()
         with torch.no_grad():
             # predict class
