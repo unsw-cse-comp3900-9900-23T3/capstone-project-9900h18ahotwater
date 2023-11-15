@@ -502,8 +502,10 @@
 
             for (let i = 0; i < selectedFiles.length; i++) {
                 if (isValidFileType(selectedFiles[i])) {
+
                     validFiles.push(selectedFiles[i]);
                     selectedImages.push(selectedFiles[i].name);
+
                 }
             }
             if (validFiles.length > 0) {
@@ -569,23 +571,13 @@
             deleteButton.textContent = "Delete";
             deleteButton.addEventListener('click', function () {
                 imageContainer.removeChild(imageWrapper);
+                document.getElementById('file-btn').value = null;
+                let index = selectedImages.indexOf(file.name);
+                selectedImages.splice(index, 1);
+                uploadedImages.splice(index, 1);
 
                 if (imageContainer.querySelectorAll(".image-wrapper").length === 0) {
-
-                    const descriptionInput = document.querySelector('.description-input');
-                    const submitButton = document.querySelector('#image-submit');
-                    const modelOption = document.querySelector('.model_option');
-                    if (descriptionInput) {
-                        descriptionInput.remove();
-                    }
-                    if (submitButton) {
-                        submitButton.remove();
-                    }
-                    if (modelOption) {
-                        modelOption.style.display = 'none';
-                    }
-                    selectedImages = [];
-                    uploadedImages = [];
+                    window.location.reload();
                 }
             });
 
