@@ -62,8 +62,7 @@
             width: 100%;
             height: 100%;
             color: #fff;
-            {#padding-top: 40px;#}
-            box-sizing: border-box;
+        {#padding-top: 40px;#} box-sizing: border-box;
         }
 
         .item input:focus + label,
@@ -157,7 +156,7 @@
         <div class="item">
 
             <input type="text" id="captcha" name="captcha" required>
-{#            <br><br>#}
+            {#            <br><br>#}
             <img id="captchaImage" src="" alt="Captcha Image" onclick="refreshCaptcha()">
         </div>
         <br>
@@ -205,10 +204,22 @@
         <div class="col-12 col-md">
             <h3>About</h3>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary text-decoration-none" href="#">Team</a></li>
-                <li><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
-                <li><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
-                <li><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://github.com/unsw-cse-comp3900-9900-23T3/capstone-project-9900h18ahotwater">Github</a>
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://9900h18ahotwater.atlassian.net/jira/software/projects/HRGJ/boards/1"
+                    >Jira</a
+                    >
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://moodle.telt.unsw.edu.au/pluginfile.php/10802393/mod_resource/content/1/P6%20Automatic%20Image%20Annotation%20using%20Multi-label%20Deep%20Learning.pdf"
+                    >Topics</a
+                    >
+                </li>
             </ul>
         </div>
     </div>
@@ -267,6 +278,7 @@
             }
         });
     });
+
     function refreshCaptcha() {
         const captchaImage = document.getElementById('captchaImage');
 
@@ -299,7 +311,7 @@
 
     window.onload = refreshCaptcha;
 
-        document.getElementById("captcha").addEventListener("input", function () {
+    document.getElementById("captcha").addEventListener("input", function () {
         const captcha_input = document.getElementById("captcha").value.toLowerCase();
         const captcha = document.getElementById("captcha");
         if (captcha_input === code) {

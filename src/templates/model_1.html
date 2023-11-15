@@ -200,32 +200,33 @@
 <body>
 <nav>
     <div class="header">
-    <div class="header_default">
-        <a href="/"
-        ><img
-                src="images/logo1.png"
-                loading="lazy"
-                width="200"
-                height="74"
-                alt="logo"
-        /></a>
-        <div class="header-left">
-            <a class="left_item" href="/">Home</a>
-            <a class="left_item" href="/introduction">Introduction</a>
-            <a class="left_item" href="/performance">Performance</a>
-            <a class="left_item" href="/upload">Upload</a>
-        </div>
-        <div class="header-right">
-            {% if session.email %}
-                <span style="color: #FFFFFF">Welcome, {{ session.email }}</span>
-                <a class="header-log" href="#" id="logout-link">Logout<span class="fa_icon button-pad-l">→</span></a>
-            {% else %}
-                <a class="header-log" href="/login">Login<span class="fa_icon button-pad-l">→</span></a>
-            {% endif %}
+        <div class="header_default">
+            <a href="/"
+            ><img
+                    src="images/logo1.png"
+                    loading="lazy"
+                    width="200"
+                    height="74"
+                    alt="logo"
+            /></a>
+            <div class="header-left">
+                <a class="left_item" href="/">Home</a>
+                <a class="left_item" href="/introduction">Introduction</a>
+                <a class="left_item" href="/performance">Performance</a>
+                <a class="left_item" href="/upload">Upload</a>
+            </div>
+            <div class="header-right">
+                {% if session.email %}
+                    <span style="color: #FFFFFF">Welcome, {{ session.email }}</span>
+                    <a class="header-log" href="#" id="logout-link">Logout<span
+                            class="fa_icon button-pad-l">→</span></a>
+                {% else %}
+                    <a class="header-log" href="/login">Login<span class="fa_icon button-pad-l">→</span></a>
+                {% endif %}
 
+            </div>
         </div>
     </div>
-</div>
 </nav>
 
 <div class="container marketing px-4 py-5">
@@ -582,21 +583,19 @@
                 <h3>About</h3>
                 <ul class="list-unstyled text-small">
                     <li>
-                        <a class="link-secondary text-decoration-none" href="#">Team</a>
+                        <a class="link-secondary text-decoration-none"
+                           href="https://github.com/unsw-cse-comp3900-9900-23T3/capstone-project-9900h18ahotwater">Github</a>
                     </li>
                     <li>
-                        <a class="link-secondary text-decoration-none" href="#"
-                        >Locations</a
+                        <a class="link-secondary text-decoration-none"
+                           href="https://9900h18ahotwater.atlassian.net/jira/software/projects/HRGJ/boards/1"
+                        >Jira</a
                         >
                     </li>
                     <li>
-                        <a class="link-secondary text-decoration-none" href="#"
-                        >Privacy</a
-                        >
-                    </li>
-                    <li>
-                        <a class="link-secondary text-decoration-none" href="#"
-                        >Terms</a
+                        <a class="link-secondary text-decoration-none"
+                           href="https://moodle.telt.unsw.edu.au/pluginfile.php/10802393/mod_resource/content/1/P6%20Automatic%20Image%20Annotation%20using%20Multi-label%20Deep%20Learning.pdf"
+                        >Topics</a
                         >
                     </li>
                 </ul>
