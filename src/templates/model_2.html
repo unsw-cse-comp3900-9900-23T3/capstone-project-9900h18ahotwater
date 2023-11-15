@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Model - I</title>
+    <title>Model - 2</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -237,7 +237,7 @@
         <!-- /.col-lg-4 -->
         <div class="col-lg-4 text-center">
           <img
-            src="images/f1_score_log1.png"
+            src="images/DFDC_f1_score_log1.png"
             class="bd-placeholder-img rounded mx-auto d-block"
             width="300"
             height="300"
@@ -272,7 +272,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <img
-                    src="images/f1_score_log1.png"
+                    src="images/DFDC_f1_score_log1.png"
                     alt="Your image description"
                     class="img-fluid"
                   />
@@ -291,7 +291,7 @@
         <!-- /.col-lg-4 -->
         <div class="col-lg-4 text-center">
           <img
-            src="images/loss_log1.png"
+            src="images/DFDC_loss_log1.png"
             class="bd-placeholder-img rounded mx-auto d-block"
             width="300"
             height="300"
@@ -326,7 +326,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <img
-                    src="images/loss_log1.png"
+                    src="images/DFDC_loss_log1.png"
                     alt="Your image description"
                     class="img-fluid"
                   />
@@ -345,7 +345,7 @@
         <!-- /.col-lg-4 -->
         <div class="col-lg-4 text-center">
           <img
-            src="images/lr_log1.png"
+            src="images/DFDC_lr_log1.png"
             class="bd-placeholder-img rounded mx-auto d-block"
             width="300"
             height="300"
@@ -380,7 +380,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <img
-                    src="images/lr_log1.png"
+                    src="images/DFDC_lr_log1.png"
                     alt="Your image description"
                     class="img-fluid"
                   />
@@ -478,14 +478,17 @@
 
       <div class="row featurette">
         <div class="col-md-7">
-          <h2 class="featurette-heading fw-normal lh-1">
-            Simple fusion method
-          </h2>
+          <h2 class="featurette-heading fw-normal lh-1">DVM-fusion methed.</h2>
           <p class="lead">
-            For example, matrix splicing, direct addition, etc. (Such simple
-            operations make there almost no connection between parameters, but
-            subsequent network layers will automatically adapt to this
-            operation) Which is shown as below:
+            The image outlines the DVM-fusion method, a data fusion strategy
+            designed for multi-view learning. It entails three stages:
+            "intra-view correlations" that assess the connections within
+            features of the same type, "inter-view alignments" that synchronize
+            features from different sources to find a common representation, and
+            "self" which likely refers to self-representation within a single
+            view. These stages are processed, merged, and yield a comprehensive
+            feature set that captures both unique and shared information across
+            views, enhancing machine learning model accuracy.
           </p>
         </div>
         <div class="col-md-5">
@@ -493,9 +496,9 @@
             class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
             width="500"
             height="500"
-            src="images/simple fusion.png"
+            src="images/D-vsmfusion.png"
             role="img"
-            aria-label="Simple fusion method"
+            aria-label="DVM-fusion methed"
             preserveAspectRatio="xMidYMid slice"
             focusable="false"
           />
@@ -507,23 +510,19 @@
       <div class="row featurette">
         <div class="col-md-7 order-md-2">
           <h2 class="featurette-heading fw-normal lh-1">
-            MLP classification method.
+            D-VSM's classification method.
           </h2>
           <p class="lead">
-            The image depicts a schematic representation of a classification
-            method using a Multilayer Perceptron (MLP), which is a type of
-            feedforward artificial neural network. The process begins with input
-            features that are represented in three different shades, possibly
-            indicating the input layer with varying inputs. These features are
-            then processed through multiple layers (as shown by the grouped
-            squares), which may represent hidden layers where the neural network
-            performs weighted computations and applies activation functions. The
-            last layer before the output is typically where the decision
-            function is applied, leading to the final classification result.
-            MLPs are commonly used for pattern recognition, classification
-            tasks, and can handle complex nonlinear mappings between inputs and
-            outputs. They are trained using algorithms like backpropagation to
-            minimize error in predictions.
+            This part of the network is the last step before outputting results.
+            Its function is to classify the features obtained from the sample in
+            the above series of operations and output the final result. This is
+            also the downstream work of the entire network, which can transform
+            unreadable, incomprehensible features into categories. Directly fuse
+            the features above (step 2) for classification (green). The text
+            features extracted in step 1 are classified (yellow). The image
+            features extracted in the first step are classified (blue). After
+            the classification, directly average the three matrices, and the
+            subsequent result (matrix) is the final classification result.
           </p>
         </div>
         <div class="col-md-5 order-md-1">
@@ -531,9 +530,9 @@
             class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
             width="500"
             height="500"
-            src="images/MLP classification.png"
+            src="images/D-VSM classification.png"
             role="img"
-            aria-label="bert"
+            aria-label="D-VSM's classification method."
             preserveAspectRatio="xMidYMid slice"
             focusable="false"
           />

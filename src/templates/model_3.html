@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Model - I</title>
+    <title>Model - 3</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -237,7 +237,7 @@
         <!-- /.col-lg-4 -->
         <div class="col-lg-4 text-center">
           <img
-            src="images/f1_score_log1.png"
+            src="images/M3_f1_score_log1.png"
             class="bd-placeholder-img rounded mx-auto d-block"
             width="300"
             height="300"
@@ -272,7 +272,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <img
-                    src="images/f1_score_log1.png"
+                    src="images/M3_f1_score_log1.png"
                     alt="Your image description"
                     class="img-fluid"
                   />
@@ -291,7 +291,7 @@
         <!-- /.col-lg-4 -->
         <div class="col-lg-4 text-center">
           <img
-            src="images/loss_log1.png"
+            src="images/M3_loss_log1.png"
             class="bd-placeholder-img rounded mx-auto d-block"
             width="300"
             height="300"
@@ -326,7 +326,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <img
-                    src="images/loss_log1.png"
+                    src="images/M3_loss_log1.png"
                     alt="Your image description"
                     class="img-fluid"
                   />
@@ -345,7 +345,7 @@
         <!-- /.col-lg-4 -->
         <div class="col-lg-4 text-center">
           <img
-            src="images/lr_log1.png"
+            src="images/M3_lr_log1.png"
             class="bd-placeholder-img rounded mx-auto d-block"
             width="300"
             height="300"
@@ -380,7 +380,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <img
-                    src="images/lr_log1.png"
+                    src="images/M3_lr_log1.png"
                     alt="Your image description"
                     class="img-fluid"
                   />
@@ -402,141 +402,66 @@
       <hr class="featurette-divider" />
 
       <div class="row featurette">
-        <div class="col-md-7">
-          <h2 class="featurette-heading fw-normal lh-1">
-            VIT(vision transformer).
-          </h2>
+        <div class="col-md-11">
+          <h2 class="featurette-heading fw-normal lh-1">Summarize.</h2>
           <p class="lead">
-            VIT is a network used to extract image features. Its original
-            architecture diagram is shown below.The input image is first divided
-            into many patches, in the paper An Image is Worth 16x16 Words:
-            Transformers for Image Recognition at Scale it's 16. Input the patch
-            into the Embedding layer of Linear Projection of Flattened Patches,
-            and get vectors, usually called 15 tokens. Then add a new token in
-            front of a series of tokens. After that input it into the
-            Transformer Encoder, which is shown as below, and stack the block L
-            times. Transformer Encoder has as many outputs as inputs. Finally,
-            the features of the image have been extracted.
+            This model, named new_design1, is a neural network that integrates a
+            Vision Transformer (ViT), a ResNet50 model, and a BERT-based
+            transformer, all orchestrated to process three distinct inputs and
+            perform classification tasks. The model is designed to handle a
+            triplet of inputs: the first element is processed by the Vision
+            Transformer, which has been parameterized with an image size of 224,
+            a patch size of 16, and an embedding dimension of 768, among other
+            settings, to produce an output feature. The second input is
+            processed by the ResNet50 model, which is pretrained and has had its
+            final classification layer removed. The output from the ResNet50 is
+            then flattened and dimensionally transformed to match the embedding
+            dimension of the Vision Transformer via a linear transformation. The
+            third input is a 1D tensor that is passed through a BERT model,
+            generating an output feature set.
           </p>
-        </div>
-        <div class="col-md-5">
-          <img
-            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            width="500"
-            height="500"
-            src="images/VIT.png"
-            role="img"
-            aria-label="VIT(vision transformer)"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          />
         </div>
       </div>
 
       <hr class="featurette-divider" />
 
       <div class="row featurette">
-        <div class="col-md-7 order-md-2">
+        <div class="col-md-11">
           <h2 class="featurette-heading fw-normal lh-1">
-            BERT(Bidirectional Encoder Representations from Transformers)
+            Vision Transformer, ResNet50, and BERT are then combined through an
+            element-wise addition.
           </h2>
           <p class="lead">
-            BERT is a pre-trained natural language processing model that
-            acquires rich language knowledge by learning a large amount of text
-            data and can be used for various natural language processing tasks.
-            In the BERT model, we can use its pre-trained model to extract text
-            features. The input of the BERT model is a text sequence, which is
-            usually processed by word segmentation and encoding. The output of
-            the BERT model includes the word vector (Word Embeddings) of each
-            word and the vector (Sentence Embeddings) for the entire sentence.
-            We can use these word vectors and sentence vectors to build our own
-            text feature vectors. Specifically, the BERT model can extract two
-            types of text features: 1. Word Embeddings: The BERT model generates
-            a corresponding word vector for each word in the input sequence.
-            This word vector reflects the semantic information and contextual
-            information of the word. 2. Sentence Embeddings: The BERT model
-            generates a sentence vector in the entire sentence of the input
-            sequence. This sentence vector reflects the semantic information and
-            contextual information of the entire sentence.
+            The outputs from the Vision Transformer, ResNet50, and BERT are then
+            combined through an element-wise addition. This combined feature set
+            is passed through a linear layer followed by a ReLU activation
+            function. To finalize the output, the feature set is averaged with
+            the individual outputs from ResNet50 and BERT, ensuring that each
+            model's output is represented equally in the final feature set. This
+            average is then passed through a final classifier—a linear layer
+            with an output dimension corresponding to the number of classes,
+            followed by a sigmoid activation function to produce the final
+            binary or multi-class classification probabilities.
           </p>
-        </div>
-        <div class="col-md-5 order-md-1">
-          <img
-            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            width="500"
-            height="500"
-            src="images/bert.png"
-            role="img"
-            aria-label="bert"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          />
         </div>
       </div>
 
       <hr class="featurette-divider" />
 
       <div class="row featurette">
-        <div class="col-md-7">
+        <div class="col-md-11">
           <h2 class="featurette-heading fw-normal lh-1">
-            Simple fusion method
+            The architecture of new_design1.
           </h2>
           <p class="lead">
-            For example, matrix splicing, direct addition, etc. (Such simple
-            operations make there almost no connection between parameters, but
-            subsequent network layers will automatically adapt to this
-            operation) Which is shown as below:
+            The architecture of new_design1 is structured to leverage the unique
+            strengths of each component: ViT's ability to capture global
+            dependencies in image data, ResNet's robust feature extraction
+            capabilities, and BERT's powerful language representation. It's a
+            multi-modal framework with the flexibility to be applied to a
+            variety of tasks that require the integration of different data
+            representations.
           </p>
-        </div>
-        <div class="col-md-5">
-          <img
-            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            width="500"
-            height="500"
-            src="images/simple fusion.png"
-            role="img"
-            aria-label="Simple fusion method"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          />
-        </div>
-      </div>
-
-      <hr class="featurette-divider" />
-
-      <div class="row featurette">
-        <div class="col-md-7 order-md-2">
-          <h2 class="featurette-heading fw-normal lh-1">
-            MLP classification method.
-          </h2>
-          <p class="lead">
-            The image depicts a schematic representation of a classification
-            method using a Multilayer Perceptron (MLP), which is a type of
-            feedforward artificial neural network. The process begins with input
-            features that are represented in three different shades, possibly
-            indicating the input layer with varying inputs. These features are
-            then processed through multiple layers (as shown by the grouped
-            squares), which may represent hidden layers where the neural network
-            performs weighted computations and applies activation functions. The
-            last layer before the output is typically where the decision
-            function is applied, leading to the final classification result.
-            MLPs are commonly used for pattern recognition, classification
-            tasks, and can handle complex nonlinear mappings between inputs and
-            outputs. They are trained using algorithms like backpropagation to
-            minimize error in predictions.
-          </p>
-        </div>
-        <div class="col-md-5 order-md-1">
-          <img
-            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            width="500"
-            height="500"
-            src="images/MLP classification.png"
-            role="img"
-            aria-label="bert"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          />
         </div>
       </div>
 
