@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pre-processing</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
+    <style>
+      .feature-icon {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 0.75rem;
+      }
+
+      .modal-dialog {
+        max-width: 60%;
+        max-height: 60%;
+      }
+
+      .header {
+        padding-left: 40px;
+        margin: 0;
+        background: #212529;
+        display: block;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .header_default {
+        min-height: 96px;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        font-family: Arial, sans-serif;
+        padding-left: 40px;
+      }
+
+      .header-left {
+        order: 0;
+        align-self: auto;
+        align-items: center;
+        display: flex;
+      }
+
+      .header-right {
+        text-align: center;
+        align-self: center;
+        align-items: center;
+        display: flex;
+      }
+
+      .left_item {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 12px;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #ffffff;
+      }
+
+      .nav-link {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 12px;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #ffffff;
+      }
+
+      .dropdown-item {
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #ffffff;
+      }
+
+      .dropdown-menu {
+        background: #212529;
+      }
+
+      .fa_icon {
+        font-family: Font Awesome Regular, sans-serif;
+      }
+
+      .fa_icon.button-pad-l {
+        padding-left: 6px;
+        padding-right: 4px;
+      }
+
+      .header-left a:hover {
+        border-bottom: 2px solid deepskyblue;
+      }
+
+      .header-right a {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 12px;
+        display: inline-block;
+        text-decoration: none;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #4d049a;
+      }
+
+      .header-log {
+        color: #111827;
+        font: 16px Inter sans-serif;
+        background: #ffffff;
+        padding: 13px 20px;
+      }
+
+      .home_container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
+
+      .home_container {
+        display: flex;
+      }
+
+      .left {
+        width: 50%;
+        padding: 20px;
+      }
+
+      .left-heading {
+        color: #ffffff;
+        margin-top: 10px;
+        margin-bottom: 40px;
+        font-size: 50px;
+        line-height: 1.1;
+      }
+
+      .button-wrap {
+        width: 100%;
+      }
+
+      .button-wrap-start {
+        border: 1px solid #ffffff;
+        background-color: #ffffff;
+        color: #111827;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 4px;
+        padding: 13px 20px;
+        line-height: 1;
+      }
+
+      .right {
+        width: 50%;
+      }
+
+      .carousel {
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .carousel img {
+        width: 100%;
+        display: inline-block;
+      }
+
+      .container1 {
+        background: #212529;
+        color: #6b7280;
+        text-align: center;
+      }
+
+      .container1 h3 {
+        color: #dee2e6;
+      }
+
+      .nav-link:focus,
+      .nav-link:hover {
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="header">
+        <div class="header_default">
+          <a href="/"
+            ><img
+              src="images/logo1.png"
+              loading="lazy"
+              width="200"
+              height="74"
+              alt="logo"
+          /></a>
+          <div class="header-left">
+            <a class="left_item" href="/">Home</a>
+            <a class="left_item" href="/introduction">Introduction</a>
+            <a class="left_item" href="/performance">Performance</a>
+            <a class="left_item" href="/upload">Upload</a>
+          </div>
+          <div class="header-right">
+            {% if session.email %}
+            <span style="color: #ffffff">Welcome, {{ session.email }}</span>
+            <a class="header-log" href="#" id="logout-link"
+              >Logout<span class="fa_icon button-pad-l">→</span></a
+            >
+            {% else %}
+            <a class="header-log" href="/login"
+              >Login<span class="fa_icon button-pad-l">→</span></a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container marketing px-4 py-5">
+      <div>
+        <h1 style="text-align: center; margin-top: 20px; margin-bottom: 20px">
+          Data pre-processing
+        </h1>
+        <hr class="featurette-divider" />
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1">
+              Image transformation settings.
+            </h2>
+            <ul>
+              <li>
+                <code>transforms.RandomResizedCrop(224)</code>: Randomly crops
+                the image and resizes it to 224x224 pixels.
+              </li>
+              <li>
+                <code>transforms.RandomHorizontalFlip()</code>: Randomly flips
+                the image horizontally.
+              </li>
+              <li>
+                <code>transforms.ToTensor()</code>: Convert an image to a
+                PyTorch tensor.
+              </li>
+              <li>
+                <code
+                  >transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])</code
+                >: Normalize the image (mean and standard deviation).
+              </li>
+            </ul>
+
+            <h2 class="featurette-heading fw-normal lh-1">
+              Validation Set Transformation ("val"):
+            </h2>
+            <ul>
+              <li>
+                <code>transforms.Resize(256)</code>: Resize the image to 256x256
+                pixels.
+              </li>
+              <li>
+                <code>transforms.CenterCrop(224)</code>: Crops a 224x224 pixel
+                area from the center of the image.
+              </li>
+              <li>
+                <code>transforms.ToTensor()</code> and
+                <code
+                  >transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])</code
+                >: Same as the training set.
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-5">
+            <img
+              class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+              width="500"
+              height="500"
+              src="images/pre-process1.png"
+              role="img"
+              aria-label="training set transformation"
+              preserveAspectRatio="xMidYMid slice"
+              focusable="false"
+            />
+          </div>
+        </div>
+
+        <hr class="featurette-divider" />
+
+        <div class="row featurette">
+          <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1">
+              Data Set Loading and Transformation Application
+            </h2>
+            <p class="lead"></p>
+            <p>
+              In the <code>train.py</code> file, use the
+              <code>COCODataSet</code> class to load the COCO dataset from the
+              specified path and apply the image transformation defined above.
+            </p>
+            <h3 class="featurette-heading fw-normal lh-1">
+              Training Set and Validation Set:
+            </h3>
+            <ul>
+              <li>
+                Create <code>COCODataSet</code> instances for the training set
+                and validation set, passing in the data path, label range, data
+                type (training or validation), and corresponding image
+                transformation.
+              </li>
+              <li>
+                These transformations are applied to each loaded image in the
+                dataset's <code>__getitem__</code> method.
+              </li>
+            </ul>
+
+            <section>
+              <h3 class="featurette-heading fw-normal lh-1">
+                DataLoader Settings
+              </h3>
+              <p>
+                In the <code>train.py</code> file, create a
+                <code>DataLoader</code> for the training set and validation set.
+                It is responsible for loading data in batches, including images
+                and labels, and can use multi-threading to speed up the data
+                loading process.
+              </p>
+              <h3 class="featurette-heading fw-normal lh-1">
+                DataLoader Parameters:
+              </h3>
+              <ul>
+                <li><code>batch_size</code>: Number of images per batch.</li>
+                <li>
+                  <code>shuffle</code>: Set to True for the training set to
+                  randomly shuffle the data, and False for the validation set.
+                </li>
+                <li>
+                  <code>pin_memory</code> and <code>num_workers</code>:
+                  Parameters used to optimize data loading performance.
+                </li>
+              </ul>
+            </section>
+          </div>
+          <div class="col-md-5 order-md-1">
+            <img
+              class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+              width="500"
+              height="500"
+              src="images/pre-process2.png"
+              role="img"
+              aria-label="bert"
+              preserveAspectRatio="xMidYMid slice"
+              focusable="false"
+            />
+          </div>
+        </div>
+
+        <hr class="featurette-divider" />
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1">Text processing</h2>
+            <p class="lead">
+              Although the text data is not processed directly in the
+              <code>train.py</code> file, the captions of the images are
+              converted to lowercase in the <code>COCODataSet</code> class (as
+              mentioned earlier). This is a basic text preprocessing step that
+              helps the model better understand and process text data.
+            </p>
+          </div>
+        </div>
+
+        <hr class="featurette-divider" />
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1">Summarize</h2>
+            <p class="lead">
+              In the COCO dataset processing process, images are enhanced
+              through a series of transformations to increase the diversity and
+              complexity of the data, and are also standardized to facilitate
+              model training. Although text data is less processed, basic
+              lowercase processing is already included in the dataset class. In
+              this way, the data is efficiently prepared and preprocessed to
+              facilitate further model training and validation.
+            </p>
+          </div>
+        </div>
+
+        <hr class="featurette-divider" />
+        <p class="float-end"><a href="#">Back to top</a></p>
+
+        <!-- /END THE FEATURETTES -->
+      </div>
+    </div>
+    <!-- footer part -->
+    <div>
+      <footer class="pt-3 mt-4 text-body-secondary border-top container1 py-5">
+        <div class="row">
+          <div class="col-12 col-md">
+            <img src="images/logo1.png" alt="Company Logo" />
+            <br />
+            <br />
+            <small class="d-block mb-3" style="text-align: center"
+              >© 2023 Hotwater, Inc.</small
+            >
+            <small class="d-block mb-3" style="text-align: center"
+              >All rights reserved.</small
+            >
+          </div>
+          <div class="col-12 col-md">
+            <h3>Links</h3>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary text-decoration-none" href="/">Home</a>
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="/introduction"
+                  >Introduction</a
+                >
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="/performance"
+                  >Performance</a
+                >
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="/login"
+                  >Login</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md">
+            <h3>Introduction</h3>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="/data-preprocessing"
+                  >Data pre-processing</a
+                >
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="/model_1"
+                  >Model - Ⅰ</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md">
+            <h3>About</h3>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="https://github.com/unsw-cse-comp3900-9900-23T3/capstone-project-9900h18ahotwater"
+                  >Github</a
+                >
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="https://9900h18ahotwater.atlassian.net/jira/software/projects/HRGJ/boards/1"
+                  >Jira</a
+                >
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="https://moodle.telt.unsw.edu.au/pluginfile.php/10802393/mod_resource/content/1/P6%20Automatic%20Image%20Annotation%20using%20Multi-label%20Deep%20Learning.pdf"
+                  >Topics</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // JavaScript代码用于处理注销操作
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("logout-link")
+          .addEventListener("click", function () {
+            // 发送注销请求到后端（可以使用Ajax或直接跳转到注销路由）
+            // 这里示例使用Ajax
+            fetch("/dologout", {
+              method: "GET",
+            })
+              .then((response) => {
+                if (response.status === 200) {
+                  // 如果后端返回了重定向操作，刷新页面以跳转到登录页面
+                  window.location.reload();
+                } else {
+                  // 否则，可能显示注销成功消息
+                  alert("Logout successful");
+                }
+              })
+              .catch((error) => {
+                alert("Logout failed");
+              });
+          });
+      });
+    </script>
+  </body>
+</html>
