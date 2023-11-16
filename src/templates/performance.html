@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Performance of Model1.0</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+            crossorigin="anonymous"
+    />
+    <style>
+        .feature-icon {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 0.75rem;
+        }
+
+        .header {
+            padding-left: 40px;
+            margin: 0;
+            background: #212529;
+            display: block;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header_default {
+            min-height: 96px;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+            font-family: Arial, sans-serif;
+            padding-left: 40px;
+        }
+
+        .header-left {
+            order: 0;
+            align-self: auto;
+            align-items: center;
+            display: flex;
+        }
+
+        .header-right {
+            text-align: center;
+            align-self: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .left_item {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .nav-link {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .dropdown-item {
+            display: inline-block;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .dropdown-menu {
+            background: #212529;
+        }
+
+        .fa_icon {
+            font-family: Font Awesome Regular, sans-serif;
+        }
+
+        .fa_icon.button-pad-l {
+            padding-left: 6px;
+            padding-right: 4px;
+        }
+
+        .header-left a:hover {
+            border-bottom: 2px solid deepskyblue;
+        }
+
+        .header-right a {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            color: #4d049a;
+        }
+
+        .header-log {
+            color: #111827;
+            font: 16px Inter sans-serif;
+            background: #ffffff;
+            padding: 13px 20px;
+        }
+
+        .home_container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .home_container {
+            display: flex;
+        }
+
+        .left {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .left-heading {
+            color: #ffffff;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            font-size: 50px;
+            line-height: 1.1;
+        }
+
+        .button-wrap {
+            width: 100%;
+        }
+
+        .button-wrap-start {
+            border: 1px solid #ffffff;
+            background-color: #ffffff;
+            color: #111827;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            padding: 13px 20px;
+            line-height: 1;
+        }
+
+        .right {
+            width: 50%;
+        }
+
+        /* .carousel {
+          overflow: hidden;
+          white-space: nowrap;
+        } */
+
+        .carousel img {
+            width: 100%;
+            display: inline-block;
+        }
+
+        .container1 {
+            background: #212529;
+            color: #6b7280;
+            text-align: center;
+        }
+
+        .container1 h3 {
+            color: #dee2e6;
+        }
+
+        .nav-link:focus,
+        .nav-link:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="header">
+        <div class="header_default">
+            <a href="/"
+            ><img
+                    src="images/logo1.png"
+                    loading="lazy"
+                    width="200"
+                    height="74"
+                    alt="logo"
+            /></a>
+            <div class="header-left">
+                <a class="left_item" href="/">Home</a>
+                <a class="left_item" href="/introduction">Introduction</a>
+                <a class="left_item" href="/performance">Performance</a>
+                <a class="left_item" href="/upload">Upload</a>
+            </div>
+            <div class="header-right">
+                {% if session.email %}
+                    <span style="color: #FFFFFF">Welcome, {{ session.email }}</span>
+                    <a class="header-log" href="#" id="logout-link">Logout<span
+                            class="fa_icon button-pad-l">→</span></a>
+                {% else %}
+                    <a class="header-log" href="/login">Login<span class="fa_icon button-pad-l">→</span></a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+    {% if session.email %}
+        <div class="carousel-indicators"></div>
+    {% else %}
+        <div class="carousel-indicators">
+            <button
+                    type="button"
+                    data-bs-target="#myCarousel"
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                    aria-label="Slide 1"
+            ></button>
+            <button
+                    type="button"
+                    data-bs-target="#myCarousel"
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2"
+            ></button>
+            <button
+                    type="button"
+                    data-bs-target="#myCarousel"
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3"
+            ></button>
+        </div>
+    {% endif %}
+    {% if session.email %}
+        <div class="carousel-inner"></div>
+
+
+    {% else %}
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="height: 70vh">
+                <svg
+                        class="bd-placeholder-img"
+                        width="100%"
+                        height="100%"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        preserveAspectRatio="xMidYMid slice"
+                        focusable="false"
+                >
+                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)"/>
+                </svg>
+                <img
+                        src="images/results/9.jpg"
+                        alt="An old man walking down a Japanese crossroads"
+                        style="
+              position: absolute;
+              top: 50%;
+              left: 65%;
+              transform: translate(-50%, -50%);
+              object-fit: contain;
+              max-width: 100%;
+              max-height: 80%;
+            "
+                />
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <h3>Person, Car, Bicycle, Vase, Handbag</h3>
+                        <p class="opacity-65">
+                            An old man walking down a Japanese crossroads
+                        </p>
+                        <p>
+                            <a
+                                    class="btn btn-lg btn-outline-secondary"
+                                    href="/model_1"
+                            >Show model-I details</a
+                            >
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" style="height: 70vh">
+                <svg
+                        class="bd-placeholder-img"
+                        width="100%"
+                        height="100%"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        preserveAspectRatio="xMidYMid slice"
+                        focusable="false"
+                >
+                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)"/>
+                </svg>
+                <img
+                        src="images/results/5.jpg"
+                        alt="An old farmer plowing a field"
+                        style="
+              position: absolute;
+              top: 50%;
+              left: 65%;
+              transform: translate(-50%, -50%);
+              object-fit: contain;
+              max-width: 100%;
+              max-height: 80%;
+            "
+                />
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <h3>Person, Cow</h3>
+                        <p>An old farmer plowing a field</p>
+                        <p>
+                            <a
+                                    class="btn btn-lg btn-outline-secondary"
+                                    href="/model_2"
+                            >Show model-II details</a
+                            >
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item" style="height: 70vh">
+                <svg
+                        class="bd-placeholder-img"
+                        width="100%"
+                        height="100%"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        preserveAspectRatio="xMidYMid slice"
+                        focusable="false"
+                >
+                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)"/>
+                </svg>
+                <img
+                        src="images/results/6.jpg"
+                        alt="Descriptive text"
+                        style="
+              position: absolute;
+              top: 50%;
+              left: 65%;
+              transform: translate(-50%, -50%);
+              object-fit: contain;
+              max-width: 100%;
+              max-height: 80%;
+            "
+                />
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <h3>Person, Tie, Book</h3>
+                        <p>
+                            Men in suits in a room full of papers. He seems to be an office
+                            worker.
+                        </p>
+                        <p>
+                            <a
+                                    class="btn btn-lg btn-outline-secondary"
+                                    href="/model_3"
+                            >Show model-III details</a
+                            >
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide="prev"
+    >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide="next"
+    >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<footer class="pt-3 mt-4 text-body-secondary border-top container1 py-5">
+    <div class="row">
+        <div class="col-12 col-md">
+            <img src="images/logo1.png" alt="Company Logo"/>
+            <br/>
+            <br/>
+            <small class="d-block mb-3" style="text-align: center"
+            >© 2023 Hotwater, Inc.</small
+            >
+            <small class="d-block mb-3" style="text-align: center"
+            >All rights reserved.</small
+            >
+        </div>
+        <div class="col-12 col-md">
+            <h3>Links</h3>
+            <ul class="list-unstyled text-small">
+                <li>
+                    <a class="link-secondary text-decoration-none" href="/"
+                    >Home</a
+                    >
+                </li>
+                <li>
+                    <a
+                            class="link-secondary text-decoration-none"
+                            href="/introduction"
+                    >Introduction</a
+                    >
+                </li>
+                <li>
+                    <a
+                            class="link-secondary text-decoration-none"
+                            href="/performance"
+                    >Performance</a
+                    >
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none" href="/login"
+                    >Login</a
+                    >
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md">
+            <h3>Introduction</h3>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="/data-preprocessing"
+                  >Data pre-processing</a
+                >
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="/model_1"
+                  >Model - I</a
+                >
+              </li>
+                <li>
+                <a class="link-secondary text-decoration-none" href="/model_2"
+                  >Model - II</a
+                >
+              </li>
+                <li>
+                <a class="link-secondary text-decoration-none" href="/model_3"
+                  >Model - III</a
+                >
+              </li>
+                <li>
+                <a class="link-secondary text-decoration-none" href="/model_4"
+                  >Model - IV</a
+                >
+              </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md">
+            <h3>About</h3>
+            <ul class="list-unstyled text-small">
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://github.com/unsw-cse-comp3900-9900-23T3/capstone-project-9900h18ahotwater">Github</a>
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://9900h18ahotwater.atlassian.net/jira/software/projects/HRGJ/boards/1"
+                    >Jira</a
+                    >
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://moodle.telt.unsw.edu.au/pluginfile.php/10802393/mod_resource/content/1/P6%20Automatic%20Image%20Annotation%20using%20Multi-label%20Deep%20Learning.pdf"
+                    >Topics</a
+                    >
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"
+></script>
+<script>
+    // JavaScript代码用于处理注销操作
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('logout-link').addEventListener('click', function () {
+            // 发送注销请求到后端（可以使用Ajax或直接跳转到注销路由）
+            // 这里示例使用Ajax
+            fetch('/dologout', {
+                method: 'GET'
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        // 如果后端返回了重定向操作，刷新页面以跳转到登录页面
+                        window.location.reload();
+                    } else {
+                        // 否则，可能显示注销成功消息
+                        alert('Logout successful');
+                    }
+                })
+                .catch(error => {
+                    alert('Logout failed');
+                });
+        });
+    });
+</script>
+<script>
+    // Fetch data from the backend (replace with your actual backend endpoint)
+    fetch('/gethistory', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // Call a function to populate the carousel with the fetched data
+            populateCarousel(data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+    function transformImagePath(originalPath) {
+        // 假设originalPath是后端传来的路径，类似于 ./src/resources/data/4.png
+        const parts = originalPath.split('/'); // 分割路径
+        const index = parts.indexOf('data'); // 找到 "data" 目录的索引
+        if (index !== -1) {
+            // 保留 "data" 目录及其之后的部分，并拼接成新的路径
+            return '/' + parts.slice(index).join('/');
+        }
+        // 如果路径中没有 "data" 目录，返回原始路径
+        return originalPath;
+    }
+
+    // Function to populate the carousel with data
+    function populateCarousel(data) {
+        const carouselInner = document.querySelector('.carousel-inner');
+
+        if (data.num_of_history === 0) {
+            carouselInner.innerHTML = `
+            <div class="carousel-item active" style="height: 70vh">
+                <svg
+                    class="bd-placeholder-img"
+                    width="100%"
+                    height="100%"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    preserveAspectRatio="xMidYMid slice"
+                    focusable="false"
+                >
+                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)"/>
+                </svg>
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <h3>No history available</h3>
+                    </div>
+                </div>
+            </div>
+        `;
+        } else {
+            const itemsToDisplay = Math.min(data.num_of_history, 3);
+            const carouselIndicators = document.querySelector('.carousel-indicators');
+            for (let index = data.num_of_history - 1; index >= Math.max(0, data.num_of_history - itemsToDisplay); index--) {
+                const isActive = index === data.num_of_history - 1 ? 'active' : '';
+                const originalPath = data.image1[index];
+                const transformedPath = transformImagePath(originalPath);
+                const carouselItem = `
+                <div class="carousel-item ${isActive}" style="height: 70vh">
+                    <svg
+                        class="bd-placeholder-img"
+                        width="100%"
+                        height="100%"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        preserveAspectRatio="xMidYMid slice"
+                        focusable="false"
+                    >
+                        <rect width="100%" height="100%" fill="var(--bs-secondary-color)"/>
+                    </svg>
+                    <!-- Replace the placeholder image with actual data -->
+                    <img src="${transformedPath}" alt="${data.text}" style="
+                        position: absolute;
+                        top: 50%;
+                        left: 65%;
+                        transform: translate(-50%, -50%);
+                        object-fit: contain;
+                        max-width: 100%;
+                        max-height: 80%;
+                    ">
+                    <div class="container">
+                        <div class="carousel-caption text-start">
+                            <h3>${data.classes[index]}</h3>
+                            <p>${data.text[index]}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                carouselInner.innerHTML += carouselItem;
+
+            }
+            for (let index = 0; index < itemsToDisplay; index++) {
+                const button = document.createElement('button');
+                button.setAttribute('type', 'button');
+                button.setAttribute('data-bs-target', '#myCarousel');
+                button.setAttribute('data-bs-slide-to', `${index}`);
+                button.setAttribute('aria-label', `Slide ${index + 1}`);
+
+                if (index === 0) {
+                    button.classList.add('active');
+                    button.setAttribute('aria-current', 'true');
+                }
+
+                carouselIndicators.appendChild(button);
+            }
+        }
+    }
+
+
+</script>
+</body>
+</html>

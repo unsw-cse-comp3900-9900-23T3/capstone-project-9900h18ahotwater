@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>HOMEPAGE</title>
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #212529;
+            display: block;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header {
+            padding-right: 40px;
+            padding-left: 40px;
+        }
+
+        .header_default {
+            min-height: 96px;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+            font-family: Arial, sans-serif;
+        }
+
+        .header-left {
+            order: 0;
+            align-self: auto;
+            align-items: center;
+            display: flex;
+        }
+
+        .header-right {
+            text-align: center;
+            align-self: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .left_item {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .nav-link {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .dropdown-item {
+            display: inline-block;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .dropdown-menu {
+            background: #212529;
+        }
+
+        .fa_icon {
+            font-family: Font Awesome Regular, sans-serif;
+        }
+
+        .fa_icon.button-pad-l {
+            padding-left: 6px;
+            padding-right: 4px;
+        }
+
+        .header-left a:hover {
+            border-bottom: 2px solid deepskyblue;
+        }
+
+        .header-right a {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            color: #4d049a;
+        }
+
+        .header-log {
+            color: #111827;
+            font: 16px Inter sans-serif;
+            background: #ffffff;
+            padding: 13px 20px;
+        }
+
+        .home_container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .home_container {
+            display: flex;
+        }
+
+        .left {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .left-heading {
+            color: #ffffff;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            font-size: 50px;
+            line-height: 1.1;
+        }
+
+        .button-wrap {
+            width: 100%;
+        }
+
+        .button-wrap-start {
+            border: 1px solid #ffffff;
+            background-color: #ffffff;
+            color: #111827;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            padding: 13px 20px;
+            line-height: 1;
+        }
+
+        .right {
+            width: 50%;
+        }
+
+
+        .container1 {
+            background: #212529;
+            color: #6b7280;
+            text-align: center;
+        }
+
+        .container1 h3 {
+            color: #dee2e6;
+        }
+
+        .nav-link:focus,
+        .nav-link:hover {
+            color: #ffffff;
+        }
+
+        .carousel {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .carousel-inner {
+            display: flex;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            justify-content: center;
+            width: 627px;
+            height: 472px;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
+
+    </style>
+    <link href="css/product.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="header">
+    <div class="header_default">
+        <a href="/"
+        ><img
+                src="images/logo1.png"
+                loading="lazy"
+                width="200"
+                height="74"
+                alt="logo"
+        /></a>
+        <div class="header-left">
+            <a class="left_item" href="/">Home</a>
+            <a class="left_item" href="/introduction">Introduction</a>
+            <a class="left_item" href="/performance">Performance</a>
+            <a class="left_item" href="/upload">Upload</a>
+        </div>
+        <div class="header-right">
+            {% if session.email %}
+                <span style="color: #FFFFFF">Welcome, {{ session.email }}</span>
+                <a class="header-log" href="#" id="logout-link">Logout<span class="fa_icon button-pad-l">→</span></a>
+            {% else %}
+                <a class="header-log" href="/login">Login<span class="fa_icon button-pad-l">→</span></a>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+<div class="home_container">
+    <div
+            class="left"
+            style="font-size: 24px; color: #ffffff; font-weight: 700"
+    >
+        <h1 class="left-heading">
+            Let us assist you in precise image, providing
+            everything necessary to build and deploy computer vision models.
+        </h1>
+        <div class="button-wrap">
+            <a href="/introduction" class="button-wrap-start"
+            >Get Start<span class="fa_icon button-pad-l">→</span></a
+            >
+        </div>
+    </div>
+    <div class="carousel">
+        <div class="carousel-inner">
+            <!-- 图片1 -->
+            <div class="slide">
+                <img src="images/home1.png" alt="image1"/>
+            </div>
+            <!-- 图片2 -->
+            <div class="slide">
+                <img src="images/home2.png" alt="image2"/>
+            </div>
+            <!-- 图片3 -->
+            <div class="slide">
+                <img src="images/home3.png" alt="image3"/>
+            </div>
+            <!-- ... 可以继续添加更多图片 -->
+        </div>
+        <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
+        <button class="next" onclick="plusSlides(1)">&#10095;</button>
+    </div>
+
+</div>
+<footer class="pt-3 mt-4 text-body-secondary border-top container1 py-5">
+    <div class="row">
+        <div class="col-12 col-md">
+            <img src="images/logo1.png" alt="Company Logo"/>
+            <br/>
+            <br/>
+            <small class="d-block mb-3" style="text-align: center"
+            >© 2023 Hotwater, Inc.</small
+            >
+            <small class="d-block mb-3" style="text-align: center"
+            >All rights reserved.</small
+            >
+        </div>
+        <div class="col-12 col-md">
+            <h3>Links</h3>
+            <ul class="list-unstyled text-small">
+                <li>
+                    <a class="link-secondary text-decoration-none" href="/"
+                    >Home</a
+                    >
+                </li>
+                <li>
+                    <a
+                            class="link-secondary text-decoration-none"
+                            href="/introduction"
+                    >Introduction</a
+                    >
+                </li>
+                <li>
+                    <a
+                            class="link-secondary text-decoration-none"
+                            href="/performance"
+                    >Performance</a
+                    >
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none" href="/login"
+                    >Login</a
+                    >
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md">
+            <h3>Introduction</h3>
+            <ul class="list-unstyled text-small">
+                <li>
+                    <a
+                            class="link-secondary text-decoration-none"
+                            href="/data-preprocessing"
+                    >Data pre-processing</a
+                    >
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none" href="/model_1"
+                    >Model - I</a
+                    >
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none" href="/model_2"
+                    >Model - II</a
+                    >
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none" href="/model_3"
+                    >Model - III</a
+                    >
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none" href="/model_4"
+                    >Model - IV</a
+                    >
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md">
+            <h3>About</h3>
+            <ul class="list-unstyled text-small">
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://github.com/unsw-cse-comp3900-9900-23T3/capstone-project-9900h18ahotwater">Github</a>
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://9900h18ahotwater.atlassian.net/jira/software/projects/HRGJ/boards/1"
+                    >Jira</a
+                    >
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://moodle.telt.unsw.edu.au/pluginfile.php/10802393/mod_resource/content/1/P6%20Automatic%20Image%20Annotation%20using%20Multi-label%20Deep%20Learning.pdf"
+                    >Topics</a
+                    >
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // JavaScript代码用于处理注销操作
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('logout-link').addEventListener('click', function () {
+            // 发送注销请求到后端（可以使用Ajax或直接跳转到注销路由）
+            // 这里示例使用Ajax
+            fetch('/dologout', {
+                method: 'GET'
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        // 如果后端返回了重定向操作，刷新页面以跳转到登录页面
+                        window.location.reload();
+                    } else {
+                        // 否则，可能显示注销成功消息
+                        alert('Logout successful');
+                    }
+                })
+                .catch(error => {
+                    alert('Logout failed');
+                });
+        });
+    });
+</script>
+<script>
+    let slideIndex = 0;
+
+    function showSlides() {
+        let slides = document.querySelectorAll('.slide');
+        if (slideIndex >= slides.length) {
+            slideIndex = 0;
+        }
+        if (slideIndex < 0) {
+            slideIndex = slides.length - 1;
+        }
+        slides.forEach(slide => slide.style.display = 'none');
+        slides[slideIndex].style.display = 'flex';
+    }
+
+    function plusSlides(n) {
+        slideIndex += n;
+        showSlides();
+    }
+
+    showSlides();
+    setInterval(() => {
+        plusSlides(1);
+    }, 3000); // 每隔3秒切换图片
+
+</script>
+</body>
+</html>

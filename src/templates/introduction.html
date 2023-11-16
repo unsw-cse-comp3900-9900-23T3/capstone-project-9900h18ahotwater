@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
+    <style>
+      .feature-icon {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 0.75rem;
+      }
+
+      .header {
+        margin: 0;
+        padding: 0;
+        background: #212529;
+        display: block;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .header_default {
+        min-height: 96px;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        font-family: Arial, sans-serif;
+        padding-left: 40px;
+      }
+
+      .header-left {
+        order: 0;
+        align-self: auto;
+        align-items: center;
+        display: flex;
+      }
+
+      .header-right {
+        text-align: center;
+        align-self: center;
+        align-items: center;
+        display: flex;
+      }
+
+      .left_item {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 12px;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #ffffff;
+      }
+
+      .nav-link {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 12px;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #ffffff;
+      }
+
+      .dropdown-item {
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #ffffff;
+      }
+
+      .dropdown-menu {
+        background: #212529;
+      }
+
+      .fa_icon {
+        font-family: Font Awesome Regular, sans-serif;
+      }
+
+      .fa_icon.button-pad-l {
+        padding-left: 6px;
+        padding-right: 4px;
+      }
+
+      .header-left a:hover {
+        border-bottom: 2px solid deepskyblue;
+      }
+
+      .header-right a {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 12px;
+        display: inline-block;
+        text-decoration: none;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #4d049a;
+      }
+
+      .header-log {
+        color: #111827;
+        font: 16px Inter sans-serif;
+        background: #ffffff;
+        padding: 13px 20px;
+      }
+
+      .home_container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
+
+      .home_container {
+        display: flex;
+      }
+
+      .left {
+        width: 50%;
+        padding: 20px;
+      }
+
+      .left-heading {
+        color: #ffffff;
+        margin-top: 10px;
+        margin-bottom: 40px;
+        font-size: 50px;
+        line-height: 1.1;
+      }
+
+      .button-wrap {
+        width: 100%;
+      }
+
+      .button-wrap-start {
+        border: 1px solid #ffffff;
+        background-color: #ffffff;
+        color: #111827;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 4px;
+        padding: 13px 20px;
+        line-height: 1;
+      }
+
+      .right {
+        width: 50%;
+      }
+
+      .carousel {
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .carousel img {
+        width: 100%;
+        display: inline-block;
+      }
+
+      .container1 {
+        background: #212529;
+        color: #6b7280;
+        text-align: center;
+      }
+
+      .container1 h3 {
+        color: #dee2e6;
+      }
+
+      .nav-link:focus,
+      .nav-link:hover {
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="header">
+        <div class="header_default">
+          <a href="/"
+            ><img
+              src="images/logo1.png"
+              loading="lazy"
+              width="200"
+              height="74"
+              alt="logo"
+          /></a>
+          <div class="header-left">
+            <a class="left_item" href="/">Home</a>
+            <a class="left_item" href="/introduction">Introduction</a>
+            <a class="left_item" href="/performance">Performance</a>
+            <a class="left_item" href="/upload">Upload</a>
+          </div>
+          <div class="header-right">
+            {% if session.email %}
+            <span style="color: #ffffff">Welcome, {{ session.email }}</span>
+            <a class="header-log" href="#" id="logout-link"
+              >Logout<span class="fa_icon button-pad-l">→</span></a
+            >
+            {% else %}
+            <a class="header-log" href="/login"
+              >Login<span class="fa_icon button-pad-l">→</span></a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="px-4 pt-5 my-5 text-center border-bottom">
+      <h1 class="display-4 fw-bold text-body-emphasis">
+        Multi-label Classification
+      </h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+          Automatic image tagging primarily assigns relevant tags to digital
+          images. These tags are used to highlight prominent features and
+          entities within the images. By uploading a set of pictures and text
+          descriptions, we can observe the labels generated by each model. After
+          uploading the files, you can click on 'Performance' to view the
+          effectiveness of each model.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+          <button
+            type="button"
+            class="btn btn-primary btn-lg px-4 me-sm-3"
+            onclick="window.location.href='/upload'"
+          >
+            Try Now !
+          </button>
+
+        </div>
+      </div>
+      <div class="overflow-hidden" style="max-height: 40vh">
+        <div class="container px-5">
+          <img
+            src="images/IMG_4277.jpg"
+            class="img-fluid border rounded-3 shadow-lg mb-4"
+            alt="Example image"
+            width="700"
+            height="500"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="container px-4 py-5" id="featured-3">
+      <h2 class="pb-2 border-bottom">What did the backend model do?</h2>
+      <div class="row g-4 py-5 row-cols-2 row-cols-lg-3">
+        <div class="feature col">
+          <div
+            class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3"
+          >
+            <img src="images/bus-front.svg" alt="briefcase" height="30" />
+          </div>
+          <h3 class="fs-2">Data Pre-processing</h3>
+          <p>
+            In our cool image-labeling tool, we break sentences into words,
+            clean out the extra stuff, and simplify words. We then match words
+            with unique codes or popular methods like 'Word2Vec'. For pictures,
+            we make sure they're all the same size, adjust their brightness, and
+            sometimes flip or crop them for variety. We ensure each image
+            matches its description, split our data for training and testing,
+            and mix features from different sources for better results.
+          </p>
+          <a href="/data-preprocessing" class="icon-link">
+            Learn more
+            <img src="images/chevron-right.svg" alt="chevron-right" />
+          </a>
+        </div>
+        <div class="feature col">
+          <div
+            class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3"
+          >
+            <img
+              src="images/chat-square-heart.svg"
+              alt="bus-front"
+              height="30"
+            />
+          </div>
+          <h3 class="fs-2">Model - Ⅰ</h3>
+          <p>
+            The "Beyond Shared Subspace" model efficiently integrates multi-view
+            data, including video screenshots, cover images, and descriptive
+            text. In three pivotal steps, it first extracts essential features
+            from each data type. Next, it merges these distinct features,
+            enhancing their combined representation power. Finally, using
+            individual and integrated features, it performs classification,
+            producing a comprehensive output that leverages both visual and
+            textual cues.
+          </p>
+          <a href="/model_1" class="icon-link">
+            Learn more
+            <img src="images/chevron-right.svg" alt="chevron-right" />
+          </a>
+        </div>
+        <div class="feature col">
+          <div
+            class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3"
+          >
+            <img src="images/bus-front.svg" alt="briefcase" height="30" />
+          </div>
+          <h3 class="fs-2">Model II</h3>
+          <p>
+            The ViT+BERT+D-VSM model is a cutting-edge fusion approach that
+            combines visual and textual analysis for enhanced classification.
+            ViT processes images, BERT interprets text, and D-VSM integrates
+            their outputs, leveraging context-rich features for accurate
+            multi-modal classification tasks.
+          </p>
+          <a href="/model_2" class="icon-link">
+            Learn more
+            <img src="images/chevron-right.svg" alt="chevron-right" />
+          </a>
+        </div>
+        <div class="feature col">
+          <div
+            class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3"
+          >
+            <img src="images/bus-front.svg" alt="briefcase" height="30" />
+          </div>
+          <h3 class="fs-2">Model III</h3>
+          <p>
+            The Model III neural network is a multi-modal architecture
+            integrating Vision Transformer (ViT), ResNet50, and BERT models to
+            process image and text inputs for classification tasks. It leverages
+            ViT for global image dependencies, ResNet50 for feature extraction,
+            and BERT for text representation, combining their outputs for robust
+            multi-class classification.
+          </p>
+          <a href="/model_3" class="icon-link">
+            Learn more
+            <img src="images/chevron-right.svg" alt="chevron-right" />
+          </a>
+        </div>
+        <div class="feature col">
+          <div
+            class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3"
+          >
+            <img src="images/bus-front.svg" alt="briefcase" height="30" />
+          </div>
+          <h3 class="fs-2">Model IV</h3>
+          <p>
+            The Model IV is a multi-input neural network extending the PyTorch
+            nn.Module. It is designed to process three different input streams,
+            combining the features extracted by a Vision Transformer (ViT), a
+            MobileNetV2, and a BERT model.
+          </p>
+          <a href="/model_4" class="icon-link">
+            Learn more
+            <img src="images/chevron-right.svg" alt="chevron-right" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <footer class="pt-3 mt-4 text-body-secondary border-top container1 py-5">
+        <div class="row">
+          <div class="col-12 col-md">
+            <img src="images/logo1.png" alt="Company Logo" />
+            <br />
+            <br />
+            <small class="d-block mb-3" style="text-align: center"
+              >© 2023 Hotwater, Inc.</small
+            >
+            <small class="d-block mb-3" style="text-align: center"
+              >All rights reserved.</small
+            >
+          </div>
+          <div class="col-12 col-md">
+            <h3>Links</h3>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary text-decoration-none" href="/">Home</a>
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="/introduction"
+                  >Introduction</a
+                >
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="/performance"
+                  >Performance</a
+                >
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="/login"
+                  >Login</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md">
+            <h3>Introduction</h3>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="/data-preprocessing"
+                  >Data pre-processing</a
+                >
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="/model_1"
+                  >Model - I</a
+                >
+              </li>
+                <li>
+                <a class="link-secondary text-decoration-none" href="/model_2"
+                  >Model - II</a
+                >
+              </li>
+                <li>
+                <a class="link-secondary text-decoration-none" href="/model_3"
+                  >Model - III</a
+                >
+              </li>
+                <li>
+                <a class="link-secondary text-decoration-none" href="/model_4"
+                  >Model - IV</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md">
+            <h3>About</h3>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="https://github.com/unsw-cse-comp3900-9900-23T3/capstone-project-9900h18ahotwater"
+                  >Github</a
+                >
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="https://9900h18ahotwater.atlassian.net/jira/software/projects/HRGJ/boards/1"
+                  >Jira</a
+                >
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="https://moodle.telt.unsw.edu.au/pluginfile.php/10802393/mod_resource/content/1/P6%20Automatic%20Image%20Annotation%20using%20Multi-label%20Deep%20Learning.pdf"
+                  >Topics</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // JavaScript代码用于处理注销操作
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("logout-link")
+          .addEventListener("click", function () {
+            // 发送注销请求到后端（可以使用Ajax或直接跳转到注销路由）
+            // 这里示例使用Ajax
+            fetch("/dologout", {
+              method: "GET",
+            })
+              .then((response) => {
+                if (response.status === 200) {
+                  // 如果后端返回了重定向操作，刷新页面以跳转到登录页面
+                  window.location.reload();
+                } else {
+                  // 否则，可能显示注销成功消息
+                  alert("Logout successful");
+                }
+              })
+              .catch((error) => {
+                alert("Logout failed");
+              });
+          });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+You need to download the weights from [here](https://drive.google.com/file/d/1pE5_gXqT8AvZ7a-bjbL-MbtSwAsKMjDA/view?usp=sharing) and put it in this folder. the file name should be 'model-best.pth'

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Model - I</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
+    <style>
+      .feature-icon {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 0.75rem;
+      }
+
+      .modal-dialog {
+        max-width: 60%;
+        max-height: 60%;
+      }
+
+      .header {
+        padding-left: 40px;
+        margin: 0;
+        background: #212529;
+        display: block;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .header_default {
+        min-height: 96px;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        font-family: Arial, sans-serif;
+        padding-left: 40px;
+      }
+
+      .header-left {
+        order: 0;
+        align-self: auto;
+        align-items: center;
+        display: flex;
+      }
+
+      .header-right {
+        text-align: center;
+        align-self: center;
+        align-items: center;
+        display: flex;
+      }
+
+      .left_item {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 12px;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #ffffff;
+      }
+
+      .nav-link {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 12px;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #ffffff;
+      }
+
+      .dropdown-item {
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #ffffff;
+      }
+
+      .dropdown-menu {
+        background: #212529;
+      }
+
+      .fa_icon {
+        font-family: Font Awesome Regular, sans-serif;
+      }
+
+      .fa_icon.button-pad-l {
+        padding-left: 6px;
+        padding-right: 4px;
+      }
+
+      .header-left a:hover {
+        border-bottom: 2px solid deepskyblue;
+      }
+
+      .header-right a {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 12px;
+        display: inline-block;
+        text-decoration: none;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #4d049a;
+      }
+
+      .header-log {
+        color: #111827;
+        font: 16px Inter sans-serif;
+        background: #ffffff;
+        padding: 13px 20px;
+      }
+
+      .home_container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
+
+      .home_container {
+        display: flex;
+      }
+
+      .left {
+        width: 50%;
+        padding: 20px;
+      }
+
+      .left-heading {
+        color: #ffffff;
+        margin-top: 10px;
+        margin-bottom: 40px;
+        font-size: 50px;
+        line-height: 1.1;
+      }
+
+      .button-wrap {
+        width: 100%;
+      }
+
+      .button-wrap-start {
+        border: 1px solid #ffffff;
+        background-color: #ffffff;
+        color: #111827;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 4px;
+        padding: 13px 20px;
+        line-height: 1;
+      }
+
+      .right {
+        width: 50%;
+      }
+
+      .carousel {
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .carousel img {
+        width: 100%;
+        display: inline-block;
+      }
+
+      .container1 {
+        background: #212529;
+        color: #6b7280;
+        text-align: center;
+      }
+
+      .container1 h3 {
+        color: #dee2e6;
+      }
+
+      .nav-link:focus,
+      .nav-link:hover {
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="header">
+        <div class="header_default">
+          <a href="/"
+            ><img
+              src="images/logo1.png"
+              loading="lazy"
+              width="200"
+              height="74"
+              alt="logo"
+          /></a>
+          <div class="header-left">
+            <a class="left_item" href="/">Home</a>
+            <a class="left_item" href="/introduction">Introduction</a>
+            <a class="left_item" href="/performance">Performance</a>
+            <a class="left_item" href="/upload">Upload</a>
+          </div>
+          <div class="header-right">
+            {% if session.email %}
+            <span style="color: #ffffff">Welcome, {{ session.email }}</span>
+            <a class="header-log" href="#" id="logout-link"
+              >Logout<span class="fa_icon button-pad-l">→</span></a
+            >
+            {% else %}
+            <a class="header-log" href="/login"
+              >Login<span class="fa_icon button-pad-l">→</span></a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container marketing px-4 py-5">
+      <!-- Three columns of text -->
+      <div class="row">
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-4 text-center">
+          <img
+            src="images/f1_score_log1.png"
+            class="bd-placeholder-img rounded mx-auto d-block"
+            width="300"
+            height="300"
+            alt="Your image description"
+            data-bs-toggle="modal"
+            data-bs-target="#imageModal1"
+          />
+          <h2 class="fw-normal">F1-Score</h2>
+          <p>
+            F1-Score combines precision and recall, providing a balanced model
+            performance metric, useful in imbalanced dataset scenarios.
+          </p>
+          <p class="d-flex justify-content-center">
+            <a
+              class="btn btn-secondary"
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target="#imageModal1"
+              >View details &raquo;</a
+            >
+          </p>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="imageModal1"
+            tabindex="-1"
+            aria-labelledby="imageModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <img
+                    src="images/f1_score_log1.png"
+                    alt="Your image description"
+                    class="img-fluid"
+                  />
+                </div>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-4 text-center">
+          <img
+            src="images/loss_log1.png"
+            class="bd-placeholder-img rounded mx-auto d-block"
+            width="300"
+            height="300"
+            alt="Your image description"
+            data-bs-toggle="modal"
+            data-bs-target="#imageModal2"
+          />
+          <h2 class="fw-normal">Loss Rate</h2>
+          <p>
+            Loss rate quantifies prediction errors during training, aiming to
+            minimize this loss for better model performance.
+          </p>
+          <p class="d-flex justify-content-center">
+            <a
+              class="btn btn-secondary"
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target="#imageModal2"
+              >View details &raquo;</a
+            >
+          </p>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="imageModal2"
+            tabindex="-1"
+            aria-labelledby="imageModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <img
+                    src="images/loss_log1.png"
+                    alt="Your image description"
+                    class="img-fluid"
+                  />
+                </div>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-4 text-center">
+          <img
+            src="images/lr_log1.png"
+            class="bd-placeholder-img rounded mx-auto d-block"
+            width="300"
+            height="300"
+            alt="Your image description"
+            data-bs-toggle="modal"
+            data-bs-target="#imageModal3"
+          />
+          <h2 class="fw-normal">Learning Rate</h2>
+          <p>
+            Learning rate determines step size in weight updates during
+            training, affecting convergence speed and model performance.
+          </p>
+          <p class="d-flex justify-content-center">
+            <a
+              class="btn btn-secondary"
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target="#imageModal3"
+              >View details &raquo;</a
+            >
+          </p>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="imageModal3"
+            tabindex="-1"
+            aria-labelledby="imageModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <img
+                    src="images/lr_log1.png"
+                    alt="Your image description"
+                    class="img-fluid"
+                  />
+                </div>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-lg-4 -->
+      </div>
+      <!-- /.row -->
+
+      <hr class="featurette-divider" />
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading fw-normal lh-1">
+            VIT(vision transformer).
+          </h2>
+          <p class="lead">
+            VIT is a network used to extract image features. Its original
+            architecture diagram is shown below.The input image is first divided
+            into many patches, in the paper An Image is Worth 16x16 Words:
+            Transformers for Image Recognition at Scale it's 16. Input the patch
+            into the Embedding layer of Linear Projection of Flattened Patches,
+            and get vectors, usually called 15 tokens. Then add a new token in
+            front of a series of tokens. After that input it into the
+            Transformer Encoder, which is shown as below, and stack the block L
+            times. Transformer Encoder has as many outputs as inputs. Finally,
+            the features of the image have been extracted.
+          </p>
+        </div>
+        <div class="col-md-5">
+          <img
+            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+            width="500"
+            height="500"
+            src="images/VIT.png"
+            role="img"
+            aria-label="VIT(vision transformer)"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          />
+        </div>
+      </div>
+
+      <hr class="featurette-divider" />
+
+      <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+          <h2 class="featurette-heading fw-normal lh-1">
+            BERT(Bidirectional Encoder Representations from Transformers)
+          </h2>
+          <p class="lead">
+            BERT is a pre-trained natural language processing model that
+            acquires rich language knowledge by learning a large amount of text
+            data and can be used for various natural language processing tasks.
+            In the BERT model, we can use its pre-trained model to extract text
+            features. The input of the BERT model is a text sequence, which is
+            usually processed by word segmentation and encoding. The output of
+            the BERT model includes the word vector (Word Embeddings) of each
+            word and the vector (Sentence Embeddings) for the entire sentence.
+            We can use these word vectors and sentence vectors to build our own
+            text feature vectors. Specifically, the BERT model can extract two
+            types of text features: 1. Word Embeddings: The BERT model generates
+            a corresponding word vector for each word in the input sequence.
+            This word vector reflects the semantic information and contextual
+            information of the word. 2. Sentence Embeddings: The BERT model
+            generates a sentence vector in the entire sentence of the input
+            sequence. This sentence vector reflects the semantic information and
+            contextual information of the entire sentence.
+          </p>
+        </div>
+        <div class="col-md-5 order-md-1">
+          <img
+            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+            width="500"
+            height="500"
+            src="images/bert.png"
+            role="img"
+            aria-label="bert"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          />
+        </div>
+      </div>
+
+      <hr class="featurette-divider" />
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading fw-normal lh-1">
+            Simple fusion method
+          </h2>
+          <p class="lead">
+            For example, matrix splicing, direct addition, etc. (Such simple
+            operations make there almost no connection between parameters, but
+            subsequent network layers will automatically adapt to this
+            operation) Which is shown as below:
+          </p>
+        </div>
+        <div class="col-md-5">
+          <img
+            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+            width="500"
+            height="500"
+            src="images/simple fusion.png"
+            role="img"
+            aria-label="Simple fusion method"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          />
+        </div>
+      </div>
+
+      <hr class="featurette-divider" />
+
+      <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+          <h2 class="featurette-heading fw-normal lh-1">
+            MLP classification method.
+          </h2>
+          <p class="lead">
+            The image depicts a schematic representation of a classification
+            method using a Multilayer Perceptron (MLP), which is a type of
+            feedforward artificial neural network. The process begins with input
+            features that are represented in three different shades, possibly
+            indicating the input layer with varying inputs. These features are
+            then processed through multiple layers (as shown by the grouped
+            squares), which may represent hidden layers where the neural network
+            performs weighted computations and applies activation functions. The
+            last layer before the output is typically where the decision
+            function is applied, leading to the final classification result.
+            MLPs are commonly used for pattern recognition, classification
+            tasks, and can handle complex nonlinear mappings between inputs and
+            outputs. They are trained using algorithms like backpropagation to
+            minimize error in predictions.
+          </p>
+        </div>
+        <div class="col-md-5 order-md-1">
+          <img
+            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+            width="500"
+            height="500"
+            src="images/MLP classification.png"
+            role="img"
+            aria-label="bert"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          />
+        </div>
+      </div>
+      <hr class="featurette-divider" />
+
+      <div class="row featurette">
+        <div class="col-md-7 order-md-1">
+          <h2 class="featurette-heading fw-normal lh-1">
+            Over view of the model.
+          </h2>
+          <p class="lead">
+            This is the overview of the model. The model can be divided into
+            three parts: feature extraction, feature fusion and classification.
+            The feature extraction part is to extract the features of the image
+            and text respectively. The feature fusion part is to fuse the image
+            and text features. The classification part is to classify the fused
+            features.
+          </p>
+        </div>
+        <div class="col-md-5 order-md-2">
+          <img
+            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+            width="500"
+            height="500"
+            src="images/overview.png"
+            role="img"
+            aria-label="bert"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          />
+        </div>
+      </div>
+      <hr class="featurette-divider" />
+
+      <p class="float-end"><a href="#">Back to top</a></p>
+
+      <!-- /END THE FEATURETTES -->
+    </div>
+
+    <!-- footer part -->
+    <div>
+      <footer class="pt-3 mt-4 text-body-secondary border-top container1 py-5">
+        <div class="row">
+          <div class="col-12 col-md">
+            <img src="images/logo1.png" alt="Company Logo" />
+            <br />
+            <br />
+            <small class="d-block mb-3" style="text-align: center"
+              >© 2023 Hotwater, Inc.</small
+            >
+            <small class="d-block mb-3" style="text-align: center"
+              >All rights reserved.</small
+            >
+          </div>
+          <div class="col-12 col-md">
+            <h3>Links</h3>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary text-decoration-none" href="/">Home</a>
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="/introduction"
+                  >Introduction</a
+                >
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="/performance"
+                  >Performance</a
+                >
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="/login"
+                  >Login</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md">
+            <h3>Introduction</h3>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="/data-preprocessing"
+                  >Data pre-processing</a
+                >
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="/model_1"
+                  >Model - I</a
+                >
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="/model_2"
+                  >Model - II</a
+                >
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="/model_3"
+                  >Model - III</a
+                >
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="/model_4"
+                  >Model - IV</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md">
+            <h3>About</h3>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="https://github.com/unsw-cse-comp3900-9900-23T3/capstone-project-9900h18ahotwater"
+                  >Github</a
+                >
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="https://9900h18ahotwater.atlassian.net/jira/software/projects/HRGJ/boards/1"
+                  >Jira</a
+                >
+              </li>
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="https://moodle.telt.unsw.edu.au/pluginfile.php/10802393/mod_resource/content/1/P6%20Automatic%20Image%20Annotation%20using%20Multi-label%20Deep%20Learning.pdf"
+                  >Topics</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // JavaScript代码用于处理注销操作
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("logout-link")
+          .addEventListener("click", function () {
+            // 发送注销请求到后端（可以使用Ajax或直接跳转到注销路由）
+            // 这里示例使用Ajax
+            fetch("/dologout", {
+              method: "GET",
+            })
+              .then((response) => {
+                if (response.status === 200) {
+                  // 如果后端返回了重定向操作，刷新页面以跳转到登录页面
+                  window.location.reload();
+                } else {
+                  // 否则，可能显示注销成功消息
+                  alert("Logout successful");
+                }
+              })
+              .catch((error) => {
+                alert("Logout failed");
+              });
+          });
+      });
+    </script>
+  </body>
+</html>

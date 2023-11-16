@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #212529;
+            display: block;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header {
+            padding-right: 40px;
+            padding-left: 40px;
+        }
+
+        .header_default {
+            min-height: 96px;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+            font-family: Arial, sans-serif;
+        }
+
+        .header-left {
+            order: 0;
+            align-self: auto;
+            align-items: center;
+            display: flex;
+
+        }
+
+        .header-right {
+            text-align: center;
+            align-self: center;
+            align-items: center;
+            display: flex;
+
+        }
+
+        .header-right a {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #4D049A;
+        }
+
+        .header-log {
+            color: #111827;
+            font: 16px Inter sans-serif;
+            background: #FFFFFF;
+            padding: 13px 20px;
+        }
+
+        .fa_icon {
+            font-family: Font Awesome Regular, sans-serif;
+        }
+
+        .fa_icon.button-pad-l {
+            padding-left: 6px;
+            padding-right: 4px;
+        }
+
+        .left_item {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #FFFFFF;
+        }
+
+        .nav-link {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #FFFFFF;
+        }
+
+        .dropdown-item {
+            display: inline-block;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #FFFFFF;
+        }
+
+        .dropdown-menu {
+            background: #212529;
+        }
+
+        .header-left a:hover {
+            border-bottom: 2px solid deepskyblue;
+        }
+
+        .header-right a {
+            margin-left: 12px;
+            margin-right: 12px;
+            padding: 12px;
+            display: inline-block;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #4D049A;
+        }
+
+        .header-log {
+            color: #111827;
+            font: 16px Inter sans-serif;
+            background: #FFFFFF;
+            padding: 13px 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        nav li {
+            margin-right: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .carousel img {
+            width: 100%;
+            display: inline-block;
+        }
+
+        .box {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            margin: 50px auto;
+            padding-top: 30px;
+            background-image: url('images/drag_file.png'); /* 你要设置的背景图片 */
+            background-size: cover;
+            background-position: center;
+            background-color: #f5f5f5 !important;
+            border-radius: 10px;
+        }
+
+        .btn {
+            width: 200px;
+            height: 30px;
+            line-height: 30px;
+            margin: 280px auto;
+            text-align: center;
+            color: #5098F8;
+            border-radius: 4px;
+            border: 1px dashed #5098F8;
+            cursor: pointer;
+        }
+
+        .container1 {
+            background: #212529;
+            color: #6B7280;
+            text-align: center;
+        }
+
+        .container1 h3 {
+            color: #dee2e6;
+        }
+
+        label[for="upload-input"] {
+            display: block;
+            background-color: #5098F8;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .nav-link:focus, .nav-link:hover {
+            color: #FFFFFF;
+        }
+
+        #file-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .image-wrapper img {
+            width: 200px;
+            height: 150px;
+        }
+
+
+        .description-input {
+            height: 200px;
+            width: 400px;
+            padding: 10px;
+            display: block;
+        }
+
+
+        .description-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .show {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        #image-submit {
+            display: block;
+            width: 150px;
+            height: 50px;
+            margin: 0 auto;
+            background-color: #4D049A;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+
+        #loading-spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 弹窗背景 */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 10%;
+            top: 10%;
+            width: 80%; /* Full width */
+            height: 80%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+            flex-direction: column;
+        }
+
+        .modal-imgs {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+        }
+
+        .modal-imgs img {
+            width: 400px; /* 设置图片的宽度为200px（或者你想要的具体尺寸） */
+            height: 300px; /* 设置图片的高度为150px（或者你想要的具体尺寸） */
+        }
+
+        #caption {
+            flex-direction: column; /* 垂直排列子元素 */
+            justify-content: center;
+            margin: auto;
+            display: flex;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+            white-space: pre-line;
+            font-size: 25px;
+        }
+
+        /* 关闭按钮 */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .model_option {
+            display: none;
+        }
+
+        .model_option label {
+            color: #FFFFFF;
+        }
+
+        .option_space {
+            margin-right: 10px; /* 调整空格大小，根据需要进行修改 */
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="header">
+    <div class="header_default">
+        <a href="/"
+        ><img
+                src="images/logo1.png"
+                loading="lazy"
+                width="200"
+                height="74"
+                alt="logo"
+        /></a>
+        <div class="header-left">
+            <a class="left_item" href="/">Home</a>
+            <a class="left_item" href="/introduction">Introduction</a>
+            <a class="left_item" href="/performance">Performance</a>
+            <a class="left_item" href="/upload">Upload</a>
+        </div>
+        <div class="header-right">
+            {% if session.email %}
+                <span style="color: #FFFFFF">Welcome, {{ session.email }}</span>
+                <a class="header-log" href="#" id="logout-link">Logout<span class="fa_icon button-pad-l">→</span></a>
+            {% else %}
+                <a class="header-log" href="/login">Login<span class="fa_icon button-pad-l">→</span></a>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+<div class="box" id="drop">
+    <input type="file" id="file-btn" name="photo" onchange="selectFile(event)" accept=".jpeg,.png,.jpg">
+</div>
+<div class="show">
+    <div id="image-container">
+
+    </div>
+    <br>
+    <div id="model_option" class="model_option">
+        <input type="radio" id="model1" name="option" value="model1" checked>
+        <label for="model1">model1</label>
+        <span class="option_space"></span>
+        <input type="radio" id="model2" name="option" value="model2">
+        <label for="model2">model2</label>
+        <span class="option_space"></span>
+        <input type="radio" id="model3" name="option" value="model3">
+        <label for="model3">model3</label>
+        <span class="option_space"></span>
+        <input type="radio" id="model4" name="option" value="model4">
+        <label for="model4">model4</label>
+    </div>
+    <br>
+    <div id="description-container">
+
+    </div>
+
+</div>
+<div id="loading-overlay">
+    <div id="loading-spinner"></div>
+    <p>Loading...</p>
+</div>
+<!-- 模态对话框 -->
+<div id="myModal" class="modal">
+
+    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+    <div id="modal-image-container" class="modal-imgs">
+        <!-- 这里显示上传的图片 -->
+    </div>
+    <div class="modal-body" id="caption">
+        <!-- 这里显示返回的数据 -->
+    </div>
+    <!--</div>-->
+</div>
+
+<footer class="pt-3 mt-4 text-body-secondary border-top container1 py-5">
+    <div class="row">
+
+        <div class="col-12 col-md">
+            <img src="images/logo1.png" alt="Company Logo">
+            <br>
+            <br>
+            <small class="d-block mb-3" style="text-align:center">© 2023 Hotwater, Inc.</small>
+            <small class="d-block mb-3" style="text-align:center">All rights reserved.</small>
+        </div>
+        <div class="col-12 col-md">
+            <h3>Links</h3>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary text-decoration-none" href="/">Home</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/introduction">Introduction</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/performance">Performance</a></li>
+                <li><a class="link-secondary text-decoration-none" href="/login">Login</a></li>
+            </ul>
+        </div>
+        <div class="col-12 col-md">
+            <h3>Introduction</h3>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a
+                  class="link-secondary text-decoration-none"
+                  href="/data-preprocessing"
+                  >Data pre-processing</a
+                >
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="/model_1"
+                  >Model - I</a
+                >
+              </li>
+                <li>
+                <a class="link-secondary text-decoration-none" href="/model_2"
+                  >Model - II</a
+                >
+              </li>
+                <li>
+                <a class="link-secondary text-decoration-none" href="/model_3"
+                  >Model - III</a
+                >
+              </li>
+                <li>
+                <a class="link-secondary text-decoration-none" href="/model_4"
+                  >Model - IV</a
+                >
+              </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md">
+            <h3>About</h3>
+            <ul class="list-unstyled text-small">
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://github.com/unsw-cse-comp3900-9900-23T3/capstone-project-9900h18ahotwater">Github</a>
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://9900h18ahotwater.atlassian.net/jira/software/projects/HRGJ/boards/1"
+                    >Jira</a
+                    >
+                </li>
+                <li>
+                    <a class="link-secondary text-decoration-none"
+                       href="https://moodle.telt.unsw.edu.au/pluginfile.php/10802393/mod_resource/content/1/P6%20Automatic%20Image%20Annotation%20using%20Multi-label%20Deep%20Learning.pdf"
+                    >Topics</a
+                    >
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script>
+    let selectedImages = [];
+    let uploadedImages = [];
+
+    function selectFile(e) {
+
+        if (e.target.files.length > 0) {
+            const selectedFiles = e.target.files;
+            const validFiles = [];
+            const displayedImagesCount = document.querySelectorAll('.image-wrapper').length;
+
+            for (let i = 0; i < selectedFiles.length; i++) {
+                if (isValidFileType(selectedFiles[i])) {
+
+                    validFiles.push(selectedFiles[i]);
+                    selectedImages.push(selectedFiles[i].name);
+
+                }
+            }
+            if (validFiles.length > 0) {
+                const remainingSlots = 2 - displayedImagesCount;
+                if (validFiles.length <= remainingSlots) {
+
+                    for (let i = 0; i < validFiles.length; i++) {
+                        displayImage(validFiles[i]);
+                    }
+                    {#alert('Success! ' + validFiles.length + ' files selected.');#}
+                    var fileObj = document.getElementById("file-btn").files[0]; // js 获取文件对象
+                    var formFile = new FormData();
+                    formFile.append("action", "UploadImage");
+                    formFile.append("file", fileObj); //加入文件对象
+                    $.ajax({
+                        url: "/uploadphoto",
+                        data: formFile,
+                        type: "post",
+                        dataType: "json",
+                        cache: false,//上传文件无需缓存
+                        processData: false,//用于对data参数进行序列化处理 这里必须false
+                        contentType: false, //必须
+                        success: function (result) {
+                            alert('Success! ' + validFiles.length + ' files selected.');
+
+                            if (result.status === "success") {
+                                uploadedImages.push(result.path);
+                            }
+
+                        },
+                    })
+
+
+                } else {
+                    alert('You can only upload a maximum of two files. You have ' + displayedImagesCount + ' images already.');
+                    e.target.value = '';
+
+                }
+
+            } else {
+                alert('Please select the correct file types (Image documents or Video documents)');
+                e.target.value = '';
+            }
+
+        }
+    }
+
+    function displayImage(file) {
+
+        if (file.type.startsWith("image/")) {
+            const imageContainer = document.querySelector('#image-container');
+            const descriptionContainer = document.querySelector('#description-container');
+
+            const imageWrapper = document.createElement("div");
+            imageWrapper.classList.add("image-wrapper");
+            imageWrapper.style.display = "inline-block";
+
+            const image = document.createElement("img");
+            image.classList.add("dragged-image");
+            image.src = URL.createObjectURL(file);
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener('click', function () {
+                imageContainer.removeChild(imageWrapper);
+                document.getElementById('file-btn').value = null;
+                let index = selectedImages.indexOf(file.name);
+                selectedImages.splice(index, 1);
+                uploadedImages.splice(index, 1);
+
+                if (imageContainer.querySelectorAll(".image-wrapper").length === 0) {
+                    window.location.reload();
+                }
+            });
+
+            imageWrapper.appendChild(image);
+            imageWrapper.appendChild(deleteButton);
+
+            imageContainer.appendChild(imageWrapper);
+
+
+            let descriptionInput = document.querySelector('.description-input');
+            if (!descriptionInput) {
+                descriptionInput = document.createElement("textarea");
+                descriptionInput.id = "image-description";
+                descriptionInput.type = "text";
+                descriptionInput.placeholder = "Image description";
+                descriptionInput.classList.add("description-input");
+                descriptionContainer.appendChild(descriptionInput);
+            }
+
+            let submitButton = document.querySelector('#image-submit');
+            let modelOption = document.getElementById('model_option');
+            if (!submitButton) {
+                modelOption.style.display = "flex";
+                submitButton = document.createElement("button");
+                submitButton.id = "image-submit";
+                submitButton.textContent = "Submit";
+                descriptionContainer.appendChild(submitButton);
+                submitButton.addEventListener('click', function (e) {
+                    e.preventDefault()
+                    // 获取 model_option 元素
+                    const modelOption = document.getElementById("model_option");
+
+                    // 获取所有单选框元素
+                    const radioButtons = modelOption.querySelectorAll('input[type="radio"]');
+
+                    // 遍历所有单选框，找到被选中的那个
+                    let selectedModel;
+                    radioButtons.forEach(radioButton => {
+                        if (radioButton.checked) {
+                            selectedModel = radioButton.value;
+                        }
+                    });
+
+                    const description = descriptionInput.value;
+                    const files = uploadedImages;
+                    const data = {
+                        num_of_img: files.length,
+                        img_path: files,
+                        text: description,
+                        model: selectedModel
+                    };
+
+                    if (description.trim() === "") {
+                        alert("Description cannot be empty.");
+                        return;
+                    }
+                    document.querySelector('#loading-overlay').style.display = 'flex';
+                    // 使用 fetch 发起异步请求
+                    fetch('/detect', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.text();
+                            } else {
+                                throw new Error('Network response was not ok');
+                            }
+                        })
+                        .then(data => {
+                            // 显示上传的图片
+                            const res = JSON.parse(data);
+                            const classes = res.classes;
+                            const probs = res.prob;
+                            const modalImageContainer = document.getElementById('modal-image-container');
+
+                            modalImageContainer.innerHTML = '';
+                            uploadedImages.forEach(imageName => {
+                                const img = document.createElement('img');
+                                img.src = imageName;
+                                img.style.marginRight = '10px';
+                                modalImageContainer.appendChild(img);
+
+                            });
+
+                            // 显示返回的数据
+                            const modalDataContainer = document.getElementById('caption');
+                            const combinedStrings = [];
+                            for (let i = 0; i < classes.length; i++) {
+                                const cls = classes[i];
+                                const prob = probs[i];
+                                const combined = `${cls}: ${prob}\n`;
+
+                                combinedStrings.push(combined);
+                            }
+                            modalDataContainer.textContent = combinedStrings.join('');
+
+                            // 显示模态对话框
+                            const modal = document.getElementById('myModal');
+                            modal.style.display = 'flex';
+
+                            document.querySelector('#loading-overlay').style.display = 'none';
+                            selectedImages = []
+                            uploadedImages = [];
+                            modal.appendChild(modalImageContainer);
+                            modal.appendChild(modalDataContainer);
+
+                            // 获取 <span> 元素，设置关闭按钮
+                            const span = document.getElementsByClassName("close")[0];
+
+                            // 当点击 (x), 关闭弹窗
+                            span.onclick = function () {
+                                modal.style.display = "none";
+                                location.reload();
+                            }
+
+                        })
+                        .catch(error => {
+
+                            console.error('Error:', error);
+                            selectedImages = [];
+                            uploadedImages = [];
+                            document.querySelector('#loading-overlay').style.display = 'none';
+                        });
+
+                });
+
+            }
+
+
+        }
+    }
+
+
+    function isValidFileType(file) {
+        const acceptedTypes = [
+            'image/jpg',
+            'image/jpeg',
+            'image/png',
+        ];
+
+        return acceptedTypes.includes(file.type);
+    }
+
+    let dropBox = document.querySelector('#drop');
+
+    dropBox.addEventListener('dragover', function (e) {
+        e.preventDefault();
+    });
+
+    dropBox.addEventListener('drop', function (e) {
+
+        e.preventDefault();
+        const droppedFiles = e.dataTransfer.files;
+        for (let i = 0; i < droppedFiles.length; i++) {
+            if (isValidFileType(droppedFiles[i])) {
+                selectedImages.push(droppedFiles[i].name);
+            }
+        }
+
+        const displayedImagesCount = document.querySelectorAll('.image-wrapper').length;
+        let remainingSlots = 2 - displayedImagesCount;
+        for (let i = 0; i < droppedFiles.length; i++) {
+            if (isValidFileType(droppedFiles[i]) && remainingSlots > 0) {
+
+                displayImage(droppedFiles[i]);
+                var formFile = new FormData();
+                formFile.append("action", "UploadImage");
+                formFile.append("file", droppedFiles[i]); //加入文件对象
+                $.ajax({
+                    url: "/uploadphoto",
+                    data: formFile,
+                    type: "post",
+                    dataType: "json",
+                    cache: false,//上传文件无需缓存
+                    processData: false,//用于对data参数进行序列化处理 这里必须false
+                    contentType: false, //必须
+                    success: function (result) {
+                        alert('Success! ' + droppedFiles.length + ' files selected.');
+
+                        if (result.status === "success") {
+                            uploadedImages.push(result.path);
+                        }
+
+                    },
+                })
+                remainingSlots--;
+            } else if (remainingSlots <= 0) {
+                alert('You can only upload a maximum of two files. You have ' + displayedImagesCount + ' images already.');
+                break;
+            } else {
+                alert('Please select the correct file type (Image document or Video document)');
+            }
+        }
+
+    });
+
+
+</script>
+<script>
+    // JavaScript代码用于处理注销操作
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('logout-link').addEventListener('click', function () {
+            // 发送注销请求到后端（可以使用Ajax或直接跳转到注销路由）
+            // 这里示例使用Ajax
+            fetch('/dologout', {
+                method: 'GET'
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        // 如果后端返回了重定向操作，刷新页面以跳转到登录页面
+                        window.location.reload();
+                    } else {
+                        // 否则，可能显示注销成功消息
+                        alert('Logout successful');
+                    }
+                })
+                .catch(error => {
+                    alert('Logout failed');
+                });
+        });
+    });
+</script>
+</body>
+
+</html>
