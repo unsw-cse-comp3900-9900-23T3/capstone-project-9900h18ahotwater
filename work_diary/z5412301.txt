@@ -28,3 +28,23 @@ Summarizes the tasks to try in the next sprint and complete the retrospective re
 week 6
 Solved the problem of the data set and started to use it for training the backend model.
 Configuring the environment and using the GPU on online server to train the model.
+
+week 7
+We didn' t have meeting with client this week, because she is not available.
+We trained two new models on the dataset and got a better result.
+We mainly focused on the implementation of frontend functionalitie this week.
+
+week 8
+We completed the sign up and log in function.
+We started intergrating the frontend annotation and the backend models.
+We allocated the asignees and the story points on the jira site and got the burndown chart on the site.
+
+week 9
+We mainly worked on the intergration of the frontend and backend models.
+We developed a new function of store the users' data history after logging in.
+We had regular meeting with the client this week.
+
+week 10
+We worked mainly on testing the whole system this week for the final demo.
+We started writing the final report this week.
+We solved several bugs in both frontend and backend models and the system is ready for users to use.
