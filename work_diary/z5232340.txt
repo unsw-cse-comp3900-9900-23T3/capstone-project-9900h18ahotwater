@@ -39,3 +39,12 @@ week8
 
 All web interfaces are completed, synchronized with teammates for web styling, and configured with a complete front-end and back-end environment. 
 Running all the preliminary project code on the computer for this week's demo.
+
+week9
+Modified the settings of some web pages. Modified the error image of the model introduction page. 
+Module settings of web pages updated. New data preprocessing page.
+
+week10
+New introduction pages for Model 2, Model 3 and Model 4. Modify the introduction page. Add Model 2, Model 3, Model 4. introduction and link modules. 
+Communicate with teammates to standardize style and schedule.
+
