@@ -32,3 +32,16 @@ week7:
 
 implemented 2 models
 
+
+
+
+week8:
+debug the models
+
+
+week9:
+Train the dataset and refine the modles
+
+
+week10:
+write report and prepare the final demo
