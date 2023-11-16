@@ -38,3 +38,6 @@ This week, I successfully interacted with the backend and implemented dynamic we
 Week9
 
 This week, after experiencing the pre of the second demo, according to the suggestions of the tutor, work with the team members to modify the logic of some pages, and then continue to improve the front-end and back-end interaction functions.
+
+Week10
+This week, we have finished all the programs, we have made the front-end code, back-end code and model code together. We conducted the final testing of the webpage. We also divided the speech into different roles.
